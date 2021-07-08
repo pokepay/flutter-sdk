@@ -1,0 +1,23 @@
+.DS_Store
+.dart_tool/
+
+.packages
+.pub/
+
+.classpath
+.project
+.settings
+.gradle
+
+build/
+coverage/
+
+# IntelliJ related
+*.iml
+*.ipr
+*.iws
+.idea/
+
+pubspec.lock
+.flutter-plugins
+.flutter-plugins-dependencies
