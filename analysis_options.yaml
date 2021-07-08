@@ -1,0 +1,5 @@
+# FIXME: Re enable after Flutter commands support NNBD
+
+# analyzer:
+#   enable-experiment:
+#    - non-nullable
