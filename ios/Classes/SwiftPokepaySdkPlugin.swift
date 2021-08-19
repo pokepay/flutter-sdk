@@ -199,14 +199,16 @@ private class MethodCallTask {
             let billId = args["billId"] as! String
             let accountId = args["accountId"] as? String
             let amount = args["amount"] as? Double
-            client.send(BankAPI.Transaction.CreateWithBill(billId: billId, accountId: accountId, amount: amount), handler: self.after)
+            let couponId = args["couponId"] as? String
+            client.send(BankAPI.Transaction.CreateWithBill(billId: billId, accountId: accountId, amount: amount, couponId: couponId), handler: self.after)
         case "createUserTransactionWithCashtray":
             let env = flutterEnvToSDKEnv(ienv: args["env"] as! Int32)
             let accessToken = args["accessToken"] as! String
             let client = Pokepay.Client(accessToken: accessToken, env: env)
             let cashtrayId = args["cashtrayId"] as! String
             let accountId = args["accountId"] as? String
-            client.send(BankAPI.Transaction.CreateWithCashtray(cashtrayId: cashtrayId, accountId: accountId), handler: self.after)
+            let couponId = args["couponId"] as? String
+            client.send(BankAPI.Transaction.CreateWithCashtray(cashtrayId: cashtrayId, accountId: accountId, couponId: couponId), handler: self.after)
         case "createUserTransactionWithCheck":
             let env = flutterEnvToSDKEnv(ienv: args["env"] as! Int32)
             let accessToken = args["accessToken"] as! String
@@ -230,7 +232,8 @@ private class MethodCallTask {
             let client = Pokepay.Client(accessToken: accessToken, env: env)
             let data = args["data"] as! String
             let accountId = args["accountId"] as? String
-            client.send(BankAPI.Transaction.CreateWithJwt(data: data, accountId: accountId), handler: self.after)
+            let couponId = args["couponId"] as? String
+            client.send(BankAPI.Transaction.CreateWithJwt(data: data, accountId: accountId, couponId: couponId), handler: self.after)
         case "deleteBill":
             let env = flutterEnvToSDKEnv(ienv: args["env"] as! Int32)
             let accessToken = args["accessToken"] as! String
@@ -279,6 +282,23 @@ private class MethodCallTask {
             let after = args["after"] as? String
             let perPage = args["perPage"] as? Int32
             client.send(BankAPI.Account.GetBalances(id: id, before: before, after: after, perPage: perPage), handler: self.after)
+        case "getAccountCoupons":
+            let env = flutterEnvToSDKEnv(ienv: args["env"] as! Int32)
+            let accessToken = args["accessToken"] as! String
+            let client = Pokepay.Client(accessToken: accessToken, env: env)
+            let accountId = args["accountId"] as! String
+            let isAvailable = args["isAvailable"] as? Bool
+            let before = args["before"] as? String
+            let after  = args["after"] as? String
+            let perPage = args["perPage"] as? Int32
+            client.send(BankAPI.Account.GetAccountCoupons(accountId: accountId, isAvailable:isAvailable, before: before, after: after, perPage: perPage),handler: self.after)
+        case "getAccountCouponDetail":
+            let env = flutterEnvToSDKEnv(ienv: args["env"] as! Int32)
+            let accessToken = args["accessToken"] as! String
+            let client = Pokepay.Client(accessToken: accessToken, env: env)
+            let accountId = args["accountId"] as! String
+            let couponId = args["couponId"] as! String
+            client.send(BankAPI.Account.GetCouponDetail(accountId: accountId, couponId: couponId), handler: self.after)
         case "getAccountTransactions":
             let env = flutterEnvToSDKEnv(ienv: args["env"] as! Int32)
             let accessToken = args["accessToken"] as! String
@@ -329,6 +349,15 @@ private class MethodCallTask {
             let accessToken = args["accessToken"] as! String
             let client = Pokepay.Client(accessToken: accessToken, env: env)
             client.send(MessagingAPI.GetUnreadCount(), handler: self.after)
+        case "getPrivateMoneyCoupons":
+            let env = flutterEnvToSDKEnv(ienv: args["env"] as! Int32)
+            let accessToken = args["accessToken"] as! String
+            let client = Pokepay.Client(accessToken: accessToken, env: env)
+            let privateMoneyId = args["privateMoneyId"] as! String
+            let before = args["before"] as? String
+            let after  = args["after"] as? String
+            let perPage = args["perPage"] as? Int32
+            client.send(BankAPI.PrivateMoney.GetPrivateMoneyCoupons(privateMoneyId:privateMoneyId, before:before, after:after, perPage: perPage), handler: self.after)
         case "getTerminal":
             let env = flutterEnvToSDKEnv(ienv: args["env"] as! Int32)
             let accessToken = args["accessToken"] as! String
@@ -372,6 +401,13 @@ private class MethodCallTask {
             let after = args["after"] as? String
             let perPage = args["perPage"] as? Int32
             client.send(MessagingAPI.List(before: before, after: after, perPage: perPage), handler: self.after)
+        case "patchAccountCouponDetail":
+            let env = flutterEnvToSDKEnv(ienv: args["env"] as! Int32)
+            let accessToken = args["accessToken"] as! String
+            let client = Pokepay.Client(accessToken: accessToken, env: env)
+            let accountId = args["accountId"] as! String
+            let couponId = args["couponId"] as! String
+            client.send(BankAPI.Account.PatchCouponDetail(accountId: accountId, couponId: couponId),handler: self.after)
         case "receiveMessageAttachment":
             let env = flutterEnvToSDKEnv(ienv: args["env"] as! Int32)
             let accessToken = args["accessToken"] as! String
@@ -400,10 +436,9 @@ private class MethodCallTask {
             let accountId = args["accountId"] as? String
             let productsString = (args["products"] as! String).data(using: .utf8)!
             let products = try! BankAPIJSONDecoder().decode([Product]?.self, from: productsString)
-            
+            let couponId = args["couponId"] as? String
             let client = Pokepay.Client(accessToken: accessToken,env: env)
-            client.scanToken(token,amount:amount,accountId:accountId,products:products,handler: self.after)
-            
+            client.scanToken(token,amount:amount,accountId:accountId,products:products,couponId:couponId,handler: self.after)
         case "searchPrivateMoneys":
             let env = flutterEnvToSDKEnv(ienv: args["env"] as! Int32)
             let accessToken = args["accessToken"] as! String
