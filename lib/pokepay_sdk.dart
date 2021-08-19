@@ -233,6 +233,7 @@ class PokepayClient {
     double amount,
     String accountId,
     List<Product> products,
+    String couponId,
   }) async {
     String json = await channel.invokeMethod('scanToken',{
       'env': envToInt(this.api.env),
@@ -240,7 +241,8 @@ class PokepayClient {
       'scanToken': scanToken,
       'amount': amount,
       'accountId': accountId,
-      'products': products
+      'products': products,
+      'couponId': couponId,
     });
 
     return UserTransaction.fromJson(jsonDecode(json));

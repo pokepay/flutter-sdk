@@ -1,4 +1,6 @@
 import 'package:meta/meta.dart';
+import 'package:pokepay_flutter_sdk/responses/coupon_detail.dart';
+import 'package:pokepay_flutter_sdk/responses/paginated_coupons.dart';
 
 import '../pokepay_sdk.dart';
 import '../responses.dart';
@@ -80,7 +82,43 @@ extension AccountAPI on PokepayAPI {
       },
     );
   }
+  Future<PaginatedCoupons> getAccountCoupons({
+    @required String accountId,
+    bool isAvailable,
+    String before,
+    String after,
+    int perPage,
+  }) async {
+    return await invokeMethod<PaginatedCoupons>(
+          (j) => PaginatedCoupons.fromJson(j),
+      'getAccountCoupons',
+      {
+        'env': this.env.index,
+        'accessToken': this.accessToken,
+        'accountId': accountId,
+        'isAvailable': isAvailable,
+        'before': before,
+        'after': after,
+        'perPage': perPage,
+      },
+    );
+  }
 
+  Future<CouponDetail> getAccountCouponDetail({
+    @required String accountId,
+    @required String couponId,
+  }) async {
+    return await invokeMethod<CouponDetail>(
+          (j) => CouponDetail.fromJson(j),
+      'getAccountCouponDetail',
+      {
+        'env': this.env.index,
+        'accessToken': this.accessToken,
+        'accountId': accountId,
+        'couponId': couponId,
+      },
+    );
+  }
   Future<PaginatedTransactions> getAccounTransactions({
     @required String id,
     String before,
@@ -97,6 +135,22 @@ extension AccountAPI on PokepayAPI {
         'before': before,
         'after': after,
         'perPage': perPage,
+      },
+    );
+  }
+
+  Future<CouponDetail> patchAccountCouponDetail({
+    @required String accountId,
+    @required String couponId,
+  }) async {
+    return await invokeMethod<CouponDetail>(
+          (j) => CouponDetail.fromJson(j),
+      'patchAccountCouponDetail',
+      {
+        'env': this.env.index,
+        'accessToken': this.accessToken,
+        'accountId': accountId,
+        'couponId': couponId,
       },
     );
   }
