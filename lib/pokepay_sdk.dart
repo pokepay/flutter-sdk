@@ -17,6 +17,22 @@ enum APIEnv {
   DEVELOPMENT,
 }
 
+// In Android and iOS SDK plugin, flutterEnvToSDKEnv
+// case 0: return Env.PRODUCTION;
+// case 1: return Env.SANDBOX;
+// case 2: return Env.QA;
+// case 3: return Env.DEVELOPMENT;
+// default: return Env.DEVELOPMENT;
+int envToInt(APIEnv apiEnv){
+  switch(apiEnv){
+    case APIEnv.PRODUCTION: return 0;
+    case APIEnv.SANDBOX: return 1;
+    case APIEnv.QA: return 2;
+    case APIEnv.DEVELOPMENT: return 3;
+    default: return 3;
+  }
+}
+
 enum LogLevel {
   verbose,
   debug,
@@ -147,7 +163,7 @@ class PokepayClient {
 
   Future<TokenInfo> getTokenInfo(String token) async {
     final String json = await channel.invokeMethod('getTokenInfo', {
-      'env': this.api.env,
+      'env': envToInt(this.api.env),
       'accessToken': this.api.accessToken,
       'token': token,
     });
@@ -183,7 +199,7 @@ class PokepayClient {
     @required String token,
   }) async {
     String json = await channel.invokeMethod('scanToken', {
-      'env': this.api.env,
+      'env': envToInt(this.api.env),
       'accessToken': this.api.accessToken,
       'token': token,
     });
@@ -199,7 +215,7 @@ class PokepayClient {
     List<Product> products,
   }) async {
     String json = await channel.invokeMethod('createToken', {
-      'env': this.api.env,
+      'env': envToInt(this.api.env),
       'accessToken': this.api.accessToken,
       'isMerchant': isMerchant,
       'amount': amount,
@@ -217,14 +233,16 @@ class PokepayClient {
     double amount,
     String accountId,
     List<Product> products,
+    String couponId,
   }) async {
     String json = await channel.invokeMethod('scanToken',{
-      'env': this.api.env,
+      'env': envToInt(this.api.env),
       'accessToken': this.api.accessToken,
       'scanToken': scanToken,
       'amount': amount,
       'accountId': accountId,
-      'products': products
+      'products': products,
+      'couponId': couponId,
     });
 
     return UserTransaction.fromJson(jsonDecode(json));
@@ -256,6 +274,7 @@ class PokepayOAuthClient {
 
   Future<AccessToken> getAccessToken(String code) async {
     final String json = await channel.invokeMethod('exchangeAuthCode', {
+      'env' : envToInt(this.env),
       'code': code,
       'clientId': this.clientId,
       'clientSecret': this.clientSecret,

@@ -11,6 +11,7 @@ extension TransactionAPI on PokepayAPI {
     @required String billId,
     String accountId,
     double amount,
+    String couponId,
   }) async {
     return await invokeMethod<UserTransaction>(
       (j) => UserTransaction.fromJson(j),
@@ -21,6 +22,7 @@ extension TransactionAPI on PokepayAPI {
         'billId': billId,
         'accountId': accountId,
         'amount': amount,
+        'couponId' : couponId,
       },
     );
   }
@@ -28,6 +30,7 @@ extension TransactionAPI on PokepayAPI {
   Future<UserTransaction> createUserTransactionWithCashtray({
     @required String cashtrayId,
     String accountId,
+    String couponId,
   }) async {
     return await invokeMethod<UserTransaction>(
       (j) => UserTransaction.fromJson(j),
@@ -37,6 +40,7 @@ extension TransactionAPI on PokepayAPI {
         'accessToken': this.accessToken,
         'cashtrayId': cashtrayId,
         'accountId': accountId,
+        'couponId' : couponId,
       },
     );
   }
@@ -80,6 +84,7 @@ extension TransactionAPI on PokepayAPI {
   Future<JwtResult> createUserTransactionWithJwt({
     @required String data,
     String accountId,
+    String couponId,
   }) async {
     return await invokeMethod<JwtResult>(
       (j) => JwtResult.fromJson(j),
@@ -89,6 +94,7 @@ extension TransactionAPI on PokepayAPI {
         'accessToken': this.accessToken,
         'data': data,
         'accountId': accountId,
+        'couponId' : couponId
       },
     );
   }

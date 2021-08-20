@@ -25,7 +25,10 @@ import jp.pokepay.pokepaylib.BankAPI.Account.CreateAccount;
 import jp.pokepay.pokepaylib.BankAPI.Account.CreateAccountCpmToken;
 import jp.pokepay.pokepaylib.BankAPI.Account.GetAccount;
 import jp.pokepay.pokepaylib.BankAPI.Account.GetAccountBalances;
+import jp.pokepay.pokepaylib.BankAPI.Account.GetAccountCouponDetail;
+import jp.pokepay.pokepaylib.BankAPI.Account.GetAccountCoupons;
 import jp.pokepay.pokepaylib.BankAPI.Account.GetAccountTransactions;
+import jp.pokepay.pokepaylib.BankAPI.Account.PatchAccountCouponDetail;
 import jp.pokepay.pokepaylib.BankAPI.BankRequestError;
 import jp.pokepay.pokepaylib.BankAPI.Bill.CreateBill;
 import jp.pokepay.pokepaylib.BankAPI.Bill.DeleteBill;
@@ -41,6 +44,8 @@ import jp.pokepay.pokepaylib.BankAPI.Check.DeleteCheck;
 import jp.pokepay.pokepaylib.BankAPI.Check.GetCheck;
 import jp.pokepay.pokepaylib.BankAPI.Check.UpdateCheck;
 import jp.pokepay.pokepaylib.BankAPI.CpmToken.GetCpmToken;
+import jp.pokepay.pokepaylib.BankAPI.Account.PatchAccountCouponDetail;
+import jp.pokepay.pokepaylib.BankAPI.PrivateMoney.GetPrivateMoneyCoupons;
 import jp.pokepay.pokepaylib.BankAPI.PrivateMoney.SearchPrivateMoneys;
 import jp.pokepay.pokepaylib.BankAPI.Terminal.AddTerminalPublicKey;
 import jp.pokepay.pokepaylib.BankAPI.Terminal.GetTerminal;
@@ -80,6 +85,7 @@ import jp.pokepay.pokepaylib.Responses.Bill;
 import jp.pokepay.pokepaylib.Responses.Cashtray;
 import jp.pokepay.pokepaylib.Responses.CashtrayAttempts;
 import jp.pokepay.pokepaylib.Responses.Check;
+import jp.pokepay.pokepaylib.Responses.CouponDetail;
 import jp.pokepay.pokepaylib.Responses.JwtResult;
 import jp.pokepay.pokepaylib.Responses.Message;
 import jp.pokepay.pokepaylib.Responses.MessageAttachment;
@@ -87,6 +93,7 @@ import jp.pokepay.pokepaylib.Responses.MessageUnreadCount;
 import jp.pokepay.pokepaylib.Responses.NoContent;
 import jp.pokepay.pokepaylib.Responses.PaginatedAccountBalances;
 import jp.pokepay.pokepaylib.Responses.PaginatedAccounts;
+import jp.pokepay.pokepaylib.Responses.PaginatedCoupons;
 import jp.pokepay.pokepaylib.Responses.PaginatedMessages;
 import jp.pokepay.pokepaylib.Responses.PaginatedPrivateMoneys;
 import jp.pokepay.pokepaylib.Responses.PaginatedTransactions;
@@ -266,7 +273,8 @@ public class PokepaySdkPlugin implements FlutterPlugin, MethodCallHandler {
                         String billId = call.argument("billId");
                         String accountId = call.argument("accountId");
                         Double amount = call.argument("amount");
-                        CreateTransactionWithBill req = new CreateTransactionWithBill(billId, accountId, amount);
+                        String couponId = call.argument("couponId");
+                        CreateTransactionWithBill req = new CreateTransactionWithBill(billId, accountId, amount,couponId);
                         Pokepay.setEnv(env);
                         UserTransaction res = req.send(accessToken);
                         return new TaskResult(null, res.toString());
@@ -276,7 +284,8 @@ public class PokepaySdkPlugin implements FlutterPlugin, MethodCallHandler {
                         String accessToken = call.argument("accessToken");
                         String cashtrayId = call.argument("cashtrayId");
                         String accountId = call.argument("accountId");
-                        CreateTransactionWithCashtray req = new CreateTransactionWithCashtray(cashtrayId, accountId);
+                        String couponId = call.argument("couponId");
+                        CreateTransactionWithCashtray req = new CreateTransactionWithCashtray(cashtrayId, accountId,couponId);
                         Pokepay.setEnv(env);
                         UserTransaction res = req.send(accessToken);
                         return new TaskResult(null, res.toString());
@@ -310,7 +319,8 @@ public class PokepaySdkPlugin implements FlutterPlugin, MethodCallHandler {
                         String accessToken = call.argument("accessToken");
                         String data = call.argument("data");
                         String accountId = call.argument("accountId");
-                        CreateTransactionWithJwt req = new CreateTransactionWithJwt(accountId, data);
+                        String couponId = call.argument("couponId");
+                        CreateTransactionWithJwt req = new CreateTransactionWithJwt(accountId, data, couponId);
                         Pokepay.setEnv(env);
                         JwtResult res = req.send(accessToken);
                         return new TaskResult(null, res.toString());
@@ -381,6 +391,29 @@ public class PokepaySdkPlugin implements FlutterPlugin, MethodCallHandler {
                         GetAccountBalances req = new GetAccountBalances(id, before, after, perPage);
                         Pokepay.setEnv(env);
                         PaginatedAccountBalances res = req.send(accessToken);
+                        return new TaskResult(null, res.toString());
+                    }
+                    case "getAccountCoupons":{
+                        Env env = flutterEnvToSDKEnv((int)call.argument("env"));
+                        String accessToken = call.argument("accessToken");
+                        String accountId = call.argument("accountId");
+                        boolean isAvailable = call.argument("isAvailable");
+                        String before = call.argument("before");
+                        String after = call.argument("after");
+                        Integer perPage = call.argument("perPage");
+                        GetAccountCoupons req = new GetAccountCoupons(accountId,isAvailable,before,after,perPage);
+                        Pokepay.setEnv(env);
+                        PaginatedCoupons res = req.send(accessToken);
+                        return new TaskResult(null, res.toString());
+                    }
+                    case "getAccountCouponDetail":{
+                        Env env = flutterEnvToSDKEnv((int)call.argument("env"));
+                        String accessToken = call.argument("accessToken");
+                        Pokepay.setEnv(env);
+                        String accountId = call.argument("accountId");
+                        String couponId = call.argument("couponId");
+                        GetAccountCouponDetail req = new GetAccountCouponDetail(accountId,couponId);
+                        CouponDetail res = req.send(accessToken);
                         return new TaskResult(null, res.toString());
                     }
                     case "getAccountTransactions": {
@@ -457,6 +490,18 @@ public class PokepaySdkPlugin implements FlutterPlugin, MethodCallHandler {
                         MessageUnreadCount res = req.send(accessToken);
                         return new TaskResult(null, res.toString());
                     }
+                    case "getPrivateMoneyCoupons" :{
+                        Env env = flutterEnvToSDKEnv((int)call.argument("env"));
+                        String accessToken = call.argument("accessToken");
+                        String privateMoneyId = call.argument("privateMoneyId");
+                        String before = call.argument("before");
+                        String after = call.argument("after");
+                        int perPage = call.argument("perPage");
+                        Pokepay.setEnv(env);
+                        GetPrivateMoneyCoupons req = new GetPrivateMoneyCoupons(privateMoneyId,before,after,perPage);
+                        PaginatedCoupons res = req.send(accessToken);
+                        return new TaskResult(null, res.toString());
+                    }
                     case "getTerminal": {
                         Env env = flutterEnvToSDKEnv((int)call.argument("env"));
                         String accessToken = call.argument("accessToken");
@@ -518,6 +563,16 @@ public class PokepaySdkPlugin implements FlutterPlugin, MethodCallHandler {
                         PaginatedMessages res = req.send(accessToken);
                         return new TaskResult(null, res.toString());
                     }
+                    case "patchAccountCouponDetail": {
+                        Env env = flutterEnvToSDKEnv((int)call.argument("env"));
+                        String accessToken = call.argument("accessToken");
+                        Pokepay.setEnv(env);
+                        String accountId = call.argument("accountId");
+                        String couponId = call.argument("couponId");
+                        PatchAccountCouponDetail req = new PatchAccountCouponDetail(accountId,couponId);
+                        CouponDetail res = req.send(accessToken);
+                        return new TaskResult(null, res.toString());
+                    }
                     case "receiveMessageAttachment": {
                         Env env = flutterEnvToSDKEnv((int)call.argument("env"));
                         String accessToken = call.argument("accessToken");
@@ -553,9 +608,10 @@ public class PokepaySdkPlugin implements FlutterPlugin, MethodCallHandler {
                         double amount = call.argument("amount");
                         String accountId = call.argument("accountId");
                         Product[] products = call.argument("products");
+                        String couponId = call.argument("couponId");
                         Pokepay.setEnv(env);
                         Pokepay.Client client = new Pokepay.Client(accessToken, null);
-                        UserTransaction userTransaction = client.scanToken(scanToken,amount,accountId,products);
+                        UserTransaction userTransaction = client.scanToken(scanToken,amount,accountId,products,couponId);
                         return new TaskResult(null, userTransaction.toString());
                     }
                     case "searchPrivateMoneys": {
