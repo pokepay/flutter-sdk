@@ -407,7 +407,8 @@ private class MethodCallTask {
             let client = Pokepay.Client(accessToken: accessToken, env: env)
             let accountId = args["accountId"] as! String
             let couponId = args["couponId"] as! String
-            client.send(BankAPI.Account.PatchCouponDetail(accountId: accountId, couponId: couponId),handler: self.after)
+            let isReceived = args["is_received"] as! Bool
+            client.send(BankAPI.Account.PatchCouponDetail(accountId: accountId, couponId: couponId,isReceived: isReceived),handler: self.after)
         case "receiveMessageAttachment":
             let env = flutterEnvToSDKEnv(ienv: args["env"] as! Int32)
             let accessToken = args["accessToken"] as! String

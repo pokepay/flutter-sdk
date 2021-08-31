@@ -142,6 +142,7 @@ extension AccountAPI on PokepayAPI {
   Future<CouponDetail> patchAccountCouponDetail({
     @required String accountId,
     @required String couponId,
+    @required bool isReceieved,
   }) async {
     return await invokeMethod<CouponDetail>(
           (j) => CouponDetail.fromJson(j),
@@ -151,6 +152,7 @@ extension AccountAPI on PokepayAPI {
         'accessToken': this.accessToken,
         'accountId': accountId,
         'couponId': couponId,
+        'is_received': isReceieved,
       },
     );
   }
