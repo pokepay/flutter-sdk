@@ -569,7 +569,8 @@ public class PokepaySdkPlugin implements FlutterPlugin, MethodCallHandler {
                         Pokepay.setEnv(env);
                         String accountId = call.argument("accountId");
                         String couponId = call.argument("couponId");
-                        PatchAccountCouponDetail req = new PatchAccountCouponDetail(accountId,couponId);
+                        boolean isReceived = call.argument("is_received");
+                        PatchAccountCouponDetail req = new PatchAccountCouponDetail(accountId,couponId,isReceived);
                         CouponDetail res = req.send(accessToken);
                         return new TaskResult(null, res.toString());
                     }
