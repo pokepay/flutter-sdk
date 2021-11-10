@@ -1,3 +1,5 @@
+##1.0.5
+* Add metadata and modified the way to get `TokenInfo`
 ##1.0.4
 * Modified API
 ## 1.0.3
