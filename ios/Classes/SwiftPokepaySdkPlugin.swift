@@ -363,12 +363,6 @@ private class MethodCallTask {
             let accessToken = args["accessToken"] as! String
             let client = Pokepay.Client(accessToken: accessToken, env: env)
             client.send(BankAPI.Terminal.Get(), handler: self.after)
-        case "getTokenInfo":
-            let env = flutterEnvToSDKEnv(ienv: args["env"] as! Int32)
-            let accessToken = args["accessToken"] as! String
-            let token = args["token"] as! String
-            let client = Pokepay.Client(accessToken: accessToken,env: env)
-            client.getTokenInfo(token,handler: self.after)
         case "getUserAccounts":
             let env = flutterEnvToSDKEnv(ienv: args["env"] as! Int32)
             let accessToken = args["accessToken"] as! String

@@ -10,8 +10,7 @@ enum TokenType {
   BILL,
   CHECK,
   CPM,
-  PAYREGI_TRANSACTION,
-  PAYREGI_CANCEL,
+  PAYREGI,
   JWT,
   UNKNOWN,
 }
@@ -21,7 +20,7 @@ class TokenInfo extends Response {
   @JsonKey(nullable: false)
   final TokenType type;
   @JsonKey(nullable: false)
-  final String token;
+  final dynamic token;
   Bill bill;
   Check check;
 

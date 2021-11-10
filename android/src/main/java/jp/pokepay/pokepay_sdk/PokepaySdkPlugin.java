@@ -512,15 +512,6 @@ public class PokepaySdkPlugin implements FlutterPlugin, MethodCallHandler {
                         Terminal res = req.send(accessToken);
                         return new TaskResult(null, res.toString());
                     }
-                    case "getTokenInfo": {
-                        Env env = flutterEnvToSDKEnv((int) call.argument("env"));
-                        String accessToken = call.argument("accessToken");
-                        String token = call.argument("token");
-                        Pokepay.setEnv(env);
-                        Pokepay.Client client = new Pokepay.Client(accessToken,null);
-                        TokenInfo tokenInfo = client.getTokenInfo(token);
-                        return  new TaskResult(null,tokenInfo.toString());
-                    }
                     case "getUserAccounts": {
                         Env env = flutterEnvToSDKEnv((int)call.argument("env"));
                         String accessToken = call.argument("accessToken");
