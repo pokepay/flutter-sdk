@@ -143,8 +143,8 @@ private class MethodCallTask {
             let accountId = args["accountId"] as! String
             let scopes = args["scopes"] as! Int
             let expiresIn = args["expiresIn"] as? Int
-            let additionalInfo = args["additionalInfo"] as? String
-            client.send(BankAPI.Account.CreateAccountCpmToken(accountId: accountId, scopes: BankAPI.Account.CreateAccountCpmToken.Scope(rawValue: scopes)!, expiresIn: expiresIn, additionalInfo: additionalInfo), handler: self.after)
+            let metadataMap = args["metadata"] as? [String:String]
+            client.send(BankAPI.Account.CreateAccountCpmToken(accountId: accountId, scopes: BankAPI.Account.CreateAccountCpmToken.Scope(rawValue: scopes)!, expiresIn: expiresIn, metadata: metadataMap), handler: self.after)
         case "createBill":
             let env = flutterEnvToSDKEnv(ienv: args["env"] as! Int32)
             let accessToken = args["accessToken"] as! String

@@ -33,7 +33,7 @@ extension AccountAPI on PokepayAPI {
     @required String accountId,
     @required CpmTokenScope scopes,
     int expiresIn,
-    String additionalInfo,
+    Map<String, String> metadata,
   }) async {
     return await invokeMethod<AccountCpmToken>(
       (j) => AccountCpmToken.fromJson(j),
@@ -44,7 +44,7 @@ extension AccountAPI on PokepayAPI {
         'accountId': accountId,
         'scopes': scopes.index,
         'expiresIn': expiresIn,
-        'additionalInfo': additionalInfo,
+        'metadata' : metadata,
       },
     );
   }

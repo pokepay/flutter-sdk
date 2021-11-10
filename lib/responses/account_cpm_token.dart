@@ -18,7 +18,7 @@ class AccountCpmToken extends Response {
   final List<String> scopes;
   @JsonKey(nullable: false)
   final DateTime expiresAt;
-  final String additionalInfo;
+  final Map<String, dynamic> metadata;
 
   AccountCpmToken({
     @required this.cpmToken,
@@ -26,7 +26,7 @@ class AccountCpmToken extends Response {
     this.transaction,
     @required this.scopes,
     @required this.expiresAt,
-    this.additionalInfo,
+    this.metadata,
   });
 
   factory AccountCpmToken.fromJson(Map<String, dynamic> json) =>

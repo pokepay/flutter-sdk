@@ -14,6 +14,7 @@ import java.io.PrintWriter;
 import java.io.StringWriter;
 import java.io.Writer;
 import java.util.Date;
+import java.util.Map;
 
 import io.flutter.embedding.engine.plugins.FlutterPlugin;
 import io.flutter.plugin.common.MethodCall;
@@ -76,6 +77,7 @@ import jp.pokepay.pokepaylib.OAuthAPI.OAuthRequestError;
 import jp.pokepay.pokepaylib.OAuthAPI.Token.ExchangeAuthCode;
 import jp.pokepay.pokepaylib.OAuthAPI.Token.RefreshAccessToken;
 import jp.pokepay.pokepaylib.Parameters.Product;
+import jp.pokepay.pokepaylib.Parameters.Metadata;
 import jp.pokepay.pokepaylib.Pokepay;
 import jp.pokepay.pokepaylib.Response;
 import jp.pokepay.pokepaylib.Responses.AccessToken;
@@ -206,8 +208,8 @@ public class PokepaySdkPlugin implements FlutterPlugin, MethodCallHandler {
                         String accountId = call.argument("accountId");
                         int scopes = call.argument("scopes");
                         Integer expiresIn = call.argument("expiresIn");
-                        String additionalInfo = call.argument("additionalInfo");
-                        CreateAccountCpmToken req = new CreateAccountCpmToken(accountId, scopes, expiresIn, additionalInfo);
+                        Map<String, String> metadataMap = call.argument("metadata");
+                        CreateAccountCpmToken req = new CreateAccountCpmToken(accountId, scopes, expiresIn, new Metadata(metadataMap));
                         Pokepay.setEnv(env);
                         AccountCpmToken res = req.send(accessToken);
                         return new TaskResult(null, res.toString());
