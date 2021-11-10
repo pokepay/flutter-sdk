@@ -9,6 +9,9 @@ import 'bank_api/terminal.dart';
 import 'bank_api/transaction.dart';
 import 'parameters/product.dart';
 import 'responses.dart';
+import 'bank_api/bill.dart';
+import 'bank_api/check.dart';
+import 'bank_api/cpm_token.dart';
 
 enum APIEnv {
   PRODUCTION,
@@ -146,6 +149,24 @@ class PokepayAPI {
   });
 }
 
+String parseAsPokeregiToken(String token) {
+  // * {25 ALNUM} - (Pokeregi_V1 OfflineMode QR)
+  final V1_QR_REG = RegExp(r'^([0-9A-Z]{25})$');
+  // * https://www.pokepay.jp/pd?={25 ALNUM} - (Pokeregi_V1 OfflineMode NFC)
+  // * https://www.pokepay.jp/pd/{25 ALNUM}  - (Pokeregi_V2 OfflineMode QR & NFC)
+  final RegExp V1_NFC_V2_QR_NFC_REG = RegExp(r'^https://www(?:-dev|-sandbox|-qa|)\\.pokepay\\.jp/pd(?:/|\\?d=)([0-9A-Z]{25})$');
+  // matching
+  final v1 = V1_QR_REG.allMatches(token);
+  if (V1_QR_REG.hasMatch(token)) {
+    return v1.elementAt(0).group(1);
+  }
+  final v2 = V1_NFC_V2_QR_NFC_REG.allMatches(token);
+  if (V1_NFC_V2_QR_NFC_REG.hasMatch(token)) {
+    return v2.elementAt(0).group(1);
+  }
+  return "";
+}
+
 class PokepayClient {
   PokepayAPI api;
 
@@ -162,12 +183,29 @@ class PokepayClient {
   }
 
   Future<TokenInfo> getTokenInfo(String token) async {
-    final String json = await channel.invokeMethod('getTokenInfo', {
-      'env': envToInt(this.api.env),
-      'accessToken': this.api.accessToken,
-      'token': token,
-    });
-    return TokenInfo.fromJson(jsonDecode(json));
+    if(token.startsWith(getWebBaseURL(this.api.env) + "/cashtrays/")){
+      return TokenInfo(type: TokenType.CASHTRAY, token: "");
+    }else if(token.startsWith(getWebBaseURL(this.api.env) + "/bills/")){
+      final String uuid = token.substring((getWebBaseURL(this.api.env) + "/bills/").length);
+      final bill = await api.getBill(id: uuid);
+      return TokenInfo(type: TokenType.BILL, token: bill);
+    }else if(token.startsWith(getWebBaseURL(this.api.env) + "/checks/")){
+      final String uuid = token.substring((getWebBaseURL(this.api.env) + "/checks/").length);
+      final check = await api.getCheck(id: uuid);
+      return TokenInfo(type: TokenType.CHECK, token: check);
+    }else if (RegExp(r'^([0-9A-Z]{25})$').hasMatch(token)) {
+      final cpmToken = await api.getCpmToken(cpmToken: token);
+      return TokenInfo(type: TokenType.CPM, token: cpmToken);
+    }else{
+      String key = parseAsPokeregiToken(token);
+      if (key.length > 0) {
+        return TokenInfo(type:
+        TokenType.PAYREGI,
+            token: ""
+        );
+      }
+    }
+    return TokenInfo(type: TokenType.UNKNOWN, token: "");
   }
 
   Future<UserTransaction> pay({

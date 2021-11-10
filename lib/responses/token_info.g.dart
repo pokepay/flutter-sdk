@@ -9,7 +9,7 @@ part of 'token_info.dart';
 TokenInfo _$TokenInfoFromJson(Map<String, dynamic> json) {
   return TokenInfo(
     type: _$enumDecode(_$TokenTypeEnumMap, json['type']),
-    token: json['token'] as String,
+    token: json['token'] as dynamic,
   )
     ..bill = json['bill'] == null
         ? null
@@ -52,8 +52,7 @@ const _$TokenTypeEnumMap = {
   TokenType.BILL: 'BILL',
   TokenType.CHECK: 'CHECK',
   TokenType.CPM: 'CPM',
-  TokenType.PAYREGI_TRANSACTION: 'PAYREGI_TRANSACTION',
-  TokenType.PAYREGI_CANCEL: 'PAYREGI_CANCEL',
+  TokenType.PAYREGI: 'PAYREGI',
   TokenType.JWT: 'JWT',
   TokenType.UNKNOWN: 'UNKNOWN',
 };

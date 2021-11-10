@@ -16,7 +16,7 @@ AccountCpmToken _$AccountCpmTokenFromJson(Map<String, dynamic> json) {
     scopes: (json['scopes'] as List).map((e) => e as String).toList(),
     expiresAt:
         const CustomDateTimeConverter().fromJson(json['expires_at'] as String),
-    additionalInfo: json['additional_info'] as String,
+    metadata: json['metadata'] as Map<String, dynamic>,
   );
 }
 
@@ -27,5 +27,5 @@ Map<String, dynamic> _$AccountCpmTokenToJson(AccountCpmToken instance) =>
       'transaction': instance.transaction,
       'scopes': instance.scopes,
       'expires_at': const CustomDateTimeConverter().toJson(instance.expiresAt),
-      'additional_info': instance.additionalInfo,
+      'metadata': instance.metadata,
     };
