@@ -1,34 +1,34 @@
-import 'package:json_annotation/json_annotation.dart';
+
 
 part 'coupon.g.dart';
 
-@JsonSerializable()
+
 class Coupon {
-  @JsonKey(nullable: false)
-  final String id;
-  @JsonKey(nullable: false)
-  final String name;
-  @JsonKey(nullable: false)
-  final String description;
-  final int discountAmount;
-  final int discountPercentage;
-  @JsonKey(nullable: false)
-  final DateTime startsAt;
-  @JsonKey(nullable: false)
-  final DateTime endsAt;
-  @JsonKey(nullable: false)
-  final DateTime displayStartsAt;
-  @JsonKey(nullable: false)
-  final DateTime displayEndsAt;
-  final int usageLimit;
-  final int minAmount;
-  @JsonKey(nullable: false)
-  final bool    isShopSpecified;
-  @JsonKey(nullable: false)
-  final bool    isDisabled;
-  @JsonKey(nullable: false)
-  final bool    isHidden;
-  final String couponImage;
+  
+  final String? id;
+  
+  final String? name;
+  
+  final String? description;
+  final int?discountAmount;
+  final int?discountPercentage;
+  
+  final DateTime?startsAt;
+  
+  final DateTime?endsAt;
+  
+  final DateTime?displayStartsAt;
+  
+  final DateTime?displayEndsAt;
+  final int?usageLimit;
+  final int?minAmount;
+  
+  final bool?   isShopSpecified;
+  
+  final bool?   isDisabled;
+  
+  final bool?   isHidden;
+  final String? couponImage;
 
   Coupon({
     this.id,

@@ -15,7 +15,7 @@ Cashtray _$CashtrayFromJson(Map<String, dynamic> json) {
     privateMoney:
         PrivateMoney.fromJson(json['private_money'] as Map<String, dynamic>),
     expiresAt:
-        const CustomDateTimeConverter().fromJson(json['expires_at'] as String),
+        const CustomDateTimeConverter().fromJson(json['expires_at'] as String)!,
     canceledAt:
         const CustomDateTimeConverter().fromJson(json['canceled_at'] as String),
     token: json['token'] as String,

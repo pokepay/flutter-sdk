@@ -3,3 +3,4 @@
 # analyzer:
 #   enable-experiment:
 #    - non-nullable
+include: package:flutter_lints/flutter.yaml

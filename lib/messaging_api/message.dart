@@ -1,45 +1,45 @@
 import 'package:meta/meta.dart';
-
 import '../pokepay_sdk.dart';
+import '../pokepay_flutter_sdk_platform_interface.dart';
 import '../responses.dart';
 
 extension MessageAPI on PokepayAPI {
   Future<Message> getMessage({
-    @required String id,
+    required String id,
   }) async {
-    return await invokeMethod<Message>(
+    return await PokepayFlutterSdkPlatform.instance.invokeMethod<Message>(
       (j) => Message.fromJson(j),
       'getMessage',
       {
-        'env': this.env.index,
-        'accessToken': this.accessToken,
+        'env': env.index,
+        'accessToken': accessToken,
         'id': id,
       },
     );
   }
 
   Future<MessageUnreadCount> getMessageUnreadCount() async {
-    return await invokeMethod<MessageUnreadCount>(
+    return await PokepayFlutterSdkPlatform.instance.invokeMethod<MessageUnreadCount>(
       (j) => MessageUnreadCount.fromJson(j),
       'getMessageUnreadCount',
       {
-        'env': this.env.index,
-        'accessToken': this.accessToken,
+        'env': env.index,
+        'accessToken': accessToken,
       },
     );
   }
 
   Future<PaginatedMessages> listMessages({
-    String before,
-    String after,
-    int perPage,
+    String? before,
+    String? after,
+    int? perPage,
   }) async {
-    return await invokeMethod<PaginatedMessages>(
+    return await PokepayFlutterSdkPlatform.instance.invokeMethod<PaginatedMessages>(
       (j) => PaginatedMessages.fromJson(j),
       'listMessages',
       {
-        'env': this.env.index,
-        'accessToken': this.accessToken,
+        'env': env.index,
+        'accessToken': accessToken,
         'before': before,
         'after': after,
         'perPage': perPage,
@@ -48,32 +48,32 @@ extension MessageAPI on PokepayAPI {
   }
 
   Future<MessageAttachment> receiveMessageAttachment({
-    @required String id,
+    required String id,
   }) async {
-    return await invokeMethod<MessageAttachment>(
+    return await PokepayFlutterSdkPlatform.instance.invokeMethod<MessageAttachment>(
       (j) => MessageAttachment.fromJson(j),
       'receiveMessageAttachment',
       {
-        'env': this.env.index,
-        'accessToken': this.accessToken,
+        'env': env.index,
+        'accessToken': accessToken,
         'id': id,
       },
     );
   }
 
   Future<Message> sendMessage({
-    @required String toUserId,
-    double amount,
-    @required String subject,
-    @required String body,
-    String fromAccountId,
+    required String toUserId,
+    double? amount,
+    required String subject,
+    required String body,
+    String? fromAccountId,
   }) async {
-    return await invokeMethod<Message>(
+    return await PokepayFlutterSdkPlatform.instance.invokeMethod<Message>(
       (j) => Message.fromJson(j),
       'sendMessage',
       {
-        'env': this.env.index,
-        'accessToken': this.accessToken,
+        'env': env.index,
+        'accessToken': accessToken,
         'toUserId': toUserId,
         'amount': amount,
         'subject': subject,

@@ -11,8 +11,8 @@ Terminal _$TerminalFromJson(Map<String, dynamic> json) {
     id: json['id'] as String,
     name: json['name'] as String,
     hardwareId: json['hardware_id'] as String,
-    pushService: json['push_service'] as String,
-    pushToken: json['push_token'] as String,
+    pushService: json['push_service'].toString(),
+    pushToken: json['push_token'].toString(),
     user: User.fromJson(json['user'] as Map<String, dynamic>),
     account: Account.fromJson(json['account'] as Map<String, dynamic>),
   );

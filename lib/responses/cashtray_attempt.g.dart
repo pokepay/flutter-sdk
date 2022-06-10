@@ -16,7 +16,7 @@ CashtrayAttempt _$CashtrayAttemptFromJson(Map<String, dynamic> json) {
     errorType: json['error_type'] as String,
     errorMessage: json['error_message'] as String,
     createdAt:
-        const CustomDateTimeConverter().fromJson(json['created_at'] as String),
+        const CustomDateTimeConverter().fromJson(json['created_at'] as String)!,
   );
 }
 

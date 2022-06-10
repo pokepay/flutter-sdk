@@ -8,8 +8,8 @@ part of 'message_attachment.dart';
 
 MessageAttachment _$MessageAttachmentFromJson(Map<String, dynamic> json) {
   return MessageAttachment(
-    moneyAmount: (json['money_amount'] as num)?.toDouble(),
-    pointAmount: (json['point_amount'] as num)?.toDouble(),
+    moneyAmount: (json['money_amount'] as num).toDouble(),
+    pointAmount: (json['point_amount'] as num).toDouble(),
     privateMoney: json['private_money'] == null
         ? null
         : PrivateMoney.fromJson(json['private_money'] as Map<String, dynamic>),

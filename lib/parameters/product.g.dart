@@ -10,8 +10,8 @@ Product _$ProductFromJson(Map<String, dynamic> json) {
   return Product(
     janCode: json['jan_code'] as String,
     name: json['name'] as String,
-    unitPrice: (json['unit_price'] as num)?.toDouble(),
-    price: (json['price'] as num)?.toDouble(),
+    unitPrice: (json['unit_price'] as num).toDouble(),
+    price: (json['price'] as num).toDouble(),
     isDiscounted: json['is_discounted'] as bool,
     other: json['other'] as String,
   );

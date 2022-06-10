@@ -4,6 +4,7 @@ import APIKit
 import Result
 import Pokepay
 
+
 private class APIJSONEncoder : JSONEncoder {
     override init() {
         super.init()
@@ -83,6 +84,7 @@ private class MethodCallTask {
         )
     }
     private func after<T: Codable>(_ ret: Result<T, PokepayError>) -> Void {
+
         switch ret {
         case .success(let ret):
            let bytes = try! APIJSONEncoder().encode(ret)
@@ -135,16 +137,18 @@ private class MethodCallTask {
             let client = Pokepay.Client(accessToken: accessToken, env: env)
             let name = args["name"] as? String
             let privateMoneyId = args["privateMoneyId"] as? String
-            client.send(BankAPI.Account.Create(name: name, privateMoneyId: privateMoneyId), handler: self.after)
+            let externalId = args["externalId"] as? String
+            client.send(BankAPI.Account.Create(name: name, privateMoneyId: privateMoneyId,externalId: externalId), handler: self.after)
         case "createAccountCpmToken":
-            let env = flutterEnvToSDKEnv(ienv: args["env"] as! Int32)
-            let accessToken = args["accessToken"] as! String
-            let client = Pokepay.Client(accessToken: accessToken, env: env)
-            let accountId = args["accountId"] as! String
-            let scopes = args["scopes"] as! Int
-            let expiresIn = args["expiresIn"] as? Int
-            let metadataMap = args["metadata"] as? [String:String]
-            client.send(BankAPI.Account.CreateAccountCpmToken(accountId: accountId, scopes: BankAPI.Account.CreateAccountCpmToken.Scope(rawValue: scopes)!, expiresIn: expiresIn, metadata: metadataMap), handler: self.after)
+                        let env = flutterEnvToSDKEnv(ienv: args["env"] as! Int32)
+                        let accessToken = args["accessToken"] as! String
+                        let client = Pokepay.Client(accessToken: accessToken, env: env)
+                        let accountId = args["accountId"] as! String
+                        let scopes = args["scopes"] as! Int
+                        let expiresIn = args["expiresIn"] as? Int
+                        let metadataMap = args["metadata"] as? [String:String]
+
+                        client.send(BankAPI.Account.CreateAccountCpmToken(accountId: accountId, scopes: BankAPI.Account.CreateAccountCpmToken.Scope(rawValue: scopes)!, expiresIn: expiresIn,metadata: metadataMap), handler: self.after)
         case "createBill":
             let env = flutterEnvToSDKEnv(ienv: args["env"] as! Int32)
             let accessToken = args["accessToken"] as! String
@@ -183,13 +187,21 @@ private class MethodCallTask {
         case "createToken":
             let env = flutterEnvToSDKEnv(ienv: args["env"] as! Int32)
             let accessToken = args["accessToken"] as! String
-            let isMerchant = args["isMerchan"] as! Bool
+            let isMerchant = args["isMerchant"] as! Bool
             let amount = args["amount"] as! Double
             let description = args["description"] as! String
             let expiresIn = args["expiresIn"] as? Int32
             let accountId = args["accountId"] as? String
-            let productsString = (args["products"] as! String).data(using: .utf8)!
-            let products = try! BankAPIJSONDecoder().decode([Product]?.self, from: productsString)
+            let productsString = (args["products"] as? String)
+            var products:[Product]?;
+            if(productsString==nil){
+                products = nil;
+            }else{
+                let productData=productsString?.data(using: .utf8)
+                 products = try! BankAPIJSONDecoder().decode([Product]?.self, from: productData!)
+            }
+
+
             let client = Pokepay.Client(accessToken: accessToken,isMerchant: isMerchant,env: env)
             client.createToken(amount,description: description, expiresIn: expiresIn, accountId: accountId, products: products, handler: self.after)
         case "createUserTransactionWithBill":
@@ -264,7 +276,7 @@ private class MethodCallTask {
             let code = args["code"] as! String
             let clientId = args["clientId"] as! String
             let clientSecret = args["clientSecret"] as! String
-            let grantType = args["grantType"] as! String
+            //let grantType = args["grantType"] as! String
             let client = Pokepay.OAuthClient(clientId: clientId, clientSecret: clientSecret, env: env)
             client.send(OAuthAPI.Token.ExchangeAuthCode(code: code, clientId: clientId, clientSecret: clientSecret), handler: self.after)
         case "getAccount":
@@ -429,8 +441,17 @@ private class MethodCallTask {
             let token = args["scanToken"] as! String
             let amount = args["amount"] as? Double
             let accountId = args["accountId"] as? String
-            let productsString = (args["products"] as! String).data(using: .utf8)!
-            let products = try! BankAPIJSONDecoder().decode([Product]?.self, from: productsString)
+//            let productsString = (args["products"] as! String).data(using: .utf8)!
+            let productsString = (args["products"] as? String)
+            var products:[Product]?;
+            if(productsString==nil){
+                products = nil;
+            }else{
+                let productData=productsString?.data(using: .utf8)
+                 products = try! BankAPIJSONDecoder().decode([Product]?.self, from: productData!)
+            }
+
+//            let products = try! BankAPIJSONDecoder().decode([Product]?.self, from: productsString)
             let couponId = args["couponId"] as? String
             let client = Pokepay.Client(accessToken: accessToken,env: env)
             client.scanToken(token,amount:amount,accountId:accountId,products:products,couponId:couponId,handler: self.after)

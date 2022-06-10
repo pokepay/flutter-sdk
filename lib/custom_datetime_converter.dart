@@ -1,20 +1,26 @@
 import 'package:intl/intl.dart';
-import 'package:json_annotation/json_annotation.dart';
+
+
+abstract class CustomJsonConverter<T, S> {
+  T? fromJson(S json);
+  S? toJson(T object);
+}
+
 
 DateFormat customDateFormatter = DateFormat("yyyy-MM-dd'T'HH:mm:ss.SSS");
 
-class CustomDateTimeConverter implements JsonConverter<DateTime, String> {
+class CustomDateTimeConverter implements CustomJsonConverter<DateTime, String> {
   const CustomDateTimeConverter();
 
   @override
-  DateTime fromJson(String utcStringDate) {
+  DateTime? fromJson(String? utcStringDate) {
     if (utcStringDate == null) {
       return null;
     } else {
       int microsecond = 0;
       utcStringDate =
           utcStringDate.replaceAllMapped(new RegExp(r'([0-9]{3})Z$'), (match) {
-        microsecond = int.parse(match.group(1));
+        microsecond = int.parse(match.group(1)!);
         return '';
       });
       return customDateFormatter
@@ -25,9 +31,9 @@ class CustomDateTimeConverter implements JsonConverter<DateTime, String> {
   }
 
   @override
-  String toJson(DateTime localDateTime) {
+  String toJson(DateTime? localDateTime) {
     if (localDateTime == null) {
-      return null;
+      return "null";
     } else {
       return customDateFormatter.format(localDateTime.toUtc()) +
           localDateTime.microsecond.toString().padLeft(3, '0') +

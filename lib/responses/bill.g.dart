@@ -9,7 +9,7 @@ part of 'bill.dart';
 Bill _$BillFromJson(Map<String, dynamic> json) {
   return Bill(
     id: json['id'] as String,
-    amount: (json['amount'] as num)?.toDouble(),
+    amount: json['amount']!=null?(json['amount'] as num).toDouble():0,
     description: json['description'] as String,
     user: User.fromJson(json['user'] as Map<String, dynamic>),
     privateMoney:
@@ -17,8 +17,8 @@ Bill _$BillFromJson(Map<String, dynamic> json) {
     isOnetime: json['is_onetime'] as bool,
     isDisabled: json['is_disabled'] as bool,
     token: json['token'] as String,
-    minAmount: (json['min_amount'] as num)?.toDouble(),
-    maxAmount: (json['max_amount'] as num)?.toDouble(),
+    minAmount: json['min_amount']!=null?(json['min_amount'] as num).toDouble():null,
+    maxAmount: json['max_amount']!=null?(json['max_amount'] as num).toDouble():null,
   );
 }
 
