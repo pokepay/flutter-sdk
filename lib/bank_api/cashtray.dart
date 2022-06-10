@@ -1,19 +1,18 @@
 import 'dart:convert';
 
-import 'package:meta/meta.dart';
-
 import '../parameters/product.dart';
 import '../pokepay_sdk.dart';
+import '../pokepay_flutter_sdk_platform_interface.dart';
 import '../responses.dart';
 
 extension CashtrayAPI on PokepayAPI {
   Future<Cashtray> createCashtray({
-    @required double amount,
-    String description,
-    int expiresIn,
-    List<Product> products,
+    required double amount,
+    String? description,
+    int? expiresIn,
+    List<Product>? products,
   }) async {
-    return await invokeMethod<Cashtray>(
+    return await PokepayFlutterSdkPlatform.instance.invokeMethod<Cashtray>(
       (j) => Cashtray.fromJson(j),
       'createCashtray',
       {
@@ -28,9 +27,9 @@ extension CashtrayAPI on PokepayAPI {
   }
 
   Future<NoContent> deleteCashtray({
-    @required String id,
+    required String? id,
   }) async {
-    return await invokeMethod<NoContent>(
+    return await PokepayFlutterSdkPlatform.instance.invokeMethod<NoContent>(
       (j) => NoContent.fromJson(j),
       'deleteCashtray',
       {
@@ -42,9 +41,9 @@ extension CashtrayAPI on PokepayAPI {
   }
 
   Future<Cashtray> getCashtray({
-    @required String id,
+    required String id,
   }) async {
-    return await invokeMethod<Cashtray>(
+    return await PokepayFlutterSdkPlatform.instance.invokeMethod<Cashtray>(
       (j) => Cashtray.fromJson(j),
       'getCashtray',
       {
@@ -57,9 +56,9 @@ extension CashtrayAPI on PokepayAPI {
 
   @deprecated
   Future<CashtrayAttempts> getCashtrayAttempts({
-    @required String id,
+    required String id,
   }) async {
-    return await invokeMethod<CashtrayAttempts>(
+    return await PokepayFlutterSdkPlatform.instance.invokeMethod<CashtrayAttempts>(
       (j) => CashtrayAttempts.fromJson(j),
       'getCashtrayAttempts',
       {
@@ -71,12 +70,12 @@ extension CashtrayAPI on PokepayAPI {
   }
 
   Future<Cashtray> updateCashtray({
-    @required String id,
-    double amount,
-    String description,
-    int expiresIn,
+    required String id,
+    double? amount,
+    String? description,
+    int? expiresIn,
   }) async {
-    return await invokeMethod<Cashtray>(
+    return await PokepayFlutterSdkPlatform.instance.invokeMethod<Cashtray>(
       (j) => Cashtray.fromJson(j),
       'updateCashtray',
       {

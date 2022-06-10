@@ -1,8 +1,9 @@
-import 'package:meta/meta.dart';
-import 'package:pokepay_flutter_sdk/responses/coupon_detail.dart';
-import 'package:pokepay_flutter_sdk/responses/paginated_coupons.dart';
+import 'dart:io';
 
 import '../pokepay_sdk.dart';
+import '../pokepay_flutter_sdk_platform_interface.dart';
+import '/responses/coupon_detail.dart';
+import '/responses/paginated_coupons.dart';
 import '../responses.dart';
 
 enum CpmTokenScope {
@@ -13,11 +14,29 @@ enum CpmTokenScope {
 }
 
 extension AccountAPI on PokepayAPI {
-  Future<Account> createAccount({
-    String name,
-    String privateMoneyId,
+
+
+  Future<AccountCpmToken> getCpmToken({
+    required String cpmToken,
   }) async {
-    return await invokeMethod<Account>(
+    
+    return await PokepayFlutterSdkPlatform.instance.invokeMethod<AccountCpmToken>(
+          (j) => AccountCpmToken.fromJson(j),
+      'getCpmToken',
+      {
+        'env': this.env.index,
+        'accessToken': this.accessToken,
+        'cpmToken': cpmToken,
+      },
+    );
+  }
+
+  Future<Account> createAccount({
+    required String name,
+    required String privateMoneyId,
+     String? externalId,
+  }) async {
+    return await PokepayFlutterSdkPlatform.instance.invokeMethod<Account>(
       (j) => Account.fromJson(j),
       'createAccount',
       {
@@ -25,34 +44,35 @@ extension AccountAPI on PokepayAPI {
         'accessToken': this.accessToken,
         'name': name,
         'privateMoneyId': privateMoneyId,
+        'externalId': externalId,
       },
     );
   }
 
   Future<AccountCpmToken> createAccountCpmToken({
-    @required String accountId,
-    @required CpmTokenScope scopes,
-    int expiresIn,
-    Map<String, String> metadata,
+    required String? accountId,
+    required CpmTokenScope? scopes,
+    int? expiresIn,
+    Map<String, String>? metadata,
   }) async {
-    return await invokeMethod<AccountCpmToken>(
+    return await PokepayFlutterSdkPlatform.instance.invokeMethod<AccountCpmToken>(
       (j) => AccountCpmToken.fromJson(j),
       'createAccountCpmToken',
       {
         'env': this.env.index,
         'accessToken': this.accessToken,
         'accountId': accountId,
-        'scopes': scopes.index,
+        'scopes': scopes!.index,
         'expiresIn': expiresIn,
-        'metadata' : metadata,
+        'metadata' : metadata??(Platform.isIOS?null:{}),
       },
     );
   }
 
   Future<Account> getAccount({
-    @required String id,
+    required String? id,
   }) async {
-    return await invokeMethod<Account>(
+    return await PokepayFlutterSdkPlatform.instance.invokeMethod<Account>(
       (j) => Account.fromJson(j),
       'getAccount',
       {
@@ -64,12 +84,12 @@ extension AccountAPI on PokepayAPI {
   }
 
   Future<PaginatedAccountBalances> getAccountBalances({
-    @required String id,
-    String before,
-    String after,
-    int perPage,
+    required String? id,
+    String? before,
+    String? after,
+    int? perPage,
   }) async {
-    return await invokeMethod<PaginatedAccountBalances>(
+    return await PokepayFlutterSdkPlatform.instance.invokeMethod<PaginatedAccountBalances>(
       (j) => PaginatedAccountBalances.fromJson(j),
       'getAccountBalances',
       {
@@ -83,13 +103,13 @@ extension AccountAPI on PokepayAPI {
     );
   }
   Future<PaginatedCoupons> getAccountCoupons({
-    @required String accountId,
-    bool isAvailable,
-    String before,
-    String after,
-    int perPage,
+    required String accountId,
+    bool? isAvailable,
+    String? before,
+    String? after,
+    int? perPage,
   }) async {
-    return await invokeMethod<PaginatedCoupons>(
+    return await PokepayFlutterSdkPlatform.instance.invokeMethod<PaginatedCoupons>(
           (j) => PaginatedCoupons.fromJson(j),
       'getAccountCoupons',
       {
@@ -105,10 +125,10 @@ extension AccountAPI on PokepayAPI {
   }
 
   Future<CouponDetail> getAccountCouponDetail({
-    @required String accountId,
-    @required String couponId,
+    required String? accountId,
+    required String? couponId,
   }) async {
-    return await invokeMethod<CouponDetail>(
+    return await PokepayFlutterSdkPlatform.instance.invokeMethod<CouponDetail>(
           (j) => CouponDetail.fromJson(j),
       'getAccountCouponDetail',
       {
@@ -120,12 +140,12 @@ extension AccountAPI on PokepayAPI {
     );
   }
   Future<PaginatedTransactions> getAccounTransactions({
-    @required String id,
-    String before,
-    String after,
-    int perPage,
+    required String id,
+    String? before,
+    String? after,
+    int? perPage,
   }) async {
-    return await invokeMethod<PaginatedTransactions>(
+    return await PokepayFlutterSdkPlatform.instance.invokeMethod<PaginatedTransactions>(
       (j) => PaginatedTransactions.fromJson(j),
       'getAccountTransactions',
       {
@@ -140,11 +160,11 @@ extension AccountAPI on PokepayAPI {
   }
 
   Future<CouponDetail> patchAccountCouponDetail({
-    @required String accountId,
-    @required String couponId,
-    @required bool isReceieved,
+    required String accountId,
+    required String couponId,
+    required bool isReceieved,
   }) async {
-    return await invokeMethod<CouponDetail>(
+    return await PokepayFlutterSdkPlatform.instance.invokeMethod<CouponDetail>(
           (j) => CouponDetail.fromJson(j),
       'patchAccountCouponDetail',
       {

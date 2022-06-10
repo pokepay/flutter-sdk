@@ -14,9 +14,8 @@ AccountCpmToken _$AccountCpmTokenFromJson(Map<String, dynamic> json) {
         ? null
         : UserTransaction.fromJson(json['transaction'] as Map<String, dynamic>),
     scopes: (json['scopes'] as List).map((e) => e as String).toList(),
-    expiresAt:
-        const CustomDateTimeConverter().fromJson(json['expires_at'] as String),
-    metadata: json['metadata'] as Map<String, dynamic>,
+    expiresAt: json['expiresAt'] != null?const CustomDateTimeConverter().fromJson(json['expires_at'] as String)!:null,
+    metadata: json['metadata']!=null?json['metadata'] as Map<String, dynamic>:null,
   );
 }
 

@@ -1,10 +1,10 @@
-import 'package:json_annotation/json_annotation.dart';
+
 
 import '../responses.dart';
 
 part 'no_content.g.dart';
 
-@JsonSerializable()
+
 class NoContent extends Response {
   NoContent();
 

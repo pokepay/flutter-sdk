@@ -1,42 +1,64 @@
-import 'package:json_annotation/json_annotation.dart';
 import 'package:meta/meta.dart';
 
 import '../custom_datetime_converter.dart';
 import '../responses.dart';
 
-part 'account.g.dart';
 
-@JsonSerializable()
+
+
 @CustomDateTimeConverter()
 class Account extends Response {
-  @JsonKey(nullable: false)
-  final String id;
-  @JsonKey(nullable: false)
-  final String name;
-  @JsonKey(nullable: false)
-  final double balance;
-  @JsonKey(nullable: false)
-  final double moneyBalance;
-  @JsonKey(nullable: false)
-  final double pointBalance;
-  @JsonKey(nullable: false)
-  final bool isSuspended;
-  @JsonKey(nullable: false)
-  final PrivateMoney privateMoney;
-  final DateTime nearestExpiresAt;
+
+  String? id;
+
+  String? name;
+
+  double? balance;
+
+  double? moneyBalance;
+
+  double? pointBalance;
+
+  bool? isSuspended;
+
+  PrivateMoney? privateMoney;
+  DateTime? nearestExpiresAt;
 
   Account({
-    @required this.id,
-    @required this.name,
-    @required this.balance,
-    @required this.moneyBalance,
-    @required this.pointBalance,
-    @required this.isSuspended,
-    @required this.privateMoney,
+    this.id,
+    this.name,
+    this.balance,
+    this.moneyBalance,
+    this.pointBalance,
+    this.isSuspended,
+    this.privateMoney,
     this.nearestExpiresAt,
   });
 
-  factory Account.fromJson(Map<String, dynamic> json) =>
-      _$AccountFromJson(json);
-  Map<String, dynamic> toJson() => _$AccountToJson(this);
+  Account.fromJson(Map<String, dynamic> json){
+    id = json['id'] as String;
+    name = json['name'] as String;
+    balance = json['balance']==null?null:(json['balance'] as num).toDouble();
+    moneyBalance = json['money_balance']==null?null: (json['money_balance'] as num).toDouble();
+    pointBalance = json['point_balance']==null?null: (json['point_balance'] as num).toDouble();
+    isSuspended = json['is_suspended'] as bool;
+    privateMoney = json['private_money'] ==null?null:PrivateMoney.fromJson(json['private_money'] as Map<String, dynamic>);
+    nearestExpiresAt = json['nearest_expires_at']==null?null:const CustomDateTimeConverter().fromJson(json['nearest_expires_at'].toString());
+  }
+
+  Map<String, dynamic> toJson() {
+    return <String, dynamic>{
+      'id': id,
+      'name': name,
+      'balance': balance,
+      'money_balance': moneyBalance,
+      'point_balance': pointBalance,
+      'is_suspended': isSuspended,
+      'private_money': privateMoney,
+      'nearest_expires_at':
+      const CustomDateTimeConverter().toJson(nearestExpiresAt),
+    };
+  }
+
+
 }

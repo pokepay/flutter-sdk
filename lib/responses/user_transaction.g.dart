@@ -18,8 +18,8 @@ UserTransaction _$UserTransactionFromJson(Map<String, dynamic> json) {
     pointAmount: (json['point_amount'] as num).toDouble(),
     account: Account.fromJson(json['account'] as Map<String, dynamic>),
     description: json['description'] as String,
-    doneAt: const CustomDateTimeConverter().fromJson(json['done_at'] as String),
-    customerBalance: (json['customer_balance'] as num)?.toDouble(),
+    doneAt: const CustomDateTimeConverter().fromJson(json['done_at'] as String)!,
+    customerBalance: json['customer_balance']!=null ?(json['customer_balance'] as num).toDouble():null,
   );
 }
 

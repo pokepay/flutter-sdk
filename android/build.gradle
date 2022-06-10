@@ -1,5 +1,5 @@
 group 'jp.pokepay.pokepay_sdk'
-version '1.0.0'
+version '1.0.6'
 
 buildscript {
     repositories {
@@ -8,7 +8,7 @@ buildscript {
     }
 
     dependencies {
-        classpath 'com.android.tools.build:gradle:3.5.0'
+        classpath 'com.android.tools.build:gradle:4.1.3'
     }
 }
 
@@ -22,7 +22,7 @@ rootProject.allprojects {
 apply plugin: 'com.android.library'
 
 android {
-    compileSdkVersion 28
+    compileSdkVersion 31
 
     defaultConfig {
         minSdkVersion 21
@@ -33,8 +33,8 @@ android {
 }
 
 dependencies {
-    implementation 'com.fasterxml.jackson.core:jackson-annotations:2.9.7'
-    implementation 'com.fasterxml.jackson.core:jackson-core:2.9.7'
-    implementation 'com.fasterxml.jackson.core:jackson-databind:2.9.7'
-    implementation 'jp.pocket-change.pokepay.android-sdk:pokepaylib:1.5.1'
+    implementation 'com.fasterxml.jackson.core:jackson-annotations:2.11.1'
+    implementation 'com.fasterxml.jackson.core:jackson-core:2.11.1'
+    implementation 'com.fasterxml.jackson.core:jackson-databind:2.11.1'
+    implementation 'jp.pocket-change.pokepay.android-sdk:pokepaylib:1.6.0'
 }

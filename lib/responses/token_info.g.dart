@@ -8,8 +8,8 @@ part of 'token_info.dart';
 
 TokenInfo _$TokenInfoFromJson(Map<String, dynamic> json) {
   return TokenInfo(
-    type: _$enumDecode(_$TokenTypeEnumMap, json['type']),
-    token: json['token'] as dynamic,
+    type: _$enumDecode(_$TokenTypeEnumMap, json['type'])!,
+    token: json['token'],
   )
     ..bill = json['bill'] == null
         ? null
@@ -26,19 +26,20 @@ Map<String, dynamic> _$TokenInfoToJson(TokenInfo instance) => <String, dynamic>{
       'check': instance.check,
     };
 
-T _$enumDecode<T>(
+T? _$enumDecode<T>(
   Map<T, dynamic> enumValues,
   dynamic source, {
-  T unknownValue,
+  T? unknownValue,
 }) {
   if (source == null) {
     throw ArgumentError('A value must be provided. Supported values: '
         '${enumValues.values.join(', ')}');
   }
 
-  final value = enumValues.entries
-      .singleWhere((e) => e.value == source, orElse: () => null)
-      ?.key;
+  final  value = enumValues.entries
+      // .singleWhere((e) => e.value == source, orElse: () => null)
+      .singleWhere((e) => e.value == source,)
+      .key;
 
   if (value == null && unknownValue == null) {
     throw ArgumentError('`$source` is not one of the supported values: '
@@ -52,14 +53,15 @@ const _$TokenTypeEnumMap = {
   TokenType.BILL: 'BILL',
   TokenType.CHECK: 'CHECK',
   TokenType.CPM: 'CPM',
-  TokenType.PAYREGI: 'PAYREGI',
+  TokenType.PAYREGI_TRANSACTION: 'PAYREGI_TRANSACTION',
+  TokenType.PAYREGI_CANCEL: 'PAYREGI_CANCEL',
   TokenType.JWT: 'JWT',
   TokenType.UNKNOWN: 'UNKNOWN',
 };
 
 TokenInfoMerchant _$TokenInfoMerchantFromJson(Map<String, dynamic> json) {
   return TokenInfoMerchant(
-    type: _$enumDecode(_$TokenTypeEnumMap, json['type']),
+    type: _$enumDecode(_$TokenTypeEnumMap, json['type'])!,
     token: json['token'] as String,
     cpmToken: json['cpm_token'] == null
         ? null

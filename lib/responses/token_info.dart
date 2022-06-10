@@ -1,4 +1,4 @@
-import 'package:json_annotation/json_annotation.dart';
+
 import 'package:meta/meta.dart';
 
 import '../responses.dart';
@@ -11,22 +11,26 @@ enum TokenType {
   CHECK,
   CPM,
   PAYREGI,
+  PAYREGI_TRANSACTION,
+  PAYREGI_CANCEL,
   JWT,
   UNKNOWN,
 }
 
-@JsonSerializable()
+
 class TokenInfo extends Response {
-  @JsonKey(nullable: false)
   final TokenType type;
-  @JsonKey(nullable: false)
   final dynamic token;
-  Bill bill;
-  Check check;
+  Bill? bill;
+  Check? check;
+  AccountCpmToken? cpmToken;
 
   TokenInfo({
-    @required this.type,
-    @required this.token,
+    required this.type,
+    required this.token,
+    this.bill,
+    this.check,
+    this.cpmToken
   });
 
   factory TokenInfo.fromJson(Map<String, dynamic> json) =>
@@ -34,14 +38,14 @@ class TokenInfo extends Response {
   Map<String, dynamic> toJson() => _$TokenInfoToJson(this);
 }
 
-@JsonSerializable()
+
 class TokenInfoMerchant extends TokenInfo {
-  final AccountCpmToken cpmToken;
-  final Cashtray cashtray;
+  final AccountCpmToken? cpmToken;
+  final Cashtray? cashtray;
 
   TokenInfoMerchant({
-    @required TokenType type,
-    @required String token,
+    required TokenType type,
+    required String token,
     this.cpmToken,
     this.cashtray,
   }) : super(type: type, token: token);

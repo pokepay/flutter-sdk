@@ -10,8 +10,8 @@ PaginatedAccounts _$PaginatedAccountsFromJson(Map<String, dynamic> json) {
   return PaginatedAccounts(
     perPage: json['per_page'] as int,
     count: json['count'] as int,
-    next: json['next'] as String,
-    prev: json['prev'] as String,
+    next: json['next'],
+    prev: json['prev'],
     items: (json['items'] as List)
         .map((e) => Account.fromJson(e as Map<String, dynamic>))
         .toList(),

@@ -16,14 +16,14 @@ Check _$CheckFromJson(Map<String, dynamic> json) {
     user: User.fromJson(json['user'] as Map<String, dynamic>),
     privateMoney:
         PrivateMoney.fromJson(json['private_money'] as Map<String, dynamic>),
-    isOnetime: json['is_onetime'] as bool,
-    isDisabled: json['is_disabled'] as bool,
-    expiresAt:
-        const CustomDateTimeConverter().fromJson(json['expires_at'] as String),
+    isOnetime: json['is_onetime'] ==null?null:json['is_onetime'] as bool,
+    isDisabled:  json['is_disabled'] ==null?null:json['is_disabled'] as bool,
+    expiresAt: json['expires_at'] ==null?null:
+        const CustomDateTimeConverter().fromJson(json['expires_at'] as String)!,
     token: json['token'] as String,
-    pointExpiresAt: const CustomDateTimeConverter()
-        .fromJson(json['point_expires_at'] as String),
-    pointExpiresInDays: json['point_expires_in_days'] as int,
+    pointExpiresAt:json['point_expires_at'] ==null?null: const CustomDateTimeConverter()
+        .fromJson(json['point_expires_at']),
+    pointExpiresInDays: json['point_expires_in_days'] ,
   );
 }
 

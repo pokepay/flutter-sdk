@@ -1,18 +1,18 @@
-import 'package:json_annotation/json_annotation.dart';
+
 
 part 'bank_error.g.dart';
 
-@JsonSerializable()
+
 class BankError {
-  @JsonKey(nullable: false)
+  
   final String type;
-  @JsonKey(nullable: false)
+  
   final String message;
-  final Object errors;
+  final Object? errors;
 
   BankError({
-    this.type,
-    this.message,
+    required this.type,
+    required this.message,
     this.errors,
   });
 

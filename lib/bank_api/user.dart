@@ -1,6 +1,7 @@
 import 'package:meta/meta.dart';
 
 import '../pokepay_sdk.dart';
+import '../pokepay_flutter_sdk_platform_interface.dart';
 import '../responses/no_content.dart';
 import '../responses/paginated_accounts.dart';
 import '../responses/paginated_transactions.dart';
@@ -8,15 +9,15 @@ import '../responses/user.dart';
 
 extension UserAPI on PokepayAPI {
   Future<NoContent> deleteUserEmail({
-    @required String id,
-    @required String email,
+    required String id,
+    required String email,
   }) async {
-    return await invokeMethod<NoContent>(
+    return await PokepayFlutterSdkPlatform.instance.invokeMethod<NoContent>(
       (j) => NoContent.fromJson(j),
       'deleteUserEmail',
       {
-        'env': this.env.index,
-        'accessToken': this.accessToken,
+        'env': env.index,
+        'accessToken': accessToken,
         'id': id,
         'email': email,
       },
@@ -24,17 +25,17 @@ extension UserAPI on PokepayAPI {
   }
 
   Future<PaginatedAccounts> getUserAccounts({
-    @required String id,
-    String before,
-    String after,
-    int perPage,
+    required String id,
+    String? before,
+    String? after,
+    int? perPage,
   }) async {
-    return await invokeMethod<PaginatedAccounts>(
+    return await PokepayFlutterSdkPlatform.instance.invokeMethod<PaginatedAccounts>(
       (j) => PaginatedAccounts.fromJson(j),
       'getUserAccounts',
       {
-        'env': this.env.index,
-        'accessToken': this.accessToken,
+        'env': env.index,
+        'accessToken': accessToken,
         'id': id,
         'before': before,
         'after': after,
@@ -44,17 +45,17 @@ extension UserAPI on PokepayAPI {
   }
 
   Future<PaginatedTransactions> getUserTransactions({
-    @required String id,
-    String before,
-    String after,
-    int perPage,
+    required String id,
+    String? before,
+    String? after,
+    int? perPage,
   }) async {
-    return await invokeMethod<PaginatedTransactions>(
+    return await PokepayFlutterSdkPlatform.instance.invokeMethod<PaginatedTransactions>(
       (j) => PaginatedTransactions.fromJson(j),
       'getUserTransactions',
       {
-        'env': this.env.index,
-        'accessToken': this.accessToken,
+        'env': env.index,
+        'accessToken': accessToken,
         'id': id,
         'before': before,
         'after': after,
@@ -64,29 +65,29 @@ extension UserAPI on PokepayAPI {
   }
 
   Future<NoContent> registerUserEmail({
-    @required String token,
+    required String token,
   }) async {
-    return await invokeMethod<NoContent>(
+    return await PokepayFlutterSdkPlatform.instance.invokeMethod<NoContent>(
       (j) => NoContent.fromJson(j),
       'registerUserEmail',
       {
-        'env': this.env.index,
-        'accessToken': this.accessToken,
+        'env': env.index,
+        'accessToken': accessToken,
         'token': token,
       },
     );
   }
 
   Future<NoContent> sendConfirmationEmail({
-    @required String id,
-    @required String email,
+    required String id,
+    required String email,
   }) async {
-    return await invokeMethod<NoContent>(
+    return await PokepayFlutterSdkPlatform.instance.invokeMethod<NoContent>(
       (j) => NoContent.fromJson(j),
       'sendConfirmationEmail',
       {
-        'env': this.env.index,
-        'accessToken': this.accessToken,
+        'env': env.index,
+        'accessToken': accessToken,
         'id': id,
         'email': email,
       },
@@ -94,15 +95,15 @@ extension UserAPI on PokepayAPI {
   }
 
   Future<User> updateUser({
-    @required String id,
-    String name,
+    required String id,
+    String? name,
   }) async {
-    return await invokeMethod<User>(
+    return await PokepayFlutterSdkPlatform.instance.invokeMethod<User>(
       (j) => User.fromJson(j),
       'updateUser',
       {
-        'env': this.env.index,
-        'accessToken': this.accessToken,
+        'env': env.index,
+        'accessToken': accessToken,
         'id': id,
         'name': name,
       },

@@ -1,20 +1,20 @@
 import 'dart:convert';
 
-import 'package:meta/meta.dart';
-
 import '../parameters/product.dart';
 import '../pokepay_sdk.dart';
+
+import '../pokepay_flutter_sdk_platform_interface.dart';
 import '../responses.dart';
 
 extension BillAPI on PokepayAPI {
   Future<Bill> createBill({
-    double amount,
-    String accountId,
-    String description,
+    double? amount,
+    String? accountId,
+    String? description,
     bool isOnetime = false,
-    List<Product> products,
+    List<Product>? products,
   }) async {
-    return await invokeMethod<Bill>(
+    return await PokepayFlutterSdkPlatform.instance.invokeMethod<Bill>(
       (j) => Bill.fromJson(j),
       'createBill',
       {
@@ -30,9 +30,9 @@ extension BillAPI on PokepayAPI {
   }
 
   Future<NoContent> deleteBill({
-    @required String id,
+    required String? id,
   }) async {
-    return await invokeMethod<NoContent>(
+    return await PokepayFlutterSdkPlatform.instance.invokeMethod<NoContent>(
       (j) => NoContent.fromJson(j),
       'deleteBill',
       {
@@ -44,9 +44,9 @@ extension BillAPI on PokepayAPI {
   }
 
   Future<Bill> getBill({
-    @required String id,
+    required String? id,
   }) async {
-    return await invokeMethod<Bill>(
+    return await PokepayFlutterSdkPlatform.instance.invokeMethod<Bill>(
       (j) => Bill.fromJson(j),
       'getBill',
       {
@@ -58,11 +58,11 @@ extension BillAPI on PokepayAPI {
   }
 
   Future<Bill> updateBill({
-    @required String id,
-    double amount,
-    String description,
+    required String? id,
+    double? amount,
+    String? description,
   }) async {
-    return await invokeMethod<Bill>(
+    return await PokepayFlutterSdkPlatform.instance.invokeMethod<Bill>(
       (j) => Bill.fromJson(j),
       'updateBill',
       {
