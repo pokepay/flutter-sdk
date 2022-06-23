@@ -14,8 +14,7 @@ AccountBalance _$AccountBalanceFromJson(Map<String, dynamic> json) {
   );
 }
 
-Map<String, dynamic> _$AccountBalanceToJson(AccountBalance instance) =>
-    <String, dynamic>{
+Map<String, dynamic> _$AccountBalanceToJson(AccountBalance instance) => <String, dynamic>{
       'expires_at': instance.expiresAt.toIso8601String(),
       'money_amount': instance.moneyAmount,
       'point_amount': instance.pointAmount,

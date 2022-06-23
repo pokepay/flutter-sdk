@@ -1,17 +1,15 @@
 import 'dart:convert';
 
-import 'package:meta/meta.dart';
-
 import '../parameters/product.dart';
 import '../pokepay_sdk.dart';
 import '../responses.dart';
 
 extension TransactionAPI on PokepayAPI {
   Future<UserTransaction> createUserTransactionWithBill({
-    @required String billId,
-    String accountId,
-    double amount,
-    String couponId,
+    required String billId,
+    String? accountId,
+    double? amount,
+    String? couponId,
   }) async {
     return await invokeMethod<UserTransaction>(
       (j) => UserTransaction.fromJson(j),
@@ -22,15 +20,15 @@ extension TransactionAPI on PokepayAPI {
         'billId': billId,
         'accountId': accountId,
         'amount': amount,
-        'couponId' : couponId,
+        'couponId': couponId,
       },
     );
   }
 
   Future<UserTransaction> createUserTransactionWithCashtray({
-    @required String cashtrayId,
-    String accountId,
-    String couponId,
+    required String cashtrayId,
+    String? accountId,
+    String? couponId,
   }) async {
     return await invokeMethod<UserTransaction>(
       (j) => UserTransaction.fromJson(j),
@@ -40,14 +38,14 @@ extension TransactionAPI on PokepayAPI {
         'accessToken': this.accessToken,
         'cashtrayId': cashtrayId,
         'accountId': accountId,
-        'couponId' : couponId,
+        'couponId': couponId,
       },
     );
   }
 
   Future<UserTransaction> createUserTransactionWithCheck({
-    @required String checkId,
-    String accountId,
+    required String checkId,
+    String? accountId,
   }) async {
     return await invokeMethod<UserTransaction>(
       (j) => UserTransaction.fromJson(j),
@@ -62,10 +60,10 @@ extension TransactionAPI on PokepayAPI {
   }
 
   Future<UserTransaction> createUserTransactionWithCpm({
-    @required String cpmToken,
-    String accountId,
-    @required double amount,
-    List<Product> products,
+    required String cpmToken,
+    String? accountId,
+    required double amount,
+    List<Product>? products,
   }) async {
     return await invokeMethod<UserTransaction>(
       (j) => UserTransaction.fromJson(j),
@@ -82,9 +80,9 @@ extension TransactionAPI on PokepayAPI {
   }
 
   Future<JwtResult> createUserTransactionWithJwt({
-    @required String data,
-    String accountId,
-    String couponId,
+    required String data,
+    String? accountId,
+    String? couponId,
   }) async {
     return await invokeMethod<JwtResult>(
       (j) => JwtResult.fromJson(j),
@@ -94,13 +92,13 @@ extension TransactionAPI on PokepayAPI {
         'accessToken': this.accessToken,
         'data': data,
         'accountId': accountId,
-        'couponId' : couponId
+        'couponId': couponId
       },
     );
   }
 
   Future<UserTransaction> getUserTransaction({
-    @required String id,
+    required String id,
   }) async {
     return await invokeMethod<UserTransaction>(
       (j) => UserTransaction.fromJson(j),
@@ -114,7 +112,7 @@ extension TransactionAPI on PokepayAPI {
   }
 
   Future<NoContent> cancelUserTransaction({
-    @required String id,
+    required String id,
   }) async {
     return await invokeMethod<NoContent>(
       (j) => NoContent.fromJson(j),
@@ -128,11 +126,11 @@ extension TransactionAPI on PokepayAPI {
   }
 
   Future<UserTransaction> sendToAccount({
-    @required String accountId,
-    @required double amount,
-    String receiverTerminalId,
-    String senderAccountId,
-    String description,
+    required String accountId,
+    required double amount,
+    String? receiverTerminalId,
+    String? senderAccountId,
+    String? description,
   }) async {
     return await invokeMethod<UserTransaction>(
       (j) => UserTransaction.fromJson(j),
@@ -150,11 +148,11 @@ extension TransactionAPI on PokepayAPI {
   }
 
   Future<UserTransaction> sendToUser({
-    @required String userId,
-    @required double amount,
-    String receiverTerminalId,
-    String senderAccountId,
-    String description,
+    required String userId,
+    required double amount,
+    String? receiverTerminalId,
+    String? senderAccountId,
+    String? description,
   }) async {
     return await invokeMethod<UserTransaction>(
       (j) => UserTransaction.fromJson(j),

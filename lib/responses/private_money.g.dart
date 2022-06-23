@@ -16,10 +16,9 @@ PrivateMoney _$PrivateMoneyFromJson(Map<String, dynamic> json) {
     onelineMessage: json['oneline_message'] as String,
     accountImage: json['account_image'] as String,
     images: Images.fromJson(json['images'] as Map<String, dynamic>),
-    organization:
-        Organization.fromJson(json['organization'] as Map<String, dynamic>),
-    maxBalance: (json['max_balance'] as num)?.toDouble(),
-    transferLimit: (json['transfer_limit'] as num)?.toDouble(),
+    organization: Organization.fromJson(json['organization'] as Map<String, dynamic>),
+    maxBalance: (json['max_balance'] as num).toDouble(),
+    transferLimit: (json['transfer_limit'] as num).toDouble(),
     expirationType: json['expiration_type'] as String,
     isExclusive: json['is_exclusive'] as bool,
     termsUrl: json['terms_url'] as String,
@@ -30,8 +29,7 @@ PrivateMoney _$PrivateMoneyFromJson(Map<String, dynamic> json) {
   );
 }
 
-Map<String, dynamic> _$PrivateMoneyToJson(PrivateMoney instance) =>
-    <String, dynamic>{
+Map<String, dynamic> _$PrivateMoneyToJson(PrivateMoney instance) => <String, dynamic>{
       'id': instance.id,
       'name': instance.name,
       'type': instance.type,

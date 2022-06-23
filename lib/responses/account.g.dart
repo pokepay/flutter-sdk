@@ -14,10 +14,8 @@ Account _$AccountFromJson(Map<String, dynamic> json) {
     moneyBalance: (json['money_balance'] as num).toDouble(),
     pointBalance: (json['point_balance'] as num).toDouble(),
     isSuspended: json['is_suspended'] as bool,
-    privateMoney:
-        PrivateMoney.fromJson(json['private_money'] as Map<String, dynamic>),
-    nearestExpiresAt: const CustomDateTimeConverter()
-        .fromJson(json['nearest_expires_at'] as String),
+    privateMoney: PrivateMoney.fromJson(json['private_money'] as Map<String, dynamic>),
+    nearestExpiresAt: const CustomDateTimeConverter().fromJson(json['nearest_expires_at'] as String),
   );
 }
 
@@ -29,6 +27,6 @@ Map<String, dynamic> _$AccountToJson(Account instance) => <String, dynamic>{
       'point_balance': instance.pointBalance,
       'is_suspended': instance.isSuspended,
       'private_money': instance.privateMoney,
-      'nearest_expires_at':
-          const CustomDateTimeConverter().toJson(instance.nearestExpiresAt),
+      if (instance.nearestExpiresAt != null)
+        'nearest_expires_at': const CustomDateTimeConverter().toJson(instance.nearestExpiresAt!),
     };

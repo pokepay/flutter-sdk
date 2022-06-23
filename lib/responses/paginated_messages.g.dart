@@ -12,14 +12,11 @@ PaginatedMessages _$PaginatedMessagesFromJson(Map<String, dynamic> json) {
     count: json['count'] as int,
     next: json['next'] as String,
     prev: json['prev'] as String,
-    items: (json['items'] as List)
-        .map((e) => Message.fromJson(e as Map<String, dynamic>))
-        .toList(),
+    items: (json['items'] as List).map((e) => Message.fromJson(e as Map<String, dynamic>)).toList(),
   );
 }
 
-Map<String, dynamic> _$PaginatedMessagesToJson(PaginatedMessages instance) =>
-    <String, dynamic>{
+Map<String, dynamic> _$PaginatedMessagesToJson(PaginatedMessages instance) => <String, dynamic>{
       'per_page': instance.perPage,
       'count': instance.count,
       'next': instance.next,

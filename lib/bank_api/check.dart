@@ -1,5 +1,3 @@
-import 'package:meta/meta.dart';
-
 import '../custom_datetime_converter.dart';
 import '../pokepay_sdk.dart';
 import '../responses.dart';
@@ -8,16 +6,16 @@ var datetimeConv = CustomDateTimeConverter();
 
 extension CheckAPI on PokepayAPI {
   Future<Check> createCheck({
-    double amount,
-    double moneyAmount,
-    double pointAmount,
-    String accountId,
-    String description,
-    bool isOnetime = true, // check should be onetime default
-    int usageLimit,
-    DateTime expiresAt,
-    DateTime pointExpiresAt,
-    int pointExpiresInDays,
+    double? amount,
+    double? moneyAmount,
+    double? pointAmount,
+    String? accountId,
+    String? description,
+    bool? isOnetime = true, // check should be onetime default
+    int? usageLimit,
+    required DateTime expiresAt,
+    required DateTime pointExpiresAt,
+    int? pointExpiresInDays,
   }) async {
     return await invokeMethod<Check>(
       (j) => Check.fromJson(j),
@@ -40,7 +38,7 @@ extension CheckAPI on PokepayAPI {
   }
 
   Future<NoContent> deleteCheck({
-    @required String id,
+    required String id,
   }) async {
     return await invokeMethod<NoContent>(
       (j) => NoContent.fromJson(j),
@@ -54,7 +52,7 @@ extension CheckAPI on PokepayAPI {
   }
 
   Future<Check> getCheck({
-    @required String id,
+    required String id,
   }) async {
     return await invokeMethod<Check>(
       (j) => Check.fromJson(j),
@@ -68,12 +66,12 @@ extension CheckAPI on PokepayAPI {
   }
 
   Future<Check> updateCheck({
-    @required String id,
-    double amount,
-    String description,
-    DateTime expiresAt,
-    DateTime pointExpiresAt,
-    int pointExpiresInDays,
+    required String id,
+    double? amount,
+    String? description,
+    required DateTime expiresAt,
+    required DateTime pointExpiresAt,
+    int? pointExpiresInDays,
   }) async {
     return await invokeMethod<Check>(
       (j) => Check.fromJson(j),

@@ -1,24 +1,21 @@
 import 'package:json_annotation/json_annotation.dart';
-import 'package:pokepay_flutter_sdk/responses.dart';
-import 'package:pokepay_flutter_sdk/responses/coupon.dart';
+import 'package:pokepay_flutter_sdk/responses/user.dart';
 
 part 'coupon_detail.g.dart';
 
 @JsonSerializable()
-class CouponDetail extends Coupon {
-
-  final String receivedAt;
-  @JsonKey(nullable: false)
+class CouponDetail {
+  final String? receivedAt;
   final int usageCount;
-  @JsonKey(nullable: false)
   final List<User> availableShops;
 
   CouponDetail({
     this.receivedAt,
-    this.usageCount,
-    this.availableShops,
+    required this.usageCount,
+    required this.availableShops,
   });
 
   factory CouponDetail.fromJson(Map<String, dynamic> json) => _$CouponDetailFromJson(json);
+
   Map<String, dynamic> toJson() => _$CouponDetailToJson(this);
 }

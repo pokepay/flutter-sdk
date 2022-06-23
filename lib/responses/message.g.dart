@@ -17,8 +17,7 @@ Message _$MessageFromJson(Map<String, dynamic> json) {
     sendTo: User.fromJson(json['send_to'] as Map<String, dynamic>),
     sentAt: const CustomDateTimeConverter().fromJson(json['sent_at'] as String),
     isUnread: json['is_unread'] as bool,
-    attachment:
-        MessageAttachment.fromJson(json['attachment'] as Map<String, dynamic>),
+    attachment: MessageAttachment.fromJson(json['attachment'] as Map<String, dynamic>),
   );
 }
 

@@ -8,13 +8,10 @@ part of 'cashtray_attempts.dart';
 
 CashtrayAttempts _$CashtrayAttemptsFromJson(Map<String, dynamic> json) {
   return CashtrayAttempts(
-    rows: (json['rows'] as List)
-        .map((e) => CashtrayAttempt.fromJson(e as Map<String, dynamic>))
-        .toList(),
+    rows: (json['rows'] as List).map((e) => CashtrayAttempt.fromJson(e as Map<String, dynamic>)).toList(),
   );
 }
 
-Map<String, dynamic> _$CashtrayAttemptsToJson(CashtrayAttempts instance) =>
-    <String, dynamic>{
+Map<String, dynamic> _$CashtrayAttemptsToJson(CashtrayAttempts instance) => <String, dynamic>{
       'rows': instance.rows,
     };

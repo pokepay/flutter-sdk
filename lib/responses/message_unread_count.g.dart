@@ -12,7 +12,6 @@ MessageUnreadCount _$MessageUnreadCountFromJson(Map<String, dynamic> json) {
   );
 }
 
-Map<String, dynamic> _$MessageUnreadCountToJson(MessageUnreadCount instance) =>
-    <String, dynamic>{
+Map<String, dynamic> _$MessageUnreadCountToJson(MessageUnreadCount instance) => <String, dynamic>{
       'count': instance.count,
     };

@@ -5,17 +5,17 @@ import '../responses.dart';
 part 'images.g.dart';
 
 @JsonSerializable()
-class Images extends Response {
+class Images {
   final String card;
-  @JsonKey(name: "300x300")
+
   final String res300;
-  @JsonKey(name: "600x600")
+
   final String res600;
 
   Images({
-    this.card,
-    this.res300,
-    this.res600,
+    required this.card,
+    required this.res300,
+    required this.res600,
   });
 
   factory Images.fromJson(Map<String, dynamic> json) => _$ImagesFromJson(json);

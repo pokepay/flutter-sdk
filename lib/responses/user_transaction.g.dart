@@ -18,13 +18,12 @@ UserTransaction _$UserTransactionFromJson(Map<String, dynamic> json) {
     pointAmount: (json['point_amount'] as num).toDouble(),
     account: Account.fromJson(json['account'] as Map<String, dynamic>),
     description: json['description'] as String,
-    doneAt: const CustomDateTimeConverter().fromJson(json['done_at'] as String),
-    customerBalance: (json['customer_balance'] as num)?.toDouble(),
+    doneAt: const CustomDateTimeConverter().fromJson(json['done_at'] as String).toString(),
+    customerBalance: (json['customer_balance'] as num).toDouble(),
   );
 }
 
-Map<String, dynamic> _$UserTransactionToJson(UserTransaction instance) =>
-    <String, dynamic>{
+Map<String, dynamic> _$UserTransactionToJson(UserTransaction instance) => <String, dynamic>{
       'id': instance.id,
       'type': instance.type,
       'is_modified': instance.isModified,
@@ -35,6 +34,6 @@ Map<String, dynamic> _$UserTransactionToJson(UserTransaction instance) =>
       'point_amount': instance.pointAmount,
       'account': instance.account,
       'description': instance.description,
-      'done_at': const CustomDateTimeConverter().toJson(instance.doneAt),
+      'done_at': instance.doneAt,
       'customer_balance': instance.customerBalance,
     };

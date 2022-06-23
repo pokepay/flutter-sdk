@@ -10,5 +10,4 @@ NoContent _$NoContentFromJson(Map<String, dynamic> json) {
   return NoContent();
 }
 
-Map<String, dynamic> _$NoContentToJson(NoContent instance) =>
-    <String, dynamic>{};
+Map<String, dynamic> _$NoContentToJson(NoContent instance) => <String, dynamic>{};

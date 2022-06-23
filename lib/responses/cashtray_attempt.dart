@@ -1,34 +1,30 @@
 import 'package:json_annotation/json_annotation.dart';
-import 'package:meta/meta.dart';
+import 'package:pokepay_flutter_sdk/responses/user.dart';
 
 import '../custom_datetime_converter.dart';
-import '../responses.dart';
+import 'account.dart';
 
 part 'cashtray_attempt.g.dart';
 
 @JsonSerializable()
-@CustomDateTimeConverter()
-class CashtrayAttempt extends Response {
-  @JsonKey(nullable: false)
+class CashtrayAttempt {
   final User user;
-  final Account account;
-  @JsonKey(nullable: false)
+  final Account? account;
   final int statusCode;
   final String errorType;
   final String errorMessage;
-  @JsonKey(nullable: false)
   final DateTime createdAt;
 
   CashtrayAttempt({
-    @required this.user,
+    required this.user,
     this.account,
-    @required this.statusCode,
-    this.errorType,
-    this.errorMessage,
-    @required this.createdAt,
+    required this.statusCode,
+    required this.errorType,
+    required this.errorMessage,
+    required this.createdAt,
   });
 
-  factory CashtrayAttempt.fromJson(Map<String, dynamic> json) =>
-      _$CashtrayAttemptFromJson(json);
+  factory CashtrayAttempt.fromJson(Map<String, dynamic> json) => _$CashtrayAttemptFromJson(json);
+
   Map<String, dynamic> toJson() => _$CashtrayAttemptToJson(this);
 }

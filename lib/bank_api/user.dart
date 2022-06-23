@@ -1,5 +1,3 @@
-import 'package:meta/meta.dart';
-
 import '../pokepay_sdk.dart';
 import '../responses/no_content.dart';
 import '../responses/paginated_accounts.dart';
@@ -8,8 +6,8 @@ import '../responses/user.dart';
 
 extension UserAPI on PokepayAPI {
   Future<NoContent> deleteUserEmail({
-    @required String id,
-    @required String email,
+    required String id,
+    required String email,
   }) async {
     return await invokeMethod<NoContent>(
       (j) => NoContent.fromJson(j),
@@ -24,10 +22,10 @@ extension UserAPI on PokepayAPI {
   }
 
   Future<PaginatedAccounts> getUserAccounts({
-    @required String id,
-    String before,
-    String after,
-    int perPage,
+    required String id,
+    String? before,
+    String? after,
+    int? perPage,
   }) async {
     return await invokeMethod<PaginatedAccounts>(
       (j) => PaginatedAccounts.fromJson(j),
@@ -44,10 +42,10 @@ extension UserAPI on PokepayAPI {
   }
 
   Future<PaginatedTransactions> getUserTransactions({
-    @required String id,
-    String before,
-    String after,
-    int perPage,
+    required String id,
+    String? before,
+    String? after,
+    int? perPage,
   }) async {
     return await invokeMethod<PaginatedTransactions>(
       (j) => PaginatedTransactions.fromJson(j),
@@ -64,7 +62,7 @@ extension UserAPI on PokepayAPI {
   }
 
   Future<NoContent> registerUserEmail({
-    @required String token,
+    required String token,
   }) async {
     return await invokeMethod<NoContent>(
       (j) => NoContent.fromJson(j),
@@ -78,8 +76,8 @@ extension UserAPI on PokepayAPI {
   }
 
   Future<NoContent> sendConfirmationEmail({
-    @required String id,
-    @required String email,
+    required String id,
+    required String email,
   }) async {
     return await invokeMethod<NoContent>(
       (j) => NoContent.fromJson(j),
@@ -94,8 +92,8 @@ extension UserAPI on PokepayAPI {
   }
 
   Future<User> updateUser({
-    @required String id,
-    String name,
+    required String id,
+    String? name,
   }) async {
     return await invokeMethod<User>(
       (j) => User.fromJson(j),

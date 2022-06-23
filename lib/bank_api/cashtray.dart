@@ -1,17 +1,15 @@
 import 'dart:convert';
 
-import 'package:meta/meta.dart';
-
 import '../parameters/product.dart';
 import '../pokepay_sdk.dart';
 import '../responses.dart';
 
 extension CashtrayAPI on PokepayAPI {
   Future<Cashtray> createCashtray({
-    @required double amount,
-    String description,
-    int expiresIn,
-    List<Product> products,
+    required double amount,
+    String? description,
+    int? expiresIn,
+    List<Product>? products,
   }) async {
     return await invokeMethod<Cashtray>(
       (j) => Cashtray.fromJson(j),
@@ -28,7 +26,7 @@ extension CashtrayAPI on PokepayAPI {
   }
 
   Future<NoContent> deleteCashtray({
-    @required String id,
+    required String id,
   }) async {
     return await invokeMethod<NoContent>(
       (j) => NoContent.fromJson(j),
@@ -42,7 +40,7 @@ extension CashtrayAPI on PokepayAPI {
   }
 
   Future<Cashtray> getCashtray({
-    @required String id,
+    required String id,
   }) async {
     return await invokeMethod<Cashtray>(
       (j) => Cashtray.fromJson(j),
@@ -57,7 +55,7 @@ extension CashtrayAPI on PokepayAPI {
 
   @deprecated
   Future<CashtrayAttempts> getCashtrayAttempts({
-    @required String id,
+    required String id,
   }) async {
     return await invokeMethod<CashtrayAttempts>(
       (j) => CashtrayAttempts.fromJson(j),
@@ -71,10 +69,10 @@ extension CashtrayAPI on PokepayAPI {
   }
 
   Future<Cashtray> updateCashtray({
-    @required String id,
-    double amount,
-    String description,
-    int expiresIn,
+    required String id,
+    double? amount,
+    String? description,
+    int? expiresIn,
   }) async {
     return await invokeMethod<Cashtray>(
       (j) => Cashtray.fromJson(j),

@@ -24,8 +24,7 @@ OAuthError _$OAuthErrorFromJson(Map<String, dynamic> json) {
   );
 }
 
-Map<String, dynamic> _$OAuthErrorToJson(OAuthError instance) =>
-    <String, dynamic>{
+Map<String, dynamic> _$OAuthErrorToJson(OAuthError instance) => <String, dynamic>{
       'error': instance.error,
     };
 
@@ -36,8 +35,7 @@ APIRequestError _$APIRequestErrorFromJson(Map<String, dynamic> json) {
   );
 }
 
-Map<String, dynamic> _$APIRequestErrorToJson(APIRequestError instance) =>
-    <String, dynamic>{
+Map<String, dynamic> _$APIRequestErrorToJson(APIRequestError instance) => <String, dynamic>{
       'status_code': instance.statusCode,
       'error': instance.error,
     };
@@ -48,8 +46,7 @@ ProcessingError _$ProcessingErrorFromJson(Map<String, dynamic> json) {
   );
 }
 
-Map<String, dynamic> _$ProcessingErrorToJson(ProcessingError instance) =>
-    <String, dynamic>{
+Map<String, dynamic> _$ProcessingErrorToJson(ProcessingError instance) => <String, dynamic>{
       'message': instance.message,
     };
 
@@ -60,8 +57,7 @@ OAuthRequestError _$OAuthRequestErrorFromJson(Map<String, dynamic> json) {
   );
 }
 
-Map<String, dynamic> _$OAuthRequestErrorToJson(OAuthRequestError instance) =>
-    <String, dynamic>{
+Map<String, dynamic> _$OAuthRequestErrorToJson(OAuthRequestError instance) => <String, dynamic>{
       'status_code': instance.statusCode,
       'error': instance.error,
     };

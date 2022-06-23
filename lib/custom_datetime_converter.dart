@@ -8,30 +8,15 @@ class CustomDateTimeConverter implements JsonConverter<DateTime, String> {
 
   @override
   DateTime fromJson(String utcStringDate) {
-    if (utcStringDate == null) {
-      return null;
-    } else {
-      int microsecond = 0;
-      utcStringDate =
-          utcStringDate.replaceAllMapped(new RegExp(r'([0-9]{3})Z$'), (match) {
-        microsecond = int.parse(match.group(1));
-        return '';
-      });
-      return customDateFormatter
-          .parse(utcStringDate, true)
-          .add(Duration(microseconds: microsecond))
-          .toLocal();
-    }
+    int microsecond = 0;
+    utcStringDate = utcStringDate.replaceAllMapped(new RegExp(r'([0-9]{3})Z$'), (match) {
+      if (match.group(1) != null) microsecond = int.parse(match.group(1)!);
+      return '';
+    });
+    return customDateFormatter.parse(utcStringDate, true).add(Duration(microseconds: microsecond)).toLocal();
   }
 
   @override
-  String toJson(DateTime localDateTime) {
-    if (localDateTime == null) {
-      return null;
-    } else {
-      return customDateFormatter.format(localDateTime.toUtc()) +
-          localDateTime.microsecond.toString().padLeft(3, '0') +
-          'Z';
-    }
-  }
+  String toJson(DateTime localDateTime) =>
+      customDateFormatter.format(localDateTime.toUtc()) + localDateTime.microsecond.toString().padLeft(3, '0') + 'Z';
 }

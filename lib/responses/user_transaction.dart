@@ -1,54 +1,45 @@
 import 'package:json_annotation/json_annotation.dart';
-import 'package:meta/meta.dart';
+import 'package:pokepay_flutter_sdk/responses/user.dart';
+import 'package:pokepay_flutter_sdk/responses/user_transfer.dart';
 
 import '../custom_datetime_converter.dart';
-import '../responses.dart';
+import 'account.dart';
 
 part 'user_transaction.g.dart';
 
 @JsonSerializable()
-@CustomDateTimeConverter()
-class UserTransaction extends Response {
-  @JsonKey(nullable: false)
+class UserTransaction {
   final String id;
-  @JsonKey(nullable: false)
   final String type;
-  @JsonKey(nullable: false)
   final bool isModified;
-  @JsonKey(nullable: false)
   final User user;
-  @JsonKey(nullable: false)
-  final double balance;
-  @JsonKey(nullable: false)
-  final double amount;
-  @JsonKey(nullable: false)
-  final double moneyAmount;
-  @JsonKey(nullable: false)
-  final double pointAmount;
-  @JsonKey(nullable: false)
+  final double? balance;
+  final double? customerBalance;
+  final double? amount;
+  final double? moneyAmount;
+  final double? pointAmount;
   final Account account;
-  @JsonKey(nullable: false)
   final String description;
-  @JsonKey(nullable: false)
-  final DateTime doneAt;
-  final double customerBalance;
+  final String doneAt;
+  final List<UserTransfer>? transfers;
 
   UserTransaction({
-    @required this.id,
-    @required this.type,
-    @required this.isModified,
-    @required this.user,
-    @required this.balance,
-    @required this.amount,
-    @required this.moneyAmount,
-    @required this.pointAmount,
-    @required this.account,
-    @required this.description,
-    @required this.doneAt,
+    required this.id,
+    required this.type,
+    required this.isModified,
+    required this.user,
+    this.balance,
     this.customerBalance,
+    this.amount,
+    this.moneyAmount,
+    this.pointAmount,
+    required this.account,
+    required this.description,
+    required this.doneAt,
+    this.transfers,
   });
 
-  factory UserTransaction.fromJson(Map<String, dynamic> json) =>
-      _$UserTransactionFromJson(json);
+  factory UserTransaction.fromJson(Map<String, dynamic> json) => _$UserTransactionFromJson(json);
+
   Map<String, dynamic> toJson() => _$UserTransactionToJson(this);
 }
