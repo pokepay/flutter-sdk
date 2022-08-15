@@ -13,8 +13,8 @@ extension CheckAPI on PokepayAPI {
     String? description,
     bool? isOnetime = true, // check should be onetime default
     int? usageLimit,
-    required DateTime expiresAt,
-    required DateTime pointExpiresAt,
+    DateTime? expiresAt,
+    DateTime? pointExpiresAt,
     int? pointExpiresInDays,
   }) async {
     return await invokeMethod<Check>(
@@ -30,9 +30,11 @@ extension CheckAPI on PokepayAPI {
         'description': description,
         'isOnetime': isOnetime,
         'usageLimit': usageLimit,
-        'expiresAt': datetimeConv.toJson(expiresAt),
-        'pointExpiresAt': datetimeConv.toJson(pointExpiresAt),
+        if(expiresAt != null)
+          'expiresAt': datetimeConv.toJson(expiresAt),
         'pointExpiresInDays': pointExpiresInDays,
+        if(pointExpiresAt != null)
+          'pointExpiresAt': datetimeConv.toJson(pointExpiresAt),
       },
     );
   }
