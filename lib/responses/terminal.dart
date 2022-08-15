@@ -19,7 +19,7 @@ class Terminal {
     required this.id,
     required this.name,
     required this.hardwareId,
-    this.pushService,
+    required this.pushService,
     this.pushToken,
     required this.user,
     required this.account,
@@ -28,4 +28,7 @@ class Terminal {
   factory Terminal.fromJson(Map<String, dynamic> json) => _$TerminalFromJson(json);
 
   Map<String, dynamic> toJson() => _$TerminalToJson(this);
+
+  @override
+  String toString() => this.toJson().toString();
 }

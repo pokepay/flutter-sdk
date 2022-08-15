@@ -7,24 +7,24 @@ part 'private_money.g.dart';
 
 @JsonSerializable()
 class PrivateMoney {
-  final String       id;
-  final String       name;
-  final String       type;
-  final String       unit;
-  final String       description;
-  final String       onelineMessage;
-  final String?       accountImage;
-  final Images       images;
+  final String id;
+  final String name;
+  final String type;
+  final String unit;
+  final String description;
+  final String onelineMessage;
+  final String? accountImage;
+  final Images images;
   final Organization organization;
-  final double?       maxBalance;
-  final double?       transferLimit;
-  final String       expirationType;
-  final bool?         isExclusive;
-  final String?       termsUrl;
-  final String?       privacyPolicyUrl;
-  final String?       paymentActUrl;
-  final String?       commercialActUrl;
-  final bool         canUseCreditCard;
+  final double? maxBalance;
+  final double? transferLimit;
+  final String expirationType;
+  final bool? isExclusive;
+  final String? termsUrl;
+  final String? privacyPolicyUrl;
+  final String? paymentActUrl;
+  final String? commercialActUrl;
+  final bool canUseCreditCard;
 
   PrivateMoney({
     required this.id,
@@ -48,5 +48,9 @@ class PrivateMoney {
   });
 
   factory PrivateMoney.fromJson(Map<String, dynamic> json) => _$PrivateMoneyFromJson(json);
+
   Map<String, dynamic> toJson() => _$PrivateMoneyToJson(this);
+
+  @override
+  String toString() => this.toJson().toString();
 }

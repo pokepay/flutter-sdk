@@ -2,8 +2,6 @@ import 'package:json_annotation/json_annotation.dart';
 import 'package:pokepay_flutter_sdk/responses/private_money.dart';
 import 'package:pokepay_flutter_sdk/responses/user.dart';
 
-import '../custom_datetime_converter.dart';
-
 part 'check.g.dart';
 
 @JsonSerializable()
@@ -41,4 +39,7 @@ class Check {
   factory Check.fromJson(Map<String, dynamic> json) => _$CheckFromJson(json);
 
   Map<String, dynamic> toJson() => _$CheckToJson(this);
+
+  @override
+  String toString() => this.toJson().toString();
 }

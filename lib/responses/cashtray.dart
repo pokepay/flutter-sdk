@@ -3,7 +3,6 @@ import 'package:pokepay_flutter_sdk/responses/private_money.dart';
 import 'package:pokepay_flutter_sdk/responses/user.dart';
 import 'package:pokepay_flutter_sdk/responses/user_transaction.dart';
 
-import '../custom_datetime_converter.dart';
 import 'cashtray_attempt.dart';
 
 part 'cashtray.g.dart';

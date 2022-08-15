@@ -3,7 +3,6 @@ import 'package:pokepay_flutter_sdk/responses/user.dart';
 
 import 'account.dart';
 
-
 @JsonSerializable()
 class UserTransfer {
   final String id;

@@ -1,7 +1,6 @@
 import 'package:json_annotation/json_annotation.dart';
 import 'package:pokepay_flutter_sdk/responses/user_transaction.dart';
 
-import '../custom_datetime_converter.dart';
 import 'account.dart';
 
 part 'account_cpm_token.g.dart';
@@ -13,7 +12,7 @@ class AccountCpmToken {
   final UserTransaction? transaction;
   final List<String> scopes;
   final DateTime? expiresAt;
-  final Map<String, String>? metadata;
+  final Map<String, dynamic>? metadata;
 
   AccountCpmToken({
     required this.cpmToken,

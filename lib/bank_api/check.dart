@@ -30,11 +30,9 @@ extension CheckAPI on PokepayAPI {
         'description': description,
         'isOnetime': isOnetime,
         'usageLimit': usageLimit,
-        if(expiresAt != null)
-          'expiresAt': datetimeConv.toJson(expiresAt),
+        if (expiresAt != null) 'expiresAt': datetimeConv.toJson(expiresAt),
         'pointExpiresInDays': pointExpiresInDays,
-        if(pointExpiresAt != null)
-          'pointExpiresAt': datetimeConv.toJson(pointExpiresAt),
+        if (pointExpiresAt != null) 'pointExpiresAt': datetimeConv.toJson(pointExpiresAt),
       },
     );
   }

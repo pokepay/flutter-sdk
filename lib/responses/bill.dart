@@ -11,8 +11,8 @@ class Bill {
   final String description;
   final User user;
   final PrivateMoney privateMoney;
-  final bool? isOnetime;
-  final bool? isDisabled;
+  final bool isOnetime;
+  final bool isDisabled;
   final String token;
   final double? minAmount;
   final double? maxAmount;
@@ -23,8 +23,8 @@ class Bill {
     required this.description,
     required this.user,
     required this.privateMoney,
-    this.isOnetime,
-    this.isDisabled,
+    required this.isOnetime,
+    required this.isDisabled,
     required this.token,
     this.minAmount,
     this.maxAmount,
@@ -33,4 +33,7 @@ class Bill {
   factory Bill.fromJson(Map<String, dynamic> json) => _$BillFromJson(json);
 
   Map<String, dynamic> toJson() => _$BillToJson(this);
+
+  @override
+  String toString() => this.toJson().toString();
 }

@@ -6,21 +6,19 @@ part of 'cashtray.dart';
 // JsonSerializableGenerator
 // **************************************************************************
 
-Cashtray _$CashtrayFromJson(Map<String, dynamic> json) {
-  return Cashtray(
-    id: json['id'] as String,
-    amount: (json['amount'] as num).toDouble(),
-    description: json['description'] as String,
-    user: User.fromJson(json['user'] as Map<String, dynamic>),
-    privateMoney: PrivateMoney.fromJson(json['private_money'] as Map<String, dynamic>),
-    expiresAt: const CustomDateTimeConverter().fromJson(json['expires_at'] as String),
-    canceledAt: const CustomDateTimeConverter().fromJson(json['canceled_at'] as String),
-    token: json['token'] as String,
-    attempt: json['attempt'] == null ? null : CashtrayAttempt.fromJson(json['attempt'] as Map<String, dynamic>),
-    transaction:
-        json['transaction'] == null ? null : UserTransaction.fromJson(json['transaction'] as Map<String, dynamic>),
-  );
-}
+Cashtray _$CashtrayFromJson(Map<String, dynamic> json) => Cashtray(
+      id: json['id'] as String,
+      amount: (json['amount'] as num).toDouble(),
+      description: json['description'] as String,
+      user: User.fromJson(json['user'] as Map<String, dynamic>),
+      privateMoney: PrivateMoney.fromJson(json['private_money'] as Map<String, dynamic>),
+      expiresAt: DateTime.parse(json['expires_at'] as String),
+      canceledAt: json['canceled_at'] == null ? null : DateTime.parse(json['canceled_at'] as String),
+      token: json['token'] as String,
+      attempt: json['attempt'] == null ? null : CashtrayAttempt.fromJson(json['attempt'] as Map<String, dynamic>),
+      transaction:
+          json['transaction'] == null ? null : UserTransaction.fromJson(json['transaction'] as Map<String, dynamic>),
+    );
 
 Map<String, dynamic> _$CashtrayToJson(Cashtray instance) => <String, dynamic>{
       'id': instance.id,
@@ -28,8 +26,8 @@ Map<String, dynamic> _$CashtrayToJson(Cashtray instance) => <String, dynamic>{
       'description': instance.description,
       'user': instance.user,
       'private_money': instance.privateMoney,
-      'expires_at': const CustomDateTimeConverter().toJson(instance.expiresAt),
-      if (instance.canceledAt != null) 'canceled_at': const CustomDateTimeConverter().toJson(instance.canceledAt!),
+      'expires_at': instance.expiresAt.toIso8601String(),
+      'canceled_at': instance.canceledAt?.toIso8601String(),
       'token': instance.token,
       'attempt': instance.attempt,
       'transaction': instance.transaction,

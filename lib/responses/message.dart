@@ -1,7 +1,6 @@
 import 'package:json_annotation/json_annotation.dart';
 import 'package:pokepay_flutter_sdk/responses/user.dart';
 
-import '../custom_datetime_converter.dart';
 import 'message_attachment.dart';
 
 part 'message.g.dart';

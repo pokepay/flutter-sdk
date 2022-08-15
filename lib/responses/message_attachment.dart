@@ -1,8 +1,6 @@
 import 'package:json_annotation/json_annotation.dart';
 import 'package:pokepay_flutter_sdk/responses/private_money.dart';
 
-import '../custom_datetime_converter.dart';
-
 part 'message_attachment.g.dart';
 
 @JsonSerializable()

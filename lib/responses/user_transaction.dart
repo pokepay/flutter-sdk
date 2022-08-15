@@ -2,7 +2,6 @@ import 'package:json_annotation/json_annotation.dart';
 import 'package:pokepay_flutter_sdk/responses/user.dart';
 import 'package:pokepay_flutter_sdk/responses/user_transfer.dart';
 
-import '../custom_datetime_converter.dart';
 import 'account.dart';
 
 part 'user_transaction.g.dart';
