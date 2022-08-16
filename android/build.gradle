@@ -8,7 +8,7 @@ buildscript {
     }
 
     dependencies {
-        classpath 'com.android.tools.build:gradle:3.5.0'
+        classpath 'com.android.tools.build:gradle:3.5.4'
     }
 }
 
@@ -33,8 +33,8 @@ android {
 }
 
 dependencies {
-    implementation 'com.fasterxml.jackson.core:jackson-annotations:2.9.7'
-    implementation 'com.fasterxml.jackson.core:jackson-core:2.9.7'
-    implementation 'com.fasterxml.jackson.core:jackson-databind:2.9.7'
-    implementation 'jp.pocket-change.pokepay.android-sdk:pokepaylib:1.5.1'
+    implementation 'com.fasterxml.jackson.core:jackson-annotations:2.11.1'
+    implementation 'com.fasterxml.jackson.core:jackson-core:2.11.1'
+    implementation 'com.fasterxml.jackson.core:jackson-databind:2.11.1'
+    implementation 'jp.pocket-change.pokepay.android-sdk:pokepaylib:1.8.0'
 }

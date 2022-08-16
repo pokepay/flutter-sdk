@@ -197,7 +197,8 @@ public class PokepaySdkPlugin implements FlutterPlugin, MethodCallHandler {
                         String accessToken = call.argument("accessToken");
                         String name = call.argument("name");
                         String privateMoneyId = call.argument("privateMoneyId");
-                        CreateAccount req = new CreateAccount(name, privateMoneyId);
+                        String externalId = call.argument("externalId");
+                        CreateAccount req = new CreateAccount(name, privateMoneyId, externalId);
                         Pokepay.setEnv(env);
                         Account res = req.send(accessToken);
                         return new TaskResult(null, res.toString());
@@ -563,7 +564,9 @@ public class PokepaySdkPlugin implements FlutterPlugin, MethodCallHandler {
                         String accountId = call.argument("accountId");
                         String couponId = call.argument("couponId");
                         boolean isReceived = call.argument("is_received");
-                        PatchAccountCouponDetail req = new PatchAccountCouponDetail(accountId,couponId,isReceived);
+                        String code = call.argument("code");
+                        PatchAccountCouponDetail req = new PatchAccountCouponDetail(accountId,couponId,isReceived,
+                                code);
                         CouponDetail res = req.send(accessToken);
                         return new TaskResult(null, res.toString());
                     }
