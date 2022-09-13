@@ -15,7 +15,8 @@ PrivateMoney _$PrivateMoneyFromJson(Map<String, dynamic> json) => PrivateMoney(
       onelineMessage: json['oneline_message'] as String,
       accountImage: json['account_image'] as String?,
       images: Images.fromJson(json['images'] as Map<String, dynamic>),
-      organization: Organization.fromJson(json['organization'] as Map<String, dynamic>),
+      organization:
+          Organization.fromJson(json['organization'] as Map<String, dynamic>),
       maxBalance: (json['max_balance'] as num?)?.toDouble(),
       transferLimit: (json['transfer_limit'] as num?)?.toDouble(),
       expirationType: json['expiration_type'] as String,
@@ -27,7 +28,8 @@ PrivateMoney _$PrivateMoneyFromJson(Map<String, dynamic> json) => PrivateMoney(
       canUseCreditCard: json['can_use_credit_card'] as bool,
     );
 
-Map<String, dynamic> _$PrivateMoneyToJson(PrivateMoney instance) => <String, dynamic>{
+Map<String, dynamic> _$PrivateMoneyToJson(PrivateMoney instance) =>
+    <String, dynamic>{
       'id': instance.id,
       'name': instance.name,
       'type': instance.type,
@@ -35,8 +37,8 @@ Map<String, dynamic> _$PrivateMoneyToJson(PrivateMoney instance) => <String, dyn
       'description': instance.description,
       'oneline_message': instance.onelineMessage,
       'account_image': instance.accountImage,
-      'images': instance.images,
-      'organization': instance.organization,
+      'images': instance.images.toJson(),
+      'organization': instance.organization.toJson(),
       'max_balance': instance.maxBalance,
       'transfer_limit': instance.transferLimit,
       'expiration_type': instance.expirationType,

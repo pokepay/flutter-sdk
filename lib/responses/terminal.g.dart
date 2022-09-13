@@ -22,6 +22,6 @@ Map<String, dynamic> _$TerminalToJson(Terminal instance) => <String, dynamic>{
       'hardware_id': instance.hardwareId,
       'push_service': instance.pushService,
       'push_token': instance.pushToken,
-      'user': instance.user,
-      'account': instance.account,
+      'user': instance.user.toJson(),
+      'account': instance.account.toJson(),
     };

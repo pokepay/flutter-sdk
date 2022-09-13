@@ -16,18 +16,19 @@ Message _$MessageFromJson(Map<String, dynamic> json) => Message(
       sendTo: User.fromJson(json['send_to'] as Map<String, dynamic>),
       sentAt: DateTime.parse(json['sent_at'] as String),
       isUnread: json['is_unread'] as bool,
-      attachment: MessageAttachment.fromJson(json['attachment'] as Map<String, dynamic>),
+      attachment: MessageAttachment.fromJson(
+          json['attachment'] as Map<String, dynamic>),
     );
 
 Map<String, dynamic> _$MessageToJson(Message instance) => <String, dynamic>{
       'id': instance.id,
       'subject': instance.subject,
       'body': instance.body,
-      'from_user': instance.fromUser,
-      'to_user': instance.toUser,
-      'send_by': instance.sendBy,
-      'send_to': instance.sendTo,
+      'from_user': instance.fromUser.toJson(),
+      'to_user': instance.toUser.toJson(),
+      'send_by': instance.sendBy.toJson(),
+      'send_to': instance.sendTo.toJson(),
       'sent_at': instance.sentAt.toIso8601String(),
       'is_unread': instance.isUnread,
-      'attachment': instance.attachment,
+      'attachment': instance.attachment.toJson(),
     };

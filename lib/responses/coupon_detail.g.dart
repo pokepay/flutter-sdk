@@ -24,11 +24,13 @@ CouponDetail _$CouponDetailFromJson(Map<String, dynamic> json) => CouponDetail(
       couponImage: json['coupon_image'] as String?,
       receivedAt: json['received_at'] as String?,
       usageCount: json['usage_count'] as int,
-      availableShops:
-          (json['available_shops'] as List<dynamic>).map((e) => User.fromJson(e as Map<String, dynamic>)).toList(),
+      availableShops: (json['available_shops'] as List<dynamic>)
+          .map((e) => User.fromJson(e as Map<String, dynamic>))
+          .toList(),
     );
 
-Map<String, dynamic> _$CouponDetailToJson(CouponDetail instance) => <String, dynamic>{
+Map<String, dynamic> _$CouponDetailToJson(CouponDetail instance) =>
+    <String, dynamic>{
       'id': instance.id,
       'name': instance.name,
       'description': instance.description,
@@ -46,5 +48,5 @@ Map<String, dynamic> _$CouponDetailToJson(CouponDetail instance) => <String, dyn
       'coupon_image': instance.couponImage,
       'received_at': instance.receivedAt,
       'usage_count': instance.usageCount,
-      'available_shops': instance.availableShops,
+      'available_shops': instance.availableShops.map((e) => e.toJson()).toList(),
     };

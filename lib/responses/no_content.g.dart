@@ -8,4 +8,5 @@ part of 'no_content.dart';
 
 NoContent _$NoContentFromJson(Map<String, dynamic> json) => NoContent();
 
-Map<String, dynamic> _$NoContentToJson(NoContent instance) => <String, dynamic>{};
+Map<String, dynamic> _$NoContentToJson(NoContent instance) =>
+    <String, dynamic>{};

@@ -2,6 +2,7 @@ import 'package:json_annotation/json_annotation.dart';
 import 'package:pokepay_flutter_sdk/responses/user.dart';
 
 import 'account.dart';
+part 'user_transfer.g.dart';
 
 @JsonSerializable()
 class UserTransfer {
@@ -31,31 +32,10 @@ class UserTransfer {
     this.transactionId,
   });
 
-  factory UserTransfer.fromJson(Map<String, dynamic> json) => UserTransfer(
-        id: json['id'] as String,
-        type: json['type'] as String,
-        description: json['description'] as String,
-        doneAt: json['doneAt'] as String,
-        amount: (json['amount'] as num).toDouble(),
-        balance: (json['balance'] as num).toDouble(),
-        user: User.fromJson(json['user'] as Map<String, dynamic>),
-        account: Account.fromJson(json['account'] as Map<String, dynamic>),
-        moneyAmount: (json['moneyAmount'] as num).toDouble(),
-        pointAmount: (json['pointAmount'] as num).toDouble(),
-        transactionId: json['transactionId'] as String,
-      );
+  factory UserTransfer.fromJson(Map<String, dynamic> json) => _$UserTransferFromJson(json);
 
-  Map<String, dynamic> toJson() => <String, dynamic>{
-        'id': this.id,
-        'type': this.type,
-        'amount': this.amount,
-        'balance': this.balance,
-        'description': this.description,
-        'user': this.user?.toJson(),
-        'account': this.account?.toJson(),
-        'doneAt': this.doneAt,
-        'moneyAmount': this.moneyAmount,
-        'pointAmount': this.pointAmount,
-        'transactionId': this.transactionId,
-      };
+  Map<String, dynamic> toJson() => _$UserTransferToJson(this);
+
+  @override
+  String toString() => this.toJson().toString();
 }
