@@ -22,4 +22,7 @@ class PaginatedTransfers {
   factory PaginatedTransfers.fromJson(Map<String, dynamic> json) => _$PaginatedTransfersFromJson(json);
 
   Map<String, dynamic> toJson() => _$PaginatedTransfersToJson(this);
+
+  @override
+  String toString() => this.toJson().toString();
 }

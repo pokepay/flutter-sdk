@@ -49,4 +49,7 @@ class CouponDetail extends Coupon {
   factory CouponDetail.fromJson(Map<String, dynamic> json) => _$CouponDetailFromJson(json);
 
   Map<String, dynamic> toJson() => _$CouponDetailToJson(this);
+
+  @override
+  String toString() => this.toJson().toString();
 }

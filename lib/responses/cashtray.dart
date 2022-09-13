@@ -36,4 +36,7 @@ class Cashtray {
   factory Cashtray.fromJson(Map<String, dynamic> json) => _$CashtrayFromJson(json);
 
   Map<String, dynamic> toJson() => _$CashtrayToJson(this);
+
+  @override
+  String toString() => this.toJson().toString();
 }

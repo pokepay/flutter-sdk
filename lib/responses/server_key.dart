@@ -13,4 +13,7 @@ class ServerKey {
   factory ServerKey.fromJson(Map<String, dynamic> json) => _$ServerKeyFromJson(json);
 
   Map<String, dynamic> toJson() => _$ServerKeyToJson(this);
+
+  @override
+  String toString() => this.toJson().toString();
 }

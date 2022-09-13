@@ -14,4 +14,7 @@ class JwtResult {
 
   factory JwtResult.fromJson(Map<String, dynamic> json) => _$JwtResultFromJson(json);
   Map<String, dynamic> toJson() => _$JwtResultToJson(this);
+
+  @override
+  String toString() => this.toJson().toString();
 }

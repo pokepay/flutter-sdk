@@ -17,4 +17,7 @@ class AccountBalance {
   factory AccountBalance.fromJson(Map<String, dynamic> json) => _$AccountBalanceFromJson(json);
 
   Map<String, dynamic> toJson() => _$AccountBalanceToJson(this);
+
+  @override
+  String toString() => this.toJson().toString();
 }

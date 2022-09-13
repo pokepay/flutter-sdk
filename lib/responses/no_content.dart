@@ -9,4 +9,7 @@ class NoContent {
   factory NoContent.fromJson(Map<String, dynamic> json) => _$NoContentFromJson(json);
 
   Map<String, dynamic> toJson() => _$NoContentToJson(this);
+
+  @override
+  String toString() => this.toJson().toString();
 }

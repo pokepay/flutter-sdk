@@ -41,4 +41,7 @@ class Coupon {
   factory Coupon.fromJson(Map<String, dynamic> json) => _$CouponFromJson(json);
 
   Map<String, dynamic> toJson() => _$CouponToJson(this);
+
+  @override
+  String toString() => this.toJson().toString();
 }

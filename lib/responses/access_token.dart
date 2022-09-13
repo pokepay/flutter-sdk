@@ -19,4 +19,7 @@ class AccessToken {
   factory AccessToken.fromJson(Map<String, dynamic> json) => _$AccessTokenFromJson(json);
 
   Map<String, dynamic> toJson() => _$AccessTokenToJson(this);
+
+  @override
+  String toString() => this.toJson().toString();
 }

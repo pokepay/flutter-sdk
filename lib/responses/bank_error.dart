@@ -17,4 +17,7 @@ class BankError {
   factory BankError.fromJson(Map<String, dynamic> json) => _$BankErrorFromJson(json);
 
   Map<String, dynamic> toJson() => _$BankErrorToJson(this);
+
+  @override
+  String toString() => this.toJson().toString();
 }

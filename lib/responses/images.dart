@@ -21,4 +21,7 @@ class Images {
   factory Images.fromJson(Map<String, dynamic> json) => _$ImagesFromJson(json);
 
   Map<String, dynamic> toJson() => _$ImagesToJson(this);
+
+  @override
+  String toString() => this.toJson().toString();
 }

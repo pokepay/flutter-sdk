@@ -22,4 +22,7 @@ class MessageAttachment {
   factory MessageAttachment.fromJson(Map<String, dynamic> json) => _$MessageAttachmentFromJson(json);
 
   Map<String, dynamic> toJson() => _$MessageAttachmentToJson(this);
+
+  @override
+  String toString() => this.toJson().toString();
 }

@@ -26,4 +26,7 @@ class AccountCpmToken {
   factory AccountCpmToken.fromJson(Map<String, dynamic> json) => _$AccountCpmTokenFromJson(json);
 
   Map<String, dynamic> toJson() => _$AccountCpmTokenToJson(this);
+
+  @override
+  String toString() => this.toJson().toString();
 }

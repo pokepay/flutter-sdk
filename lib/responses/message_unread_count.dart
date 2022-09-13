@@ -13,4 +13,7 @@ class MessageUnreadCount {
   factory MessageUnreadCount.fromJson(Map<String, dynamic> json) => _$MessageUnreadCountFromJson(json);
 
   Map<String, dynamic> toJson() => _$MessageUnreadCountToJson(this);
+
+  @override
+  String toString() => this.toJson().toString();
 }

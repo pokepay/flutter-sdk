@@ -23,4 +23,7 @@ class PaginatedAccountBalances {
   factory PaginatedAccountBalances.fromJson(Map<String, dynamic> json) => _$PaginatedAccountBalancesFromJson(json);
 
   Map<String, dynamic> toJson() => _$PaginatedAccountBalancesToJson(this);
+
+  @override
+  String toString() => this.toJson().toString();
 }

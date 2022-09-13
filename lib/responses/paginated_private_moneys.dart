@@ -22,4 +22,7 @@ class PaginatedPrivateMoneys {
   factory PaginatedPrivateMoneys.fromJson(Map<String, dynamic> json) => _$PaginatedPrivateMoneysFromJson(json);
 
   Map<String, dynamic> toJson() => _$PaginatedPrivateMoneysToJson(this);
+
+  @override
+  String toString() => this.toJson().toString();
 }

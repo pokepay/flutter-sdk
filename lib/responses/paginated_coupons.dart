@@ -23,4 +23,7 @@ class PaginatedCoupons {
   factory PaginatedCoupons.fromJson(Map<String, dynamic> json) => _$PaginatedCouponsFromJson(json);
 
   Map<String, dynamic> toJson() => _$PaginatedCouponsToJson(this);
+
+  @override
+  String toString() => this.toJson().toString();
 }

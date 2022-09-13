@@ -26,4 +26,7 @@ class CashtrayAttempt {
   factory CashtrayAttempt.fromJson(Map<String, dynamic> json) => _$CashtrayAttemptFromJson(json);
 
   Map<String, dynamic> toJson() => _$CashtrayAttemptToJson(this);
+
+  @override
+  String toString() => this.toJson().toString();
 }

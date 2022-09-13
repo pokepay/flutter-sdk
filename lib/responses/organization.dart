@@ -15,4 +15,7 @@ class Organization {
   factory Organization.fromJson(Map<String, dynamic> json) => _$OrganizationFromJson(json);
 
   Map<String, dynamic> toJson() => _$OrganizationToJson(this);
+
+  @override
+  String toString() => this.toJson().toString();
 }

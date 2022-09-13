@@ -73,4 +73,7 @@ class OAuthRequestError extends Response {
   factory OAuthRequestError.fromJson(Map<String, dynamic> json) => _$OAuthRequestErrorFromJson(json);
 
   Map<String, dynamic> toJson() => _$OAuthRequestErrorToJson(this);
+
+  @override
+  String toString() => this.toJson().toString();
 }

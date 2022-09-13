@@ -28,4 +28,7 @@ class Account {
   factory Account.fromJson(Map<String, dynamic> json) => _$AccountFromJson(json);
 
   Map<String, dynamic> toJson() => _$AccountToJson(this);
+
+  @override
+  String toString() => this.toJson().toString();
 }

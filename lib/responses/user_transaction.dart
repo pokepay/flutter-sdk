@@ -41,4 +41,7 @@ class UserTransaction {
   factory UserTransaction.fromJson(Map<String, dynamic> json) => _$UserTransactionFromJson(json);
 
   Map<String, dynamic> toJson() => _$UserTransactionToJson(this);
+
+  @override
+  String toString() => this.toJson().toString();
 }

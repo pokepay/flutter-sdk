@@ -48,4 +48,7 @@ class TokenInfoMerchant extends TokenInfo {
   factory TokenInfoMerchant.fromJson(Map<String, dynamic> json) => _$TokenInfoMerchantFromJson(json);
 
   Map<String, dynamic> toJson() => _$TokenInfoMerchantToJson(this);
+
+  @override
+  String toString() => this.toJson().toString();
 }

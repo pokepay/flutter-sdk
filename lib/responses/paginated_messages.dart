@@ -23,4 +23,7 @@ class PaginatedMessages {
   factory PaginatedMessages.fromJson(Map<String, dynamic> json) => _$PaginatedMessagesFromJson(json);
 
   Map<String, dynamic> toJson() => _$PaginatedMessagesToJson(this);
+
+  @override
+  String toString() => this.toJson().toString();
 }
