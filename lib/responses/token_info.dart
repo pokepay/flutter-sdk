@@ -18,14 +18,10 @@ enum TokenType {
 class TokenInfo extends Response {
   final TokenType type;
   final dynamic token;
-  final Bill? bill;
-  final Check? check;
 
   TokenInfo({
     required this.type,
     required this.token,
-    this.bill,
-    this.check,
   });
 
   factory TokenInfo.fromJson(Map<String, dynamic> json) => _$TokenInfoFromJson(json);

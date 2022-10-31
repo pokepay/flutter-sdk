@@ -264,7 +264,6 @@ private class MethodCallTask {
             let code = args["code"] as! String
             let clientId = args["clientId"] as! String
             let clientSecret = args["clientSecret"] as! String
-            let grantType = args["grantType"] as! String
             let client = Pokepay.OAuthClient(clientId: clientId, clientSecret: clientSecret, env: env)
             client.send(OAuthAPI.Token.ExchangeAuthCode(code: code, clientId: clientId, clientSecret: clientSecret), handler: self.after)
         case "getAccount":
@@ -414,7 +413,6 @@ private class MethodCallTask {
             let refreshToken = args["refreshToken"] as! String
             let clientId = args["clientId"] as! String
             let clientSecret = args["clientSecret"] as! String
-            let grantType = args["grantType"] as! String
             let client = Pokepay.OAuthClient(clientId: clientId, clientSecret: clientSecret, env: env)
             client.send(OAuthAPI.Token.RefreshAccessToken(refreshToken: refreshToken, clientId: clientId, clientSecret: clientSecret), handler: self.after)
         case "registerUserEmail":

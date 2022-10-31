@@ -237,7 +237,7 @@ public class PokepaySdkPlugin implements FlutterPlugin, MethodCallHandler {
                     case "createCashtray": {
                         Env env = flutterEnvToSDKEnv((int)call.argument("env"));
                         String accessToken = call.argument("accessToken");
-                        double amount = call.argument("amount");
+                        Double amount = call.argument("amount");
                         String description = call.argument("description");
                         Integer expiresIn = call.argument("expiresIn");
                         String productsString = call.argument("products");
@@ -266,7 +266,7 @@ public class PokepaySdkPlugin implements FlutterPlugin, MethodCallHandler {
                         Boolean isMerchant = call.argument("isMerchant");
                         Double amount = call.argument("amount");
                         String description = call.argument("description");
-                        int expiresIn = call.argument("expiresIn");
+                        Integer expiresIn = call.argument("expiresIn");
                         String accountId = call.argument("accountId");
                         Product[] products = call.argument("products");
 
@@ -313,7 +313,7 @@ public class PokepaySdkPlugin implements FlutterPlugin, MethodCallHandler {
                         String accessToken = call.argument("accessToken");
                         String cpmToken = call.argument("cpmToken");
                         String accountId = call.argument("accountId");
-                        double amount = call.argument("amount");
+                        Double amount = call.argument("amount");
                         String productsString = call.argument("products");
                         final ObjectMapper mapper = JsonConverter.createObjectMapper();
                         Product[] products = mapper.readValue(productsString,  Product[].class);
@@ -607,7 +607,7 @@ public class PokepaySdkPlugin implements FlutterPlugin, MethodCallHandler {
                         Env env = flutterEnvToSDKEnv((int) call.argument("env"));
                         String accessToken = call.argument("accessToken");
                         String scanToken = call.argument("scanToken");
-                        double amount = call.argument("amount");
+                        Double amount = call.argument("amount");
                         String accountId = call.argument("accountId");
                         Product[] products = call.argument("products");
                         String couponId = call.argument("couponId");
@@ -648,7 +648,10 @@ public class PokepaySdkPlugin implements FlutterPlugin, MethodCallHandler {
                         String subject = call.argument("subject");
                         String body = call.argument("body");
                         String fromAccountId = call.argument("fromAccountId");
-                        SendMessage req = new SendMessage(toUserId, amount, subject, body, fromAccountId);
+                        String senderStr = call.argument("sender");
+                        ObjectMapper mapper = JsonConverter.createObjectMapper();
+                        User sender = mapper.readValue(senderStr,User.class);
+                        SendMessage req = new SendMessage(toUserId, amount, subject, body,sender, fromAccountId);
                         Pokepay.setEnv(env);
                         Message res = req.send(accessToken);
                         return new TaskResult(null, res.toString());
@@ -657,7 +660,7 @@ public class PokepaySdkPlugin implements FlutterPlugin, MethodCallHandler {
                         Env env = flutterEnvToSDKEnv((int)call.argument("env"));
                         String accessToken = call.argument("accessToken");
                         String accountId = call.argument("accountId");
-                        double amount = call.argument("amount");
+                        Double amount = call.argument("amount");
                         String receiverTerminalId = call.argument("receiverTerminalId");
                         String senderAccountId = call.argument("senderAccountId");
                         String description = call.argument("description");
@@ -670,7 +673,7 @@ public class PokepaySdkPlugin implements FlutterPlugin, MethodCallHandler {
                         Env env = flutterEnvToSDKEnv((int)call.argument("env"));
                         String accessToken = call.argument("accessToken");
                         String userId = call.argument("userId");
-                        double amount = call.argument("amount");
+                        Double amount = call.argument("amount");
                         String receiverTerminalId = call.argument("receiverTerminalId");
                         String senderAccountId = call.argument("senderAccountId");
                         String description = call.argument("description");

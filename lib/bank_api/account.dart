@@ -14,7 +14,8 @@ enum CpmTokenScope {
 extension AccountAPI on PokepayAPI {
   Future<Account> createAccount({
     String? name,
-    String? privateMoneyId,
+    required String privateMoneyId,
+    String? externalId,
   }) async {
     return await invokeMethod<Account>(
       (j) => Account.fromJson(j),
@@ -24,6 +25,7 @@ extension AccountAPI on PokepayAPI {
         'accessToken': this.accessToken,
         'name': name,
         'privateMoneyId': privateMoneyId,
+        'externalId': externalId,
       },
     );
   }
@@ -120,7 +122,7 @@ extension AccountAPI on PokepayAPI {
     );
   }
 
-  Future<PaginatedTransactions> getAccounTransactions({
+  Future<PaginatedTransactions> getAccountTransactions({
     required String id,
     String? before,
     String? after,
@@ -143,7 +145,7 @@ extension AccountAPI on PokepayAPI {
   Future<CouponDetail> patchAccountCouponDetail({
     required String accountId,
     required String couponId,
-    required bool isReceieved,
+    required bool isReceived,
   }) async {
     return await invokeMethod<CouponDetail>(
       (j) => CouponDetail.fromJson(j),
@@ -153,7 +155,7 @@ extension AccountAPI on PokepayAPI {
         'accessToken': this.accessToken,
         'accountId': accountId,
         'couponId': couponId,
-        'is_received': isReceieved,
+        'is_received': isReceived,
       },
     );
   }

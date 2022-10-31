@@ -20,7 +20,7 @@ class PokepayOAuthAPI {
       {
         'env': this.env.index,
         'code': code,
-        'clinetId': clientId,
+        'clientId': clientId,
         'clientSecret': clientSecret,
         'grantType': grantType,
       },

@@ -168,7 +168,7 @@ String parseAsPokeregiToken(String token) {
   // * https://www.pokepay.jp/pd?={25 ALNUM} - (Pokeregi_V1 OfflineMode NFC)
   // * https://www.pokepay.jp/pd/{25 ALNUM}  - (Pokeregi_V2 OfflineMode QR & NFC)
   final RegExp V1_NFC_V2_QR_NFC_REG =
-      RegExp(r'^https://www(?:-dev|-sandbox|-qa|)\\.pokepay\\.jp/pd(?:/|\\?d=)([0-9A-Z]{25})$');
+      RegExp(r'^https://www(?:-dev|-sandbox|-qa|)\.pokepay\.jp/pd(?:/|\\?d=)([0-9A-Z]{25})$');
   // matching
   final v1 = V1_QR_REG.allMatches(token);
   if (V1_QR_REG.hasMatch(token)) {
@@ -196,15 +196,15 @@ class PokepayClient {
     return this.api.getTerminal();
   }
 
-  Future<TokenInfo> getTokenInfo(String token) async {
-    if (token.startsWith(getWebBaseURL(this.api.env) + "/cashtrays/")) {
+  Future<TokenInfo> getTokenInfo(String token, APIEnv env) async {
+    if (token.startsWith(getWebBaseURL(env) + "/cashtrays/")) {
       return TokenInfo(type: TokenType.CASHTRAY, token: "");
-    } else if (token.startsWith(getWebBaseURL(this.api.env) + "/bills/")) {
-      final String uuid = token.substring((getWebBaseURL(this.api.env) + "/bills/").length);
+    } else if (token.startsWith(getWebBaseURL(env) + "/bills/")) {
+      final String uuid = token.substring((getWebBaseURL(env) + "/bills/").length);
       final bill = await api.getBill(id: uuid);
       return TokenInfo(type: TokenType.BILL, token: bill);
-    } else if (token.startsWith(getWebBaseURL(this.api.env) + "/checks/")) {
-      final String uuid = token.substring((getWebBaseURL(this.api.env) + "/checks/").length);
+    } else if (token.startsWith(getWebBaseURL(env) + "/checks/")) {
+      final String uuid = token.substring((getWebBaseURL(env) + "/checks/").length);
       final check = await api.getCheck(id: uuid);
       return TokenInfo(type: TokenType.CHECK, token: check);
     } else if (RegExp(r'^([0-9A-Z]{25})$').hasMatch(token)) {
@@ -214,9 +214,10 @@ class PokepayClient {
       String key = parseAsPokeregiToken(token);
       if (key.length > 0) {
         return TokenInfo(type: TokenType.PAYREGI, token: "");
+      }else{
+        return TokenInfo(type: TokenType.UNKNOWN, token: "");
       }
     }
-    return TokenInfo(type: TokenType.UNKNOWN, token: "");
   }
 
   Future<UserTransaction> pay({

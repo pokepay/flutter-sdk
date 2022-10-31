@@ -25,8 +25,8 @@ UserTransaction _$UserTransactionFromJson(Map<String, dynamic> json) =>
           .toList(),
     );
 
-Map<String, dynamic> _$UserTransactionToJson(UserTransaction instance) =>
-    <String, dynamic>{
+Map<String, dynamic?> _$UserTransactionToJson(UserTransaction instance) =>
+    <String, dynamic?>{
       'id': instance.id,
       'type': instance.type,
       'is_modified': instance.isModified,

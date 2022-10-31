@@ -1,5 +1,6 @@
 import '../pokepay_sdk.dart';
 import '../responses.dart';
+import 'dart:convert';
 
 extension MessageAPI on PokepayAPI {
   Future<Message> getMessage({
@@ -64,6 +65,7 @@ extension MessageAPI on PokepayAPI {
     double? amount,
     required String subject,
     required String body,
+    required User sender,
     String? fromAccountId,
   }) async {
     return await invokeMethod<Message>(
@@ -76,6 +78,11 @@ extension MessageAPI on PokepayAPI {
         'amount': amount,
         'subject': subject,
         'body': body,
+        'sender': jsonEncode({
+          "id": sender.id,
+          "name": sender.name,
+          "is_merchant": sender.isMerchant,
+        }),
         'fromAccountId': fromAccountId,
       },
     );
