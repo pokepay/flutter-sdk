@@ -1,5 +1,6 @@
 package jp.pokepay.pokepay_sdk;
 
+import android.content.Context;
 import android.os.AsyncTask;
 import android.util.Log;
 
@@ -112,11 +113,13 @@ public class PokepaySdkPlugin implements FlutterPlugin, MethodCallHandler {
     /// This local reference serves to register the plugin with the Flutter Engine and unregister it
     /// when the Flutter Engine is detached from the Activity
     private MethodChannel channel;
+    private Context context;
 
     @Override
     public void onAttachedToEngine(@NonNull FlutterPluginBinding flutterPluginBinding) {
         channel = new MethodChannel(flutterPluginBinding.getFlutterEngine().getDartExecutor(), "jp.pokepay/pokepay_sdk");
         channel.setMethodCallHandler(this);
+        context = flutterPluginBinding.getApplicationContext();
     }
 
     // This static function is optional and equivalent to onAttachedToEngine. It supports the old
@@ -146,10 +149,12 @@ public class PokepaySdkPlugin implements FlutterPlugin, MethodCallHandler {
 
         private final MethodCall call;
         private final Result result;
+        private final Context context;
 
-        private MethodCallAsyncTask(MethodCall call, Result result) {
+        private MethodCallAsyncTask(MethodCall call, Result result,Context context) {
             this.call = call;
             this.result = result;
+            this.context = context;
         }
 
         private Env flutterEnvToSDKEnv(int env) {
@@ -609,6 +614,7 @@ public class PokepaySdkPlugin implements FlutterPlugin, MethodCallHandler {
                         Pokepay.setEnv(env);
                         Pokepay.Client client = new Pokepay.Client(accessToken, null);
                         UserTransaction userTransaction = client.scanToken(scanToken,amount,accountId,products,couponId);
+                        Pokepay.Client client = new Pokepay.Client(accessToken, this.context);
                         return new TaskResult(null, userTransaction.toString());
                     }
                     case "searchPrivateMoneys": {
@@ -774,7 +780,7 @@ public class PokepaySdkPlugin implements FlutterPlugin, MethodCallHandler {
 
     @Override
     public void onMethodCall(@NonNull MethodCall call, @NonNull Result result) {
-        new MethodCallAsyncTask(call, result).execute("");
+        new MethodCallAsyncTask(call, result,context).execute("");
     }
 
     @Override
