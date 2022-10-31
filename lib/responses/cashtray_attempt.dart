@@ -13,6 +13,7 @@ class CashtrayAttempt {
   final String errorType;
   final String errorMessage;
   final DateTime createdAt;
+  final String? strategy;
 
   CashtrayAttempt({
     required this.user,
@@ -21,6 +22,7 @@ class CashtrayAttempt {
     required this.errorType,
     required this.errorMessage,
     required this.createdAt,
+    this.strategy,
   });
 
   factory CashtrayAttempt.fromJson(Map<String, dynamic> json) => _$CashtrayAttemptFromJson(json);

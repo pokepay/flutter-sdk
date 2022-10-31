@@ -1,5 +1,7 @@
 import 'dart:convert';
 
+import 'package:pokepay_flutter_sdk/parameters/transaction_strategy.dart';
+
 import '../parameters/product.dart';
 import '../pokepay_sdk.dart';
 import '../responses.dart';
@@ -10,6 +12,7 @@ extension TransactionAPI on PokepayAPI {
     String? accountId,
     double? amount,
     String? couponId,
+    TransactionStrategy strategy = TransactionStrategy.POINT_PREFERRED,
   }) async {
     return await invokeMethod<UserTransaction>(
       (j) => UserTransaction.fromJson(j),
@@ -21,6 +24,7 @@ extension TransactionAPI on PokepayAPI {
         'accountId': accountId,
         'amount': amount,
         'couponId': couponId,
+        'tx_strategy': strategy.value,
       },
     );
   }
@@ -29,6 +33,7 @@ extension TransactionAPI on PokepayAPI {
     required String cashtrayId,
     String? accountId,
     String? couponId,
+    TransactionStrategy strategy = TransactionStrategy.POINT_PREFERRED,
   }) async {
     return await invokeMethod<UserTransaction>(
       (j) => UserTransaction.fromJson(j),
@@ -39,6 +44,7 @@ extension TransactionAPI on PokepayAPI {
         'cashtrayId': cashtrayId,
         'accountId': accountId,
         'couponId': couponId,
+        'tx_strategy': strategy.value,
       },
     );
   }
@@ -83,6 +89,7 @@ extension TransactionAPI on PokepayAPI {
     required String data,
     String? accountId,
     String? couponId,
+    TransactionStrategy strategy = TransactionStrategy.POINT_PREFERRED,
   }) async {
     return await invokeMethod<JwtResult>(
       (j) => JwtResult.fromJson(j),
@@ -92,7 +99,8 @@ extension TransactionAPI on PokepayAPI {
         'accessToken': this.accessToken,
         'data': data,
         'accountId': accountId,
-        'couponId': couponId
+        'couponId': couponId,
+        'tx_strategy': strategy.value,
       },
     );
   }

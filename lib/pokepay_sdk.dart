@@ -3,6 +3,7 @@ import 'dart:convert';
 
 import 'package:flutter/services.dart';
 import 'package:logger/logger.dart';
+import 'package:pokepay_flutter_sdk/parameters/transaction_strategy.dart';
 
 import 'bank_api/bill.dart';
 import 'bank_api/check.dart';
@@ -281,6 +282,7 @@ class PokepayClient {
     String? accountId,
     List<Product>? products,
     String? couponId,
+    TransactionStrategy strategy = TransactionStrategy.POINT_PREFERRED,
   }) async {
     String json = await channel.invokeMethod('scanToken', {
       'env': envToInt(this.api.env),
@@ -290,6 +292,7 @@ class PokepayClient {
       'accountId': accountId,
       'products': products,
       'couponId': couponId,
+      'tx_strategy': strategy.value,
     });
 
     return UserTransaction.fromJson(jsonDecode(json));

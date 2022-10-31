@@ -55,6 +55,14 @@ private class MethodCallTask {
             default: return Env.development;
         }
     }
+
+    private func parseStrategy(raw:String?) -> TransactionStrategy{
+        switch raw {
+            case "money-only": return TransactionStrategy.moneyOnly;
+            case "point-preferred": return TransactionStrategy.pointPreferred;
+            default: return TransactionStrategy.pointPreferred;
+        }
+    }
     private func stringToDate(s: String?) -> Date? {
         if (s == nil) {
             return nil;
@@ -200,7 +208,10 @@ private class MethodCallTask {
             let accountId = args["accountId"] as? String
             let amount = args["amount"] as? Double
             let couponId = args["couponId"] as? String
-            client.send(BankAPI.Transaction.CreateWithBill(billId: billId, accountId: accountId, amount: amount, couponId: couponId), handler: self.after)
+            let rawStrategy =  args["tx_strategy"] as? String
+            let txStrategy = parseStrategy(raw: rawStrategy);
+            client.send(BankAPI.Transaction.CreateWithBill(billId: billId, accountId: accountId, amount: amount,
+            couponId: couponId,strategy: txStrategy), handler: self.after)
         case "createUserTransactionWithCashtray":
             let env = flutterEnvToSDKEnv(ienv: args["env"] as! Int32)
             let accessToken = args["accessToken"] as! String
@@ -208,7 +219,10 @@ private class MethodCallTask {
             let cashtrayId = args["cashtrayId"] as! String
             let accountId = args["accountId"] as? String
             let couponId = args["couponId"] as? String
-            client.send(BankAPI.Transaction.CreateWithCashtray(cashtrayId: cashtrayId, accountId: accountId, couponId: couponId), handler: self.after)
+            let rawStrategy =  args["tx_strategy"] as? String
+            let txStrategy = parseStrategy(raw: rawStrategy);
+            client.send(BankAPI.Transaction.CreateWithCashtray(cashtrayId: cashtrayId, accountId: accountId,
+            couponId: couponId,strategy: txStrategy), handler: self.after)
         case "createUserTransactionWithCheck":
             let env = flutterEnvToSDKEnv(ienv: args["env"] as! Int32)
             let accessToken = args["accessToken"] as! String
@@ -233,7 +247,11 @@ private class MethodCallTask {
             let data = args["data"] as! String
             let accountId = args["accountId"] as? String
             let couponId = args["couponId"] as? String
-            client.send(BankAPI.Transaction.CreateWithJwt(data: data, accountId: accountId, couponId: couponId), handler: self.after)
+            let rawStrategy =  args["tx_strategy"] as? String
+            let txStrategy = parseStrategy(raw: rawStrategy);
+            client.send(BankAPI.Transaction.CreateWithJwt(data: data, accountId: accountId, couponId: couponId,
+            strategy:txStrategy),
+            handler: self.after)
         case "deleteBill":
             let env = flutterEnvToSDKEnv(ienv: args["env"] as! Int32)
             let accessToken = args["accessToken"] as! String
