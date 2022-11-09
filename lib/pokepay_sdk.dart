@@ -11,6 +11,7 @@ import 'bank_api/check.dart';
 import 'bank_api/cpm_token.dart';
 import 'bank_api/terminal.dart';
 import 'bank_api/transaction.dart';
+import 'o_auth_api/o_auth.dart';
 import 'parameters/product.dart';
 import 'responses.dart';
 
@@ -333,12 +334,8 @@ class PokepayOAuthClient {
   }
 
   Future<AccessToken> getAccessToken(String code) async {
-    final String json = await channel.invokeMethod('exchangeAuthCode', {
-      'env': envToInt(this.env),
-      'code': code,
-      'clientId': this.clientId,
-      'clientSecret': this.clientSecret,
-    });
-    return AccessToken.fromJson(jsonDecode(json));
+    final api = PokepayOAuthAPI(env: this.env);
+    final result = await api.exchangeAuthCode(code: code, clientId: this.clientId, clientSecret: this.clientSecret);
+    return result;
   }
 }
