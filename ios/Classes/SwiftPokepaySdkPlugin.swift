@@ -102,7 +102,7 @@ private class MethodCallTask {
            case .serverError(let code, let apiError):
                self.apiRequestError(code: code, apiError: apiError)
            case .unknownError(let code, let apiError):
-               self.apiRequestError(code: code, apiError: apiError)
+               self.apiRequestError(code: code ?? 0, apiError: apiError)
            case .invalidJSON(let swiftError):
                self.processingError(message: swiftError.localizedDescription)
            }
@@ -113,7 +113,7 @@ private class MethodCallTask {
            case .serverError(let code, let oauthError):
                self.oauthRequestError(code: code, oauthError: oauthError)
            case .unknownError(let code, let oauthError):
-               self.oauthRequestError(code: code, oauthError: oauthError)
+               self.oauthRequestError(code: code ?? 0, oauthError: oauthError)
            case .invalidJSON(let swiftError):
                self.processingError(message: swiftError.localizedDescription)
            }
@@ -142,7 +142,7 @@ private class MethodCallTask {
             let accessToken = args["accessToken"] as! String
             let client = Pokepay.Client(accessToken: accessToken, env: env)
             let name = args["name"] as? String
-            let privateMoneyId = args["privateMoneyId"] as? String
+            let privateMoneyId = args["privateMoneyId"] as! String
             client.send(BankAPI.Account.Create(name: name, privateMoneyId: privateMoneyId), handler: self.after)
         case "createAccountCpmToken":
             let env = flutterEnvToSDKEnv(ienv: args["env"] as! Int32)
@@ -152,7 +152,8 @@ private class MethodCallTask {
             let scopes = args["scopes"] as! Int
             let expiresIn = args["expiresIn"] as? Int
             let metadataMap = args["metadata"] as? [String:String]
-            client.send(BankAPI.Account.CreateAccountCpmToken(accountId: accountId, scopes: BankAPI.Account.CreateAccountCpmToken.Scope(rawValue: scopes)!, expiresIn: expiresIn, metadata: metadataMap), handler: self.after)
+            client.send(BankAPI.Account.CreateAccountCpmToken(accountId: accountId, scopes: scopes, expiresIn: expiresIn,
+            metadata: metadataMap), handler: self.after)
         case "createBill":
             let env = flutterEnvToSDKEnv(ienv: args["env"] as! Int32)
             let accessToken = args["accessToken"] as! String
@@ -160,8 +161,8 @@ private class MethodCallTask {
             let amount = args["amount"] as? Double
             let accountId = args["accountId"] as? String
             let description = args["description"] as? String
-            let productsString = (args["products"] as! String).data(using: .utf8)!
-            let products = try! BankAPIJSONDecoder().decode([Product]?.self, from: productsString)
+            let productsString = (args["products"] as? String)?.data(using: .utf8)
+            let products = productsString != nil ? try? BankAPIJSONDecoder().decode([Product]?.self, from: productsString!) : nil
             client.send(BankAPI.Bill.Create(amount: amount, accountId: accountId, description: description, products: products), handler: self.after)
         case "createCashtray":
             let env = flutterEnvToSDKEnv(ienv: args["env"] as! Int32)
@@ -170,8 +171,8 @@ private class MethodCallTask {
             let amount = args["amount"] as! Double
             let description = args["description"] as? String
             let expiresIn = args["expiresIn"] as? Int32
-            let productsString = (args["products"] as! String).data(using: .utf8)!
-            let products = try! BankAPIJSONDecoder().decode([Product]?.self, from: productsString)
+            let productsString = (args["products"] as? String)?.data(using: .utf8)
+            let products = productsString != nil ? try? BankAPIJSONDecoder().decode([Product]?.self, from: productsString!) : nil
             client.send(BankAPI.Cashtray.Create(amount: amount, description: description, expiresIn: expiresIn, products: products), handler: self.after)
         case "createCheck":
             let env = flutterEnvToSDKEnv(ienv: args["env"] as! Int32)
@@ -250,8 +251,8 @@ private class MethodCallTask {
             let cpmToken = args["cpmToken"] as! String
             let accountId = args["accountId"] as? String
             let amount = args["amount"] as! Double
-            let productsString = (args["products"] as! String).data(using: .utf8)!
-            let products = try! BankAPIJSONDecoder().decode([Product]?.self, from: productsString)
+            let productsString = (args["products"] as? String)?.data(using: .utf8)
+            let products = productsString != nil ? try? BankAPIJSONDecoder().decode([Product]?.self, from: productsString!) : nil
             client.send(BankAPI.Transaction.CreateWithCpm(cpmToken: cpmToken, accountId: accountId, amount: amount, products: products), handler: self.after)
         case "createUserTransactionWithJwt":
             let env = flutterEnvToSDKEnv(ienv: args["env"] as! Int32)
@@ -507,7 +508,9 @@ private class MethodCallTask {
             let subject = args["subject"] as! String
             let body = args["body"] as! String
             let fromAccountId = args["fromAccountId"] as? String
-            client.send(MessagingAPI.Send(toUserId: toUserId, amount: amount, subject: subject, body: body, fromAccountId: fromAccountId), handler: self.after)
+            let rawSender = (args["sender"] as! String).data(using: .utf8)!
+            let sender = try! JSONDecoder().decode(User.self,from: rawSender)
+            client.send(MessagingAPI.Send(toUserId: toUserId, amount: amount, subject: subject, body: body, sender: sender, fromAccountId: fromAccountId), handler: self.after)
         case "sendToAccount":
             let env = flutterEnvToSDKEnv(ienv: args["env"] as! Int32)
             let accessToken = args["accessToken"] as! String
