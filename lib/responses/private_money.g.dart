@@ -12,11 +12,10 @@ PrivateMoney _$PrivateMoneyFromJson(Map<String, dynamic> json) => PrivateMoney(
       type: json['type'] as String,
       unit: json['unit'] as String,
       description: json['description'] as String,
-      onelineMessage: json['oneline_message'] as String,
+      onlineMessage: json['oneline_message'] as String,
       accountImage: json['account_image'] as String?,
       images: Images.fromJson(json['images'] as Map<String, dynamic>),
-      organization:
-          Organization.fromJson(json['organization'] as Map<String, dynamic>),
+      organization: Organization.fromJson(json['organization'] as Map<String, dynamic>),
       maxBalance: (json['max_balance'] as num?)?.toDouble(),
       transferLimit: (json['transfer_limit'] as num?)?.toDouble(),
       expirationType: json['expiration_type'] as String,
@@ -26,16 +25,16 @@ PrivateMoney _$PrivateMoneyFromJson(Map<String, dynamic> json) => PrivateMoney(
       paymentActUrl: json['payment_act_url'] as String?,
       commercialActUrl: json['commercial_act_url'] as String?,
       canUseCreditCard: json['can_use_credit_card'] as bool,
+      customDomainName: json['custom_domain_name'] as String?,
     );
 
-Map<String, dynamic> _$PrivateMoneyToJson(PrivateMoney instance) =>
-    <String, dynamic>{
+Map<String, dynamic> _$PrivateMoneyToJson(PrivateMoney instance) => <String, dynamic>{
       'id': instance.id,
       'name': instance.name,
       'type': instance.type,
       'unit': instance.unit,
       'description': instance.description,
-      'oneline_message': instance.onelineMessage,
+      'online_message': instance.onlineMessage,
       'account_image': instance.accountImage,
       'images': instance.images.toJson(),
       'organization': instance.organization.toJson(),
@@ -48,4 +47,5 @@ Map<String, dynamic> _$PrivateMoneyToJson(PrivateMoney instance) =>
       'payment_act_url': instance.paymentActUrl,
       'commercial_act_url': instance.commercialActUrl,
       'can_use_credit_card': instance.canUseCreditCard,
+      'custom_domain_name': instance.customDomainName,
     };

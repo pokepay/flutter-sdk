@@ -47,6 +47,7 @@ import jp.pokepay.pokepaylib.BankAPI.Check.GetCheck;
 import jp.pokepay.pokepaylib.BankAPI.Check.UpdateCheck;
 import jp.pokepay.pokepaylib.BankAPI.CpmToken.GetCpmToken;
 import jp.pokepay.pokepaylib.BankAPI.Account.PatchAccountCouponDetail;
+import jp.pokepay.pokepaylib.BankAPI.PrivateMoney.GetPrivateMoney;
 import jp.pokepay.pokepaylib.BankAPI.PrivateMoney.GetPrivateMoneyCoupons;
 import jp.pokepay.pokepaylib.BankAPI.PrivateMoney.SearchPrivateMoneys;
 import jp.pokepay.pokepaylib.BankAPI.Terminal.AddTerminalPublicKey;
@@ -101,6 +102,7 @@ import jp.pokepay.pokepaylib.Responses.PaginatedCoupons;
 import jp.pokepay.pokepaylib.Responses.PaginatedMessages;
 import jp.pokepay.pokepaylib.Responses.PaginatedPrivateMoneys;
 import jp.pokepay.pokepaylib.Responses.PaginatedTransactions;
+import jp.pokepay.pokepaylib.Responses.PrivateMoney;
 import jp.pokepay.pokepaylib.Responses.ServerKey;
 import jp.pokepay.pokepaylib.Responses.Terminal;
 import jp.pokepay.pokepaylib.Responses.User;
@@ -278,9 +280,16 @@ public class PokepaySdkPlugin implements FlutterPlugin, MethodCallHandler {
                         Integer expiresIn = call.argument("expiresIn");
                         String accountId = call.argument("accountId");
                         Product[] products = call.argument("products");
-
+                        String privateMoneyId = call.argument("privateMoneyId");
                         Pokepay.setEnv(env);
-                        Pokepay.Client client = new Pokepay.Client(accessToken, null, isMerchant);
+                        Pokepay.Client client;
+
+                        if (privateMoneyId != null){
+                            client = Pokepay.Client.withCustomDomain(accessToken,this.context, isMerchant, privateMoneyId);
+                        }else{
+                            client = new Pokepay.Client(accessToken, null, isMerchant);
+                        }
+
                         String result = client.createToken(amount, description, expiresIn, accountId, products);
                         return new TaskResult(null, result);
                     }
@@ -631,7 +640,15 @@ public class PokepaySdkPlugin implements FlutterPlugin, MethodCallHandler {
                         Pokepay.setEnv(env);
                         String rawStrategy = call.argument("tx_strategy");
                         TransactionStrategy txStrategy = parseTxStrategy(rawStrategy);
-                        Pokepay.Client client = new Pokepay.Client(accessToken, this.context);
+                        String privateMoneyId = call.argument("privateMoneyId");
+                        Pokepay.Client client;
+
+                        if (privateMoneyId != null){
+                            client = Pokepay.Client.withCustomDomain(accessToken,this.context, false, privateMoneyId);
+                        }else{
+                            client = new Pokepay.Client(accessToken, this.context);
+                        }
+
                         UserTransaction userTransaction = client.scanToken(scanToken,amount,accountId,products,
                                 couponId,txStrategy);
                         return new TaskResult(null, userTransaction.toString());
@@ -648,6 +665,15 @@ public class PokepaySdkPlugin implements FlutterPlugin, MethodCallHandler {
                         Pokepay.setEnv(env);
                         PaginatedPrivateMoneys res = req.send(accessToken);
                         return new TaskResult(null, res.toString());
+                    }
+
+                    case "getPrivateMoney":{
+                        Env env = flutterEnvToSDKEnv((int)call.argument("env"));
+                        String accessToken = call.argument("accessToken");
+                        String privateMoneyId = call.argument("privateMoneyId");
+                        Pokepay.setEnv(env);
+                        PrivateMoney privateMoney =  new GetPrivateMoney(privateMoneyId).send(accessToken);
+                        return new TaskResult(null, privateMoney.toString());
                     }
                     case "sendConfirmationEmail": {
                         Env env = flutterEnvToSDKEnv((int)call.argument("env"));

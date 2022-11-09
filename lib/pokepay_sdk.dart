@@ -3,6 +3,7 @@ import 'dart:convert';
 
 import 'package:flutter/services.dart';
 import 'package:logger/logger.dart';
+import 'package:pokepay_flutter_sdk/bank_api/private_money.dart';
 import 'package:pokepay_flutter_sdk/parameters/transaction_strategy.dart';
 
 import 'bank_api/bill.dart';
@@ -141,12 +142,6 @@ const Map<APIEnv, String> envNameMap = {
   APIEnv.DEVELOPMENT: "dev",
 };
 
-String getWebBaseURL(APIEnv env) {
-  String name = envNameMap[env]!;
-  String suffix = ((name.length > 0) ? ("-" + name) : "");
-  return "https://www" + suffix + ".pokepay.jp";
-}
-
 String getAPIBaseURL(APIEnv env) {
   String name = envNameMap[env]!;
   String suffix = ((name.length > 0) ? ("-" + name) : "");
@@ -184,28 +179,38 @@ String parseAsPokeregiToken(String token) {
 
 class PokepayClient {
   PokepayAPI api;
+  String privateMoneyId;
 
   PokepayClient({
     required String accessToken,
     APIEnv env = APIEnv.PRODUCTION,
+    required String privateMoneyId,
   }) : this.api = PokepayAPI(
           accessToken: accessToken,
           env: env,
-        );
+        ),this.privateMoneyId = privateMoneyId;
 
   Future<Terminal> getTerminalInfo() async {
     return this.api.getTerminal();
   }
 
+  Future<String> getWebBaseURL(APIEnv env) async {
+    String name = envNameMap[env]!;
+    String suffix = ((name.length > 0) ? ("-" + name) : "");
+    return (await this.api.getPrivateMoney(privateMoneyId: this.privateMoneyId)).customDomainName ?? "https://www" + suffix + ".pokepay"
+        ".jp";
+  }
+
   Future<TokenInfo> getTokenInfo(String token, APIEnv env) async {
-    if (token.startsWith(getWebBaseURL(env) + "/cashtrays/")) {
+    final webBaseURL = await getWebBaseURL(env);
+    if (token.startsWith(webBaseURL + "/cashtrays/")) {
       return TokenInfo(type: TokenType.CASHTRAY, token: "");
-    } else if (token.startsWith(getWebBaseURL(env) + "/bills/")) {
-      final String uuid = token.substring((getWebBaseURL(env) + "/bills/").length);
+    } else if (token.startsWith(webBaseURL + "/bills/")) {
+      final String uuid = token.substring((webBaseURL + "/bills/").length);
       final bill = await api.getBill(id: uuid);
       return TokenInfo(type: TokenType.BILL, token: bill);
-    } else if (token.startsWith(getWebBaseURL(env) + "/checks/")) {
-      final String uuid = token.substring((getWebBaseURL(env) + "/checks/").length);
+    } else if (token.startsWith(webBaseURL + "/checks/")) {
+      final String uuid = token.substring((webBaseURL + "/checks/").length);
       final check = await api.getCheck(id: uuid);
       return TokenInfo(type: TokenType.CHECK, token: check);
     } else if (RegExp(r'^([0-9A-Z]{25})$').hasMatch(token)) {
@@ -270,7 +275,8 @@ class PokepayClient {
       'description': description,
       'expiresIn': expiresIn,
       'accountId': accountId,
-      'products': products
+      'products': products,
+      'privateMoneyId': this.privateMoneyId
     });
 
     return json;
@@ -293,6 +299,7 @@ class PokepayClient {
       'products': products,
       'couponId': couponId,
       'tx_strategy': strategy.value,
+      'privateMoneyId': this.privateMoneyId
     });
 
     return UserTransaction.fromJson(jsonDecode(json));
@@ -309,6 +316,12 @@ class PokepayOAuthClient {
     required this.clientId,
     required this.clientSecret,
   });
+
+  String getWebBaseURL(APIEnv env) {
+    String name = envNameMap[env]!;
+    String suffix = ((name.length > 0) ? ("-" + name) : "");
+    return "https://www" + suffix + ".pokepay.jp";
+  }
 
   String getAuthorizationUrl({String contact = ""}) {
     String base = getWebBaseURL(this.env) + "/oauth/authorize?client_id=" + this.clientId + "&response_type=code";

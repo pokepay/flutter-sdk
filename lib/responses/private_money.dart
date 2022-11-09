@@ -12,7 +12,7 @@ class PrivateMoney {
   final String type;
   final String unit;
   final String description;
-  final String onelineMessage;
+  final String onlineMessage;
   final String? accountImage;
   final Images images;
   final Organization organization;
@@ -25,6 +25,7 @@ class PrivateMoney {
   final String? paymentActUrl;
   final String? commercialActUrl;
   final bool canUseCreditCard;
+  final String? customDomainName;
 
   PrivateMoney({
     required this.id,
@@ -32,7 +33,7 @@ class PrivateMoney {
     required this.type,
     required this.unit,
     required this.description,
-    required this.onelineMessage,
+    required this.onlineMessage,
     this.accountImage,
     required this.images,
     required this.organization,
@@ -45,6 +46,7 @@ class PrivateMoney {
     this.paymentActUrl,
     this.commercialActUrl,
     required this.canUseCreditCard,
+    this.customDomainName,
   });
 
   factory PrivateMoney.fromJson(Map<String, dynamic> json) => _$PrivateMoneyFromJson(json);

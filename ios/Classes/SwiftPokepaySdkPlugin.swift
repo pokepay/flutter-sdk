@@ -191,15 +191,28 @@ private class MethodCallTask {
         case "createToken":
             let env = flutterEnvToSDKEnv(ienv: args["env"] as! Int32)
             let accessToken = args["accessToken"] as! String
-            let isMerchant = args["isMerchan"] as! Bool
+            let isMerchant = args["isMerchant"] as! Bool
             let amount = args["amount"] as! Double
             let description = args["description"] as! String
             let expiresIn = args["expiresIn"] as? Int32
             let accountId = args["accountId"] as? String
-            let productsString = (args["products"] as! String).data(using: .utf8)!
-            let products = try! BankAPIJSONDecoder().decode([Product]?.self, from: productsString)
-            let client = Pokepay.Client(accessToken: accessToken,isMerchant: isMerchant,env: env)
-            client.createToken(amount,description: description, expiresIn: expiresIn, accountId: accountId, products: products, handler: self.after)
+            let productsString = (args["products"] as? String)?.data(using: .utf8)
+            let products = productsString != nil ? try? BankAPIJSONDecoder().decode([Product]?.self, from: productsString!) : nil
+            let privateMoneyId = args["privateMoneyId"] as? String
+            
+            if privateMoneyId != nil {
+                Pokepay.Client.withCustomDomain(accessToken: accessToken, isMerchant: isMerchant, env: env, challange: privateMoneyId!){ result in
+                    switch result {
+                        case .success(let response):
+                           response.createToken(amount,description: description, expiresIn: expiresIn, accountId: accountId, products: products, handler: self.after)
+                        case .failure(let error):
+                           break
+                    }
+                }
+            }else{
+                let client = Pokepay.Client(accessToken: accessToken,isMerchant: isMerchant,env: env)
+                client.createToken(amount,description: description, expiresIn: expiresIn, accountId: accountId, products: products, handler: self.after)
+            }
         case "createUserTransactionWithBill":
             let env = flutterEnvToSDKEnv(ienv: args["env"] as! Int32)
             let accessToken = args["accessToken"] as! String
@@ -366,6 +379,12 @@ private class MethodCallTask {
             let accessToken = args["accessToken"] as! String
             let client = Pokepay.Client(accessToken: accessToken, env: env)
             client.send(MessagingAPI.GetUnreadCount(), handler: self.after)
+        case "getPrivateMoney":
+            let env = flutterEnvToSDKEnv(ienv: args["env"] as! Int32)
+            let accessToken = args["accessToken"] as! String
+            let client = Pokepay.Client(accessToken: accessToken, env: env)
+            let privateMoneyId = args["privateMoneyId"] as! String
+            client.send(BankAPI.PrivateMoney.GetPrivateMoney(privateMoneyId:privateMoneyId),handler:self.after)
         case "getPrivateMoneyCoupons":
             let env = flutterEnvToSDKEnv(ienv: args["env"] as! Int32)
             let accessToken = args["accessToken"] as! String
@@ -445,11 +464,23 @@ private class MethodCallTask {
             let token = args["scanToken"] as! String
             let amount = args["amount"] as? Double
             let accountId = args["accountId"] as? String
-            let productsString = (args["products"] as! String).data(using: .utf8)!
-            let products = try! BankAPIJSONDecoder().decode([Product]?.self, from: productsString)
+            let productsString = (args["products"] as? String)?.data(using: .utf8)
+            let products = productsString != nil ? try? BankAPIJSONDecoder().decode([Product]?.self, from: productsString!) : nil
             let couponId = args["couponId"] as? String
-            let client = Pokepay.Client(accessToken: accessToken,env: env)
-            client.scanToken(token,amount:amount,accountId:accountId,products:products,couponId:couponId,handler: self.after)
+            let privateMoneyId = args["privateMoneyId"] as? String
+            if privateMoneyId != nil {
+                Pokepay.Client.withCustomDomain(accessToken: accessToken, env: env, challange: privateMoneyId!){ result in
+                    switch result {
+                        case .success(let response):
+                           response.scanToken(token,amount:amount,accountId:accountId,products:products,couponId:couponId,handler: self.after)
+                        case .failure(let error):
+                           break
+                    }
+                }
+            }else{
+                let client = Pokepay.Client(accessToken: accessToken,env: env)
+                client.scanToken(token,amount:amount,accountId:accountId,products:products,couponId:couponId,handler: self.after)
+            }
         case "searchPrivateMoneys":
             let env = flutterEnvToSDKEnv(ienv: args["env"] as! Int32)
             let accessToken = args["accessToken"] as! String

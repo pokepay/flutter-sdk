@@ -1,7 +1,8 @@
+import 'package:pokepay_flutter_sdk/responses.dart';
 import 'package:pokepay_flutter_sdk/responses/paginated_coupons.dart';
 
 import '../pokepay_sdk.dart';
-import '../responses.dart';
+import '../responses/private_money.dart' as response;
 
 extension PrivateMoney on PokepayAPI {
   Future<PaginatedPrivateMoneys> searchPrivateMoneys({
@@ -42,6 +43,20 @@ extension PrivateMoney on PokepayAPI {
         'before': before,
         'after': after,
         'perPage': perPage,
+      },
+    );
+  }
+
+  Future<response.PrivateMoney> getPrivateMoney({
+    required String privateMoneyId,
+  }) async {
+    return await invokeMethod<response.PrivateMoney>(
+      (j) => response.PrivateMoney.fromJson(j),
+      "getPrivateMoney",
+      {
+        'env': this.env.index,
+        'accessToken': this.accessToken,
+        'privateMoneyId': privateMoneyId,
       },
     );
   }
