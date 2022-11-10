@@ -265,7 +265,8 @@ public class PokepaySdkPlugin implements FlutterPlugin, MethodCallHandler {
                         Double amount = call.argument("amount");
                         String accountId = call.argument("accountId");
                         String description = call.argument("description");
-                        CreateCheck req = new CreateCheck(amount, accountId, description);
+                        String dateStr = call.argument("expires_at");
+                        CreateCheck req = new CreateCheck(amount, accountId, description,stringToDate(dateStr));
                         Pokepay.setEnv(env);
                         Check res = req.send(accessToken);
                         return new TaskResult(null, res.toString());

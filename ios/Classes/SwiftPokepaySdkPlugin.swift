@@ -93,8 +93,12 @@ private class MethodCallTask {
     private func after<T: Codable>(_ ret: Result<T, PokepayError>) -> Void {
         switch ret {
         case .success(let ret):
-           let bytes = try! APIJSONEncoder().encode(ret)
-           self.result(String(data: bytes, encoding: .utf8))
+            if ret is String {
+                self.result(ret)
+            }else{
+                let bytes = try! APIJSONEncoder().encode(ret)
+                self.result(String(data: bytes, encoding: .utf8))
+            }
         case .failure(.responseError(let error as BankAPIError)):
            switch error {
            case .clientError(let code, let apiError):
