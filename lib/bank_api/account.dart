@@ -86,7 +86,7 @@ extension AccountAPI on PokepayAPI {
 
   Future<PaginatedCoupons> getAccountCoupons({
     required String accountId,
-    bool? isAvailable,
+    bool isAvailable = true,
     String? before,
     String? after,
     int? perPage,
