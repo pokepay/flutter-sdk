@@ -13,7 +13,7 @@ flutter pub get
 ```
 3. Then you can use Pokepay SDK in your project.
 ## Usage
-1. How to use OAthClient with [FLutterWebAuth](https://pub.dev/packages/flutter_web_auth)
+1. How to use OAthClient with [FlutterWebAuth](https://pub.dev/packages/flutter_web_auth)
 ```flutter
 PokepayOAuthClient oauthClient = PokepayOAuthClient(clientId: YOUR_CLIENT_ID,clientSecret: YOUR_CLIENT_SCRET, env: APIEnv.DEVELOPMENT);
 String authUrl = oauthClient.getAuthorizationUrl();

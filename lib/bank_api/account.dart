@@ -6,7 +6,7 @@ import '../responses.dart';
 
 enum CpmTokenScope {
   none, // = 0
-  payemnt,
+  payment,
   topup,
   both,
 }
