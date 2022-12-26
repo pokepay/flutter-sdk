@@ -1,3 +1,8 @@
+##1.0.6
+* Upgrade to flutter 3.0
+* Null safety
+* Make the transaction can choose to use points or not.
+* Support custom domain.
 ##1.0.4
 * Modified API
 ## 1.0.3
