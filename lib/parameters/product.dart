@@ -6,42 +6,38 @@ part 'product.g.dart';
 
 @JsonSerializable()
 class Product {
-  @JsonKey(nullable: false)
   final String janCode;
-  @JsonKey(nullable: false)
   final String name;
-  final double unitPrice;
-  final double price;
-  final bool isDiscounted;
-  final String other;
+  final double? unitPrice;
+  final double? price;
+  final bool? isDiscounted;
+  final String? other;
 
   Product({
-    this.janCode,
-    this.name,
+    required this.janCode,
+    required this.name,
     this.unitPrice,
     this.price,
     this.isDiscounted,
     this.other,
   });
 
-  factory Product.fromJson(Map<String, dynamic> json) =>
-      _$ProductFromJson(json);
+  factory Product.fromJson(Map<String, dynamic> json) => _$ProductFromJson(json);
+
   Map<String, dynamic> toJson() => _$ProductToJson(this);
 
   factory Product.create({
-    String janCodePrimary,
-    String janCodeSecondary,
-    String name,
-    double unitPrice,
-    double price,
+    required String janCodePrimary,
+    required String janCodeSecondary,
+    required String name,
+    double? unitPrice,
+    double? price,
     bool isDiscounted = false,
-    double amount,
-    String amountUnit,
+    required double amount,
+    required String amountUnit,
   }) {
     String janCode = janCodePrimary;
-    if (janCodeSecondary != null) {
-      janCode += "___" + janCodeSecondary;
-    }
+    janCode += "___" + janCodeSecondary;
     Product product = Product(
       janCode: janCode,
       name: name,

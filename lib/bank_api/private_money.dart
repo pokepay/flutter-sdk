@@ -1,16 +1,16 @@
-import 'package:meta/meta.dart';
+import 'package:pokepay_flutter_sdk/responses.dart';
 import 'package:pokepay_flutter_sdk/responses/paginated_coupons.dart';
 
 import '../pokepay_sdk.dart';
-import '../responses.dart';
+import '../responses/private_money.dart' as response;
 
 extension PrivateMoney on PokepayAPI {
   Future<PaginatedPrivateMoneys> searchPrivateMoneys({
-    String name,
+    String? name,
     bool includeExclusive = false,
-    String before,
-    String after,
-    int perPage,
+    String? before,
+    String? after,
+    int? perPage,
   }) async {
     return await invokeMethod<PaginatedPrivateMoneys>(
       (j) => PaginatedPrivateMoneys.fromJson(j),
@@ -28,13 +28,13 @@ extension PrivateMoney on PokepayAPI {
   }
 
   Future<PaginatedCoupons> getPrivateMoneyCoupons({
-    @required String privateMoneyId,
-    String before,
-    String after,
-    int perPage,
+    required String privateMoneyId,
+    String? before,
+    String? after,
+    int? perPage,
   }) async {
     return await invokeMethod<PaginatedCoupons>(
-          (j) => PaginatedCoupons.fromJson(j),
+      (j) => PaginatedCoupons.fromJson(j),
       'getPrivateMoneyCoupons',
       {
         'env': this.env.index,
@@ -43,6 +43,20 @@ extension PrivateMoney on PokepayAPI {
         'before': before,
         'after': after,
         'perPage': perPage,
+      },
+    );
+  }
+
+  Future<response.PrivateMoney> getPrivateMoney({
+    required String privateMoneyId,
+  }) async {
+    return await invokeMethod<response.PrivateMoney>(
+      (j) => response.PrivateMoney.fromJson(j),
+      "getPrivateMoney",
+      {
+        'env': this.env.index,
+        'accessToken': this.accessToken,
+        'privateMoneyId': privateMoneyId,
       },
     );
   }

@@ -23,6 +23,7 @@ export 'responses/paginated_accounts.dart';
 export 'responses/paginated_messages.dart';
 export 'responses/paginated_private_moneys.dart';
 export 'responses/paginated_transactions.dart';
+export 'responses/paginated_transfers.dart';
 export 'responses/private_money.dart';
 export 'responses/server_key.dart';
 export 'responses/terminal.dart';

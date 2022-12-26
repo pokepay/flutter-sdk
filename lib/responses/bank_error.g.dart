@@ -6,13 +6,11 @@ part of 'bank_error.dart';
 // JsonSerializableGenerator
 // **************************************************************************
 
-BankError _$BankErrorFromJson(Map<String, dynamic> json) {
-  return BankError(
-    type: json['type'] as String,
-    message: json['message'] as String,
-    errors: json['errors'],
-  );
-}
+BankError _$BankErrorFromJson(Map<String, dynamic> json) => BankError(
+      type: json['type'] as String,
+      message: json['message'] as String,
+      errors: json['errors'],
+    );
 
 Map<String, dynamic> _$BankErrorToJson(BankError instance) => <String, dynamic>{
       'type': instance.type,

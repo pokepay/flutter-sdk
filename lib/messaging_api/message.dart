@@ -1,11 +1,10 @@
-import 'package:meta/meta.dart';
-
 import '../pokepay_sdk.dart';
 import '../responses.dart';
+import 'dart:convert';
 
 extension MessageAPI on PokepayAPI {
   Future<Message> getMessage({
-    @required String id,
+    required String id,
   }) async {
     return await invokeMethod<Message>(
       (j) => Message.fromJson(j),
@@ -30,9 +29,9 @@ extension MessageAPI on PokepayAPI {
   }
 
   Future<PaginatedMessages> listMessages({
-    String before,
-    String after,
-    int perPage,
+    String? before,
+    String? after,
+    int? perPage,
   }) async {
     return await invokeMethod<PaginatedMessages>(
       (j) => PaginatedMessages.fromJson(j),
@@ -48,7 +47,7 @@ extension MessageAPI on PokepayAPI {
   }
 
   Future<MessageAttachment> receiveMessageAttachment({
-    @required String id,
+    required String id,
   }) async {
     return await invokeMethod<MessageAttachment>(
       (j) => MessageAttachment.fromJson(j),
@@ -62,11 +61,12 @@ extension MessageAPI on PokepayAPI {
   }
 
   Future<Message> sendMessage({
-    @required String toUserId,
-    double amount,
-    @required String subject,
-    @required String body,
-    String fromAccountId,
+    required String toUserId,
+    double? amount,
+    required String subject,
+    required String body,
+    required User sender,
+    String? fromAccountId,
   }) async {
     return await invokeMethod<Message>(
       (j) => Message.fromJson(j),
@@ -78,6 +78,11 @@ extension MessageAPI on PokepayAPI {
         'amount': amount,
         'subject': subject,
         'body': body,
+        'sender': jsonEncode({
+          "id": sender.id,
+          "name": sender.name,
+          "is_merchant": sender.isMerchant,
+        }),
         'fromAccountId': fromAccountId,
       },
     );

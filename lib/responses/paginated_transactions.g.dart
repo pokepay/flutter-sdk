@@ -7,17 +7,16 @@ part of 'paginated_transactions.dart';
 // **************************************************************************
 
 PaginatedTransactions _$PaginatedTransactionsFromJson(
-    Map<String, dynamic> json) {
-  return PaginatedTransactions(
-    perPage: json['per_page'] as int,
-    count: json['count'] as int,
-    next: json['next'] as String,
-    prev: json['prev'] as String,
-    items: (json['items'] as List)
-        .map((e) => UserTransaction.fromJson(e as Map<String, dynamic>))
-        .toList(),
-  );
-}
+        Map<String, dynamic> json) =>
+    PaginatedTransactions(
+      perPage: json['per_page'] as int?,
+      count: json['count'] as int?,
+      next: json['next'] as String?,
+      prev: json['prev'] as String?,
+      items: (json['items'] as List<dynamic>)
+          .map((e) => UserTransaction.fromJson(e as Map<String, dynamic>))
+          .toList(),
+    );
 
 Map<String, dynamic> _$PaginatedTransactionsToJson(
         PaginatedTransactions instance) =>
@@ -26,5 +25,5 @@ Map<String, dynamic> _$PaginatedTransactionsToJson(
       'count': instance.count,
       'next': instance.next,
       'prev': instance.prev,
-      'items': instance.items,
+      'items': instance.items.map((e) => e.toJson()).toList(),
     };

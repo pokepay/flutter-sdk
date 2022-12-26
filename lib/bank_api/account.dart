@@ -1,4 +1,3 @@
-import 'package:meta/meta.dart';
 import 'package:pokepay_flutter_sdk/responses/coupon_detail.dart';
 import 'package:pokepay_flutter_sdk/responses/paginated_coupons.dart';
 
@@ -7,15 +6,16 @@ import '../responses.dart';
 
 enum CpmTokenScope {
   none, // = 0
-  payemnt,
+  payment,
   topup,
   both,
 }
 
 extension AccountAPI on PokepayAPI {
   Future<Account> createAccount({
-    String name,
-    String privateMoneyId,
+    String? name,
+    required String privateMoneyId,
+    String? externalId,
   }) async {
     return await invokeMethod<Account>(
       (j) => Account.fromJson(j),
@@ -25,15 +25,16 @@ extension AccountAPI on PokepayAPI {
         'accessToken': this.accessToken,
         'name': name,
         'privateMoneyId': privateMoneyId,
+        'externalId': externalId,
       },
     );
   }
 
   Future<AccountCpmToken> createAccountCpmToken({
-    @required String accountId,
-    @required CpmTokenScope scopes,
-    int expiresIn,
-    Map<String, String> metadata,
+    required String accountId,
+    required CpmTokenScope scopes,
+    int? expiresIn,
+    Map<String, String>? metadata,
   }) async {
     return await invokeMethod<AccountCpmToken>(
       (j) => AccountCpmToken.fromJson(j),
@@ -44,13 +45,13 @@ extension AccountAPI on PokepayAPI {
         'accountId': accountId,
         'scopes': scopes.index,
         'expiresIn': expiresIn,
-        'metadata' : metadata,
+        'metadata': metadata,
       },
     );
   }
 
   Future<Account> getAccount({
-    @required String id,
+    required String id,
   }) async {
     return await invokeMethod<Account>(
       (j) => Account.fromJson(j),
@@ -64,10 +65,10 @@ extension AccountAPI on PokepayAPI {
   }
 
   Future<PaginatedAccountBalances> getAccountBalances({
-    @required String id,
-    String before,
-    String after,
-    int perPage,
+    required String id,
+    String? before,
+    String? after,
+    int? perPage,
   }) async {
     return await invokeMethod<PaginatedAccountBalances>(
       (j) => PaginatedAccountBalances.fromJson(j),
@@ -82,15 +83,16 @@ extension AccountAPI on PokepayAPI {
       },
     );
   }
+
   Future<PaginatedCoupons> getAccountCoupons({
-    @required String accountId,
-    bool isAvailable,
-    String before,
-    String after,
-    int perPage,
+    required String accountId,
+    bool isAvailable = true,
+    String? before,
+    String? after,
+    int? perPage,
   }) async {
     return await invokeMethod<PaginatedCoupons>(
-          (j) => PaginatedCoupons.fromJson(j),
+      (j) => PaginatedCoupons.fromJson(j),
       'getAccountCoupons',
       {
         'env': this.env.index,
@@ -105,11 +107,11 @@ extension AccountAPI on PokepayAPI {
   }
 
   Future<CouponDetail> getAccountCouponDetail({
-    @required String accountId,
-    @required String couponId,
+    required String accountId,
+    required String couponId,
   }) async {
     return await invokeMethod<CouponDetail>(
-          (j) => CouponDetail.fromJson(j),
+      (j) => CouponDetail.fromJson(j),
       'getAccountCouponDetail',
       {
         'env': this.env.index,
@@ -119,11 +121,12 @@ extension AccountAPI on PokepayAPI {
       },
     );
   }
-  Future<PaginatedTransactions> getAccounTransactions({
-    @required String id,
-    String before,
-    String after,
-    int perPage,
+
+  Future<PaginatedTransactions> getAccountTransactions({
+    required String id,
+    String? before,
+    String? after,
+    int? perPage,
   }) async {
     return await invokeMethod<PaginatedTransactions>(
       (j) => PaginatedTransactions.fromJson(j),
@@ -140,19 +143,19 @@ extension AccountAPI on PokepayAPI {
   }
 
   Future<CouponDetail> patchAccountCouponDetail({
-    @required String accountId,
-    @required String couponId,
-    @required bool isReceieved,
+    required String accountId,
+    required String couponId,
+    required bool isReceived,
   }) async {
     return await invokeMethod<CouponDetail>(
-          (j) => CouponDetail.fromJson(j),
+      (j) => CouponDetail.fromJson(j),
       'patchAccountCouponDetail',
       {
         'env': this.env.index,
         'accessToken': this.accessToken,
         'accountId': accountId,
         'couponId': couponId,
-        'is_received': isReceieved,
+        'is_received': isReceived,
       },
     );
   }

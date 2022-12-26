@@ -1,23 +1,23 @@
 // GENERATED CODE - DO NOT MODIFY BY HAND
 
-part of 'paginated_accounts.dart';
+part of 'paginated_transfers.dart';
 
 // **************************************************************************
 // JsonSerializableGenerator
 // **************************************************************************
 
-PaginatedAccounts _$PaginatedAccountsFromJson(Map<String, dynamic> json) =>
-    PaginatedAccounts(
+PaginatedTransfers _$PaginatedTransfersFromJson(Map<String, dynamic> json) =>
+    PaginatedTransfers(
       perPage: json['per_page'] as int?,
       count: json['count'] as int?,
       next: json['next'] as String?,
       prev: json['prev'] as String?,
       items: (json['items'] as List<dynamic>)
-          .map((e) => Account.fromJson(e as Map<String, dynamic>))
+          .map((e) => UserTransfer.fromJson(e as Map<String, dynamic>))
           .toList(),
     );
 
-Map<String, dynamic> _$PaginatedAccountsToJson(PaginatedAccounts instance) =>
+Map<String, dynamic> _$PaginatedTransfersToJson(PaginatedTransfers instance) =>
     <String, dynamic>{
       'per_page': instance.perPage,
       'count': instance.count,

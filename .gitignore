@@ -16,7 +16,7 @@ coverage/
 *.iml
 *.ipr
 *.iws
-.idea/
+.idea/*
 
 pubspec.lock
 .flutter-plugins

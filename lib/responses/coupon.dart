@@ -4,50 +4,44 @@ part 'coupon.g.dart';
 
 @JsonSerializable()
 class Coupon {
-  @JsonKey(nullable: false)
   final String id;
-  @JsonKey(nullable: false)
   final String name;
-  @JsonKey(nullable: false)
   final String description;
-  final int discountAmount;
-  final int discountPercentage;
-  @JsonKey(nullable: false)
+  final int? discountAmount;
+  final int? discountPercentage;
   final DateTime startsAt;
-  @JsonKey(nullable: false)
   final DateTime endsAt;
-  @JsonKey(nullable: false)
   final DateTime displayStartsAt;
-  @JsonKey(nullable: false)
   final DateTime displayEndsAt;
-  final int usageLimit;
-  final int minAmount;
-  @JsonKey(nullable: false)
-  final bool    isShopSpecified;
-  @JsonKey(nullable: false)
-  final bool    isDisabled;
-  @JsonKey(nullable: false)
-  final bool    isHidden;
-  final String couponImage;
+  final int? usageLimit;
+  final int? minAmount;
+  final bool isShopSpecified;
+  final bool isDisabled;
+  final bool isHidden;
+  final String? couponImage;
 
   Coupon({
-    this.id,
-    this.name,
-    this.description,
+    required this.id,
+    required this.name,
+    required this.description,
     this.discountAmount,
     this.discountPercentage,
-    this.startsAt,
-    this.endsAt,
-    this.displayStartsAt,
-    this.displayEndsAt,
+    required this.startsAt,
+    required this.endsAt,
+    required this.displayStartsAt,
+    required this.displayEndsAt,
     this.usageLimit,
     this.minAmount,
-    this.isShopSpecified,
-    this.isDisabled,
-    this.isHidden,
+    required this.isShopSpecified,
+    required this.isDisabled,
+    required this.isHidden,
     this.couponImage,
   });
 
   factory Coupon.fromJson(Map<String, dynamic> json) => _$CouponFromJson(json);
+
   Map<String, dynamic> toJson() => _$CouponToJson(this);
+
+  @override
+  String toString() => this.toJson().toString();
 }

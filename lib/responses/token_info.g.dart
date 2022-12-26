@@ -7,44 +7,61 @@ part of 'token_info.dart';
 // **************************************************************************
 
 TokenInfo _$TokenInfoFromJson(Map<String, dynamic> json) {
+  final tokenType = $enumDecode(_$TokenTypeEnumMap, json['type']);
+  late dynamic token;
+  switch(tokenType){
+    case TokenType.BILL:
+      token = Bill.fromJson(json['token'] as Map<String, dynamic>);
+      break;
+    case TokenType.CASHTRAY:
+      token = Cashtray.fromJson(json['token'] as Map<String, dynamic>);
+      break;
+    case TokenType.CHECK:
+      token = Check.fromJson(json['token'] as Map<String, dynamic>);
+      break;
+    case TokenType.CPM:
+      token = AccountCpmToken.fromJson(json['token'] as Map<String, dynamic>);
+      break;
+    case TokenType.PAYREGI:
+    case TokenType.JWT:
+      token = json['token'];
+      break;
+    case TokenType.UNKNOWN:
+      token = '';
+      break;
+  }
   return TokenInfo(
-    type: _$enumDecode(_$TokenTypeEnumMap, json['type']),
-    token: json['token'] as dynamic,
-  )
-    ..bill = json['bill'] == null
-        ? null
-        : Bill.fromJson(json['bill'] as Map<String, dynamic>)
-    ..check = json['check'] == null
-        ? null
-        : Check.fromJson(json['check'] as Map<String, dynamic>);
+    type: tokenType,
+    token: token,
+  );
 }
 
-Map<String, dynamic> _$TokenInfoToJson(TokenInfo instance) => <String, dynamic>{
-      'type': _$TokenTypeEnumMap[instance.type],
-      'token': instance.token,
-      'bill': instance.bill,
-      'check': instance.check,
-    };
+Map<String, dynamic> _$TokenInfoToJson(TokenInfo instance){
+  late dynamic token;
+  switch(instance.type){
 
-T _$enumDecode<T>(
-  Map<T, dynamic> enumValues,
-  dynamic source, {
-  T unknownValue,
-}) {
-  if (source == null) {
-    throw ArgumentError('A value must be provided. Supported values: '
-        '${enumValues.values.join(', ')}');
+    case TokenType.CASHTRAY:
+      token = (instance.token as Cashtray).toJson();
+      break;
+    case TokenType.BILL:
+      token = (instance.token as Bill).toJson();
+      break;
+    case TokenType.CHECK:
+      token = (instance.token as Check).toJson();
+      break;
+    case TokenType.CPM:
+      token = (instance.token as AccountCpmToken).toJson();
+      break;
+    case TokenType.PAYREGI:
+    case TokenType.JWT:
+    case TokenType.UNKNOWN:
+      token = instance.token;
+      break;
   }
-
-  final value = enumValues.entries
-      .singleWhere((e) => e.value == source, orElse: () => null)
-      ?.key;
-
-  if (value == null && unknownValue == null) {
-    throw ArgumentError('`$source` is not one of the supported values: '
-        '${enumValues.values.join(', ')}');
-  }
-  return value ?? unknownValue;
+  return <String, dynamic>{
+    'type': _$TokenTypeEnumMap[instance.type]!,
+    'token': token,
+  };
 }
 
 const _$TokenTypeEnumMap = {
@@ -57,31 +74,22 @@ const _$TokenTypeEnumMap = {
   TokenType.UNKNOWN: 'UNKNOWN',
 };
 
-TokenInfoMerchant _$TokenInfoMerchantFromJson(Map<String, dynamic> json) {
-  return TokenInfoMerchant(
-    type: _$enumDecode(_$TokenTypeEnumMap, json['type']),
-    token: json['token'] as String,
-    cpmToken: json['cpm_token'] == null
-        ? null
-        : AccountCpmToken.fromJson(json['cpm_token'] as Map<String, dynamic>),
-    cashtray: json['cashtray'] == null
-        ? null
-        : Cashtray.fromJson(json['cashtray'] as Map<String, dynamic>),
-  )
-    ..bill = json['bill'] == null
-        ? null
-        : Bill.fromJson(json['bill'] as Map<String, dynamic>)
-    ..check = json['check'] == null
-        ? null
-        : Check.fromJson(json['check'] as Map<String, dynamic>);
-}
+TokenInfoMerchant _$TokenInfoMerchantFromJson(Map<String, dynamic> json) =>
+    TokenInfoMerchant(
+      type: $enumDecode(_$TokenTypeEnumMap, json['type']),
+      token: json['token'] as String,
+      cpmToken: json['cpm_token'] == null
+          ? null
+          : AccountCpmToken.fromJson(json['cpm_token'] as Map<String, dynamic>),
+      cashtray: json['cashtray'] == null
+          ? null
+          : Cashtray.fromJson(json['cashtray'] as Map<String, dynamic>),
+    );
 
 Map<String, dynamic> _$TokenInfoMerchantToJson(TokenInfoMerchant instance) =>
     <String, dynamic>{
-      'type': _$TokenTypeEnumMap[instance.type],
+      'type': _$TokenTypeEnumMap[instance.type]!,
       'token': instance.token,
-      'bill': instance.bill,
-      'check': instance.check,
-      'cpm_token': instance.cpmToken,
-      'cashtray': instance.cashtray,
+      'cpm_token': instance.cpmToken?.toJson(),
+      'cashtray': instance.cashtray?.toJson(),
     };

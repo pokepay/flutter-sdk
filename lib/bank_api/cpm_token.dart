@@ -1,12 +1,9 @@
-import 'package:meta/meta.dart';
-
 import '../pokepay_sdk.dart';
 import '../responses.dart';
 
 extension AccountAPI on PokepayAPI {
   Future<AccountCpmToken> getCpmToken({
-    @required String cpmToken,
-    Map<String, String> metadata,
+    required String cpmToken,
   }) async {
     return await invokeMethod<AccountCpmToken>(
       (j) => AccountCpmToken.fromJson(j),
@@ -15,7 +12,6 @@ extension AccountAPI on PokepayAPI {
         'env': this.env.index,
         'accessToken': this.accessToken,
         'cpmToken': cpmToken,
-        'metadata': metadata,
       },
     );
   }

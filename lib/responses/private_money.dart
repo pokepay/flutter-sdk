@@ -1,63 +1,58 @@
 import 'package:json_annotation/json_annotation.dart';
-import 'package:meta/meta.dart';
 
-import '../responses.dart';
+import 'images.dart';
+import 'organization.dart';
 
 part 'private_money.g.dart';
 
 @JsonSerializable()
-class PrivateMoney extends Response {
-  @JsonKey(nullable: false)
+class PrivateMoney {
   final String id;
-  @JsonKey(nullable: false)
   final String name;
-  @JsonKey(nullable: false)
   final String type;
-  @JsonKey(nullable: false)
   final String unit;
-  @JsonKey(nullable: false)
   final String description;
-  @JsonKey(nullable: false)
-  final String onelineMessage;
-  final String accountImage;
-  @JsonKey(nullable: false)
+  final String onlineMessage;
+  final String? accountImage;
   final Images images;
-  @JsonKey(nullable: false)
   final Organization organization;
-  final double maxBalance;
-  final double transferLimit;
-  @JsonKey(nullable: false)
+  final double? maxBalance;
+  final double? transferLimit;
   final String expirationType;
-  final bool isExclusive;
-  final String termsUrl;
-  final String privacyPolicyUrl;
-  final String paymentActUrl;
-  final String commercialActUrl;
-  @JsonKey(nullable: false)
+  final bool? isExclusive;
+  final String? termsUrl;
+  final String? privacyPolicyUrl;
+  final String? paymentActUrl;
+  final String? commercialActUrl;
   final bool canUseCreditCard;
+  final String? customDomainName;
 
   PrivateMoney({
-    @required this.id,
-    @required this.name,
-    @required this.type,
-    @required this.unit,
-    @required this.description,
-    @required this.onelineMessage,
+    required this.id,
+    required this.name,
+    required this.type,
+    required this.unit,
+    required this.description,
+    required this.onlineMessage,
     this.accountImage,
-    @required this.images,
-    @required this.organization,
-    @required this.maxBalance,
-    @required this.transferLimit,
-    @required this.expirationType,
-    @required this.isExclusive,
+    required this.images,
+    required this.organization,
+    this.maxBalance,
+    this.transferLimit,
+    required this.expirationType,
+    this.isExclusive,
     this.termsUrl,
     this.privacyPolicyUrl,
     this.paymentActUrl,
     this.commercialActUrl,
-    @required this.canUseCreditCard,
+    required this.canUseCreditCard,
+    this.customDomainName,
   });
 
-  factory PrivateMoney.fromJson(Map<String, dynamic> json) =>
-      _$PrivateMoneyFromJson(json);
+  factory PrivateMoney.fromJson(Map<String, dynamic> json) => _$PrivateMoneyFromJson(json);
+
   Map<String, dynamic> toJson() => _$PrivateMoneyToJson(this);
+
+  @override
+  String toString() => this.toJson().toString();
 }

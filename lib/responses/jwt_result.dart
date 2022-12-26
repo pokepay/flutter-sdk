@@ -1,20 +1,20 @@
 import 'package:json_annotation/json_annotation.dart';
 
-import '../responses.dart';
-
 part 'jwt_result.g.dart';
 
 @JsonSerializable()
-class JwtResult extends Response {
+class JwtResult {
   final String data;
   final String error;
 
   JwtResult({
-    this.data,
-    this.error,
+    required this.data,
+    required this.error,
   });
 
-  factory JwtResult.fromJson(Map<String, dynamic> json) =>
-      _$JwtResultFromJson(json);
+  factory JwtResult.fromJson(Map<String, dynamic> json) => _$JwtResultFromJson(json);
   Map<String, dynamic> toJson() => _$JwtResultToJson(this);
+
+  @override
+  String toString() => this.toJson().toString();
 }
