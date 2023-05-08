@@ -3,6 +3,7 @@ import '../responses/no_content.dart';
 import '../responses/paginated_accounts.dart';
 import '../responses/paginated_transactions.dart';
 import '../responses/user.dart';
+import '../responses/user_with_auth_factors.dart';
 
 extension UserAPI on PokepayAPI {
   Future<NoContent> deleteUserEmail({
@@ -57,6 +58,20 @@ extension UserAPI on PokepayAPI {
         'before': before,
         'after': after,
         'perPage': perPage,
+      },
+    );
+  }
+
+  Future<UserWithAuthFactors> getUserWithAuthFactors({
+    required String userId,
+  }) async {
+    return await invokeMethod<UserWithAuthFactors>(
+      (j) => UserWithAuthFactors.fromJson(j),
+      'getUserWithAuthFactors',
+      {
+        'env': this.env.index,
+        'accessToken': this.accessToken,
+        'userId': userId,
       },
     );
   }

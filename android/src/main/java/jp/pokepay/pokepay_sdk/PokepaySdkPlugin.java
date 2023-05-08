@@ -68,6 +68,7 @@ import jp.pokepay.pokepaylib.BankAPI.User.GetUserTransactions;
 import jp.pokepay.pokepaylib.BankAPI.User.RegisterUserEmail;
 import jp.pokepay.pokepaylib.BankAPI.User.SendConfirmationEmail;
 import jp.pokepay.pokepaylib.BankAPI.User.UpdateUser;
+import jp.pokepay.pokepaylib.BankAPI.User.GetUserWithAuthFactors;
 import jp.pokepay.pokepaylib.Env;
 import jp.pokepay.pokepaylib.JsonConverter;
 import jp.pokepay.pokepaylib.MessagingAPI.GetMessage;
@@ -866,6 +867,15 @@ public class PokepaySdkPlugin implements FlutterPlugin, MethodCallHandler {
                         String id = call.argument("id");
                         String name = call.argument("name");
                         UpdateUser req = new UpdateUser(id, name);
+                        Pokepay.setEnv(env);
+                        User res = req.send(accessToken);
+                        return new TaskResult(null, res.toString());
+                    }
+                    case "getUserWithAuthFactors": {
+                        Env env = flutterEnvToSDKEnv((int)call.argument("env"));
+                        String accessToken = call.argument("accessToken");
+                        String userId = call.argument("userId");
+                        GetUserWithAuthFactors req = new GetUserWithAuthFactors(userId);
                         Pokepay.setEnv(env);
                         User res = req.send(accessToken);
                         return new TaskResult(null, res.toString());
