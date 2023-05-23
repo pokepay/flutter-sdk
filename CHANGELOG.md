@@ -1,3 +1,9 @@
+## 2.0.3
+**Sync with Native SDK versions**
+* Added custom fallback for scanning token
+* Added `RequestId` parameter for create transactions with `Bill`, `Cashtray`, `Check`, and `CPM`
+* Added `pointDept` parameter for `Account` response
+
 ##1.0.6
 * Upgrade to flutter 3.0
 * Null safety
