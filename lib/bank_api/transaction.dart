@@ -13,6 +13,7 @@ extension TransactionAPI on PokepayAPI {
     double? amount,
     String? couponId,
     TransactionStrategy strategy = TransactionStrategy.POINT_PREFERRED,
+    String? requestId,
   }) async {
     return await invokeMethod<UserTransaction>(
       (j) => UserTransaction.fromJson(j),
@@ -25,6 +26,7 @@ extension TransactionAPI on PokepayAPI {
         'amount': amount,
         'couponId': couponId,
         'tx_strategy': strategy.value,
+        'requestId': requestId,
       },
     );
   }
@@ -34,6 +36,7 @@ extension TransactionAPI on PokepayAPI {
     String? accountId,
     String? couponId,
     TransactionStrategy strategy = TransactionStrategy.POINT_PREFERRED,
+    String? requestId,
   }) async {
     return await invokeMethod<UserTransaction>(
       (j) => UserTransaction.fromJson(j),
@@ -45,6 +48,7 @@ extension TransactionAPI on PokepayAPI {
         'accountId': accountId,
         'couponId': couponId,
         'tx_strategy': strategy.value,
+        'requestId': requestId,
       },
     );
   }
@@ -52,6 +56,7 @@ extension TransactionAPI on PokepayAPI {
   Future<UserTransaction> createUserTransactionWithCheck({
     required String checkId,
     String? accountId,
+    String? requestId,
   }) async {
     return await invokeMethod<UserTransaction>(
       (j) => UserTransaction.fromJson(j),
@@ -61,6 +66,7 @@ extension TransactionAPI on PokepayAPI {
         'accessToken': this.accessToken,
         'checkId': checkId,
         'accountId': accountId,
+        'requestId': requestId,
       },
     );
   }
@@ -70,6 +76,7 @@ extension TransactionAPI on PokepayAPI {
     String? accountId,
     required double amount,
     List<Product>? products,
+    String? requestId,
   }) async {
     return await invokeMethod<UserTransaction>(
       (j) => UserTransaction.fromJson(j),
@@ -81,6 +88,7 @@ extension TransactionAPI on PokepayAPI {
         'accountId': accountId,
         'amount': amount,
         'products': jsonEncode(products),
+        'requestId': requestId,
       },
     );
   }
