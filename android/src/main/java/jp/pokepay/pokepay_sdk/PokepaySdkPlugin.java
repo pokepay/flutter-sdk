@@ -109,6 +109,7 @@ import jp.pokepay.pokepaylib.Responses.ServerKey;
 import jp.pokepay.pokepaylib.Responses.Terminal;
 import jp.pokepay.pokepaylib.Responses.User;
 import jp.pokepay.pokepaylib.Responses.UserTransaction;
+import jp.pokepay.pokepaylib.Responses.UserWithAuthFactors;
 import jp.pokepay.pokepaylib.TokenInfo;
 
 /** PokepaySdkPlugin */
@@ -331,7 +332,7 @@ public class PokepaySdkPlugin implements FlutterPlugin, MethodCallHandler {
                         if (amount != null){
                             req = new CreateTransactionWithBill(billId, accountId, amount, couponId, txStrategy, requestId);
                         }else{
-                            req = new CreateTransactionWithBill(billId, accountId, couponId,txStrategy, requestId);
+                            req = new CreateTransactionWithBill(billId, accountId, 0, couponId,txStrategy, requestId);
                         }
 
                         Pokepay.setEnv(env);
@@ -888,7 +889,7 @@ public class PokepaySdkPlugin implements FlutterPlugin, MethodCallHandler {
                         String userId = call.argument("userId");
                         GetUserWithAuthFactors req = new GetUserWithAuthFactors(userId);
                         Pokepay.setEnv(env);
-                        User res = req.send(accessToken);
+                        UserWithAuthFactors res = req.send(accessToken);
                         return new TaskResult(null, res.toString());
                     }
                     default:

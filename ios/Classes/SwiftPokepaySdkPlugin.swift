@@ -596,7 +596,7 @@ private class MethodCallTask {
             let accessToken = args["accessToken"] as! String
             let client = Pokepay.Client(accessToken:accessToken, env: env)
             let userId = args["userId"] as! String
-            client.send(BankAPI.User.GetWithAuthFactors(userId: userId), handler: self.after)
+            client.send(BankAPI.User.GetUserWithAuthFactors(userId: userId), handler: self.after)
         default:
             self.result(FlutterMethodNotImplemented)
         }
