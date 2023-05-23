@@ -3,6 +3,7 @@ import UIKit
 import APIKit
 import Result
 import Pokepay
+import Foundation
 
 private class APIJSONEncoder : JSONEncoder {
     override init() {
@@ -227,9 +228,11 @@ private class MethodCallTask {
             let amount = args["amount"] as? Double
             let couponId = args["couponId"] as? String
             let rawStrategy =  args["tx_strategy"] as? String
-            let txStrategy = parseStrategy(raw: rawStrategy);
+            let txStrategy = parseStrategy(raw: rawStrategy)
+            let rawRequestId = args["requestId"] as? String
+            let requestId = UUID(uuidString: rawRequestId ?? "")
             client.send(BankAPI.Transaction.CreateWithBill(billId: billId, accountId: accountId, amount: amount,
-            couponId: couponId,strategy: txStrategy), handler: self.after)
+            couponId: couponId,strategy: txStrategy, requestId: requestId), handler: self.after)
         case "createUserTransactionWithCashtray":
             let env = flutterEnvToSDKEnv(ienv: args["env"] as! Int32)
             let accessToken = args["accessToken"] as! String
@@ -239,15 +242,19 @@ private class MethodCallTask {
             let couponId = args["couponId"] as? String
             let rawStrategy =  args["tx_strategy"] as? String
             let txStrategy = parseStrategy(raw: rawStrategy);
+            let rawRequestId = args["requestId"] as? String
+            let requestId = UUID(uuidString: rawRequestId ?? "")
             client.send(BankAPI.Transaction.CreateWithCashtray(cashtrayId: cashtrayId, accountId: accountId,
-            couponId: couponId,strategy: txStrategy), handler: self.after)
+            couponId: couponId,strategy: txStrategy, requestId: requestId), handler: self.after)
         case "createUserTransactionWithCheck":
             let env = flutterEnvToSDKEnv(ienv: args["env"] as! Int32)
             let accessToken = args["accessToken"] as! String
             let client = Pokepay.Client(accessToken: accessToken, env: env)
             let checkId = args["checkId"] as! String
             let accountId = args["accountId"] as? String
-            client.send(BankAPI.Transaction.CreateWithCheck(checkId: checkId, accountId: accountId), handler: self.after)
+            let rawRequestId = args["requestId"] as? String
+            let requestId = UUID(uuidString: rawRequestId ?? "")
+            client.send(BankAPI.Transaction.CreateWithCheck(checkId: checkId, accountId: accountId, requestId: requestId), handler: self.after)
         case "createUserTransactionWithCpm":
             let env = flutterEnvToSDKEnv(ienv: args["env"] as! Int32)
             let accessToken = args["accessToken"] as! String
@@ -257,7 +264,9 @@ private class MethodCallTask {
             let amount = args["amount"] as! Double
             let productsString = (args["products"] as? String)?.data(using: .utf8)
             let products = productsString != nil ? try? BankAPIJSONDecoder().decode([Product]?.self, from: productsString!) : nil
-            client.send(BankAPI.Transaction.CreateWithCpm(cpmToken: cpmToken, accountId: accountId, amount: amount, products: products), handler: self.after)
+            let rawRequestId = args["requestId"] as? String
+            let requestId = UUID(uuidString: rawRequestId ?? "")
+            client.send(BankAPI.Transaction.CreateWithCpm(cpmToken: cpmToken, accountId: accountId, amount: amount, products: products, requestId: requestId), handler: self.after)
         case "createUserTransactionWithJwt":
             let env = flutterEnvToSDKEnv(ienv: args["env"] as! Int32)
             let accessToken = args["accessToken"] as! String
@@ -473,18 +482,22 @@ private class MethodCallTask {
             let products = productsString != nil ? try? BankAPIJSONDecoder().decode([Product]?.self, from: productsString!) : nil
             let couponId = args["couponId"] as? String
             let privateMoneyId = args["privateMoneyId"] as? String
+            let rawStrategy =  args["tx_strategy"] as? String
+            let txStrategy = parseStrategy(raw: rawStrategy);
+            let rawRequestId = args["requestId"] as? String
+            let requestId = UUID(uuidString: rawRequestId ?? "")
             if privateMoneyId != nil {
                 Pokepay.Client.withCustomDomain(accessToken: accessToken, env: env, challange: privateMoneyId!){ result in
                     switch result {
                         case .success(let response):
-                           response.scanToken(token,amount:amount,accountId:accountId,products:products,couponId:couponId,handler: self.after)
+                           response.scanToken(token,amount:amount,accountId:accountId,products:products,couponId:couponId,strategy: txStrategy,requestId: requestId,handler: self.after)
                         case .failure(let error):
                            break
                     }
                 }
             }else{
                 let client = Pokepay.Client(accessToken: accessToken,env: env)
-                client.scanToken(token,amount:amount,accountId:accountId,products:products,couponId:couponId,handler: self.after)
+                client.scanToken(token,amount:amount,accountId:accountId,products:products,couponId:couponId,strategy: txStrategy, requestId: requestId, handler: self.after)
             }
         case "searchPrivateMoneys":
             let env = flutterEnvToSDKEnv(ienv: args["env"] as! Int32)
@@ -578,6 +591,12 @@ private class MethodCallTask {
             let id = args["id"] as! String
             let name = args["name"] as? String
             client.send(BankAPI.User.Update(id: id, name: name), handler: self.after)
+        case "getUserWithAuthFactors":
+            let env = flutterEnvToSDKEnv(ienv: args["env"] as! Int32)
+            let accessToken = args["accessToken"] as! String
+            let client = Pokepay.Client(accessToken:accessToken, env: env)
+            let userId = args["userId"] as! String
+            client.send(BankAPI.User.GetUserWithAuthFactors(userId: userId), handler: self.after)
         default:
             self.result(FlutterMethodNotImplemented)
         }

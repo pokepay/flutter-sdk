@@ -16,6 +16,7 @@ import java.io.StringWriter;
 import java.io.Writer;
 import java.util.Date;
 import java.util.Map;
+import java.util.UUID;
 
 import io.flutter.embedding.engine.plugins.FlutterPlugin;
 import io.flutter.plugin.common.MethodCall;
@@ -68,6 +69,7 @@ import jp.pokepay.pokepaylib.BankAPI.User.GetUserTransactions;
 import jp.pokepay.pokepaylib.BankAPI.User.RegisterUserEmail;
 import jp.pokepay.pokepaylib.BankAPI.User.SendConfirmationEmail;
 import jp.pokepay.pokepaylib.BankAPI.User.UpdateUser;
+import jp.pokepay.pokepaylib.BankAPI.User.GetUserWithAuthFactors;
 import jp.pokepay.pokepaylib.Env;
 import jp.pokepay.pokepaylib.JsonConverter;
 import jp.pokepay.pokepaylib.MessagingAPI.GetMessage;
@@ -107,6 +109,7 @@ import jp.pokepay.pokepaylib.Responses.ServerKey;
 import jp.pokepay.pokepaylib.Responses.Terminal;
 import jp.pokepay.pokepaylib.Responses.User;
 import jp.pokepay.pokepaylib.Responses.UserTransaction;
+import jp.pokepay.pokepaylib.Responses.UserWithAuthFactors;
 import jp.pokepay.pokepaylib.TokenInfo;
 
 /** PokepaySdkPlugin */
@@ -324,10 +327,12 @@ public class PokepaySdkPlugin implements FlutterPlugin, MethodCallHandler {
                         String rawStrategy = call.argument("tx_strategy");
                         TransactionStrategy txStrategy = parseTxStrategy(rawStrategy);
                         Double amount = call.argument("amount");
+                        String rawRequestId = call.argument("requestId");
+                        UUID requestId = UUID.fromString(rawRequestId);
                         if (amount != null){
-                            req = new CreateTransactionWithBill(billId, accountId, amount, couponId, txStrategy);
+                            req = new CreateTransactionWithBill(billId, accountId, amount, couponId, txStrategy, requestId);
                         }else{
-                            req = new CreateTransactionWithBill(billId, accountId, couponId,txStrategy);
+                            req = new CreateTransactionWithBill(billId, accountId, 0, couponId,txStrategy, requestId);
                         }
 
                         Pokepay.setEnv(env);
@@ -341,8 +346,10 @@ public class PokepaySdkPlugin implements FlutterPlugin, MethodCallHandler {
                         String accountId = call.argument("accountId");
                         String couponId = call.argument("couponId");
                         String rawStrategy = call.argument("tx_strategy");
+                        String rawRequestId = call.argument("requestId");
+                        UUID requestId = UUID.fromString(rawRequestId);
                         TransactionStrategy txStrategy = parseTxStrategy(rawStrategy);
-                        CreateTransactionWithCashtray req = new CreateTransactionWithCashtray(cashtrayId, accountId, couponId,txStrategy);
+                        CreateTransactionWithCashtray req = new CreateTransactionWithCashtray(cashtrayId, accountId, couponId,txStrategy,requestId);
                         Pokepay.setEnv(env);
                         UserTransaction res = req.send(accessToken);
                         return new TaskResult(null, res.toString());
@@ -352,7 +359,9 @@ public class PokepaySdkPlugin implements FlutterPlugin, MethodCallHandler {
                         String accessToken = call.argument("accessToken");
                         String checkId = call.argument("checkId");
                         String accountId = call.argument("accountId");
-                        CreateTransactionWithCheck req = new CreateTransactionWithCheck(checkId, accountId);
+                        String rawRequestId = call.argument("requestId");
+                        UUID requestId = UUID.fromString(rawRequestId);
+                        CreateTransactionWithCheck req = new CreateTransactionWithCheck(checkId, accountId, requestId);
                         Pokepay.setEnv(env);
                         UserTransaction res = req.send(accessToken);
                         return new TaskResult(null, res.toString());
@@ -366,7 +375,9 @@ public class PokepaySdkPlugin implements FlutterPlugin, MethodCallHandler {
                         String productsString = call.argument("products");
                         final ObjectMapper mapper = JsonConverter.createObjectMapper();
                         Product[] products = mapper.readValue(productsString,  Product[].class);
-                        CreateTransactionWithCpm req = new CreateTransactionWithCpm(cpmToken, accountId, amount, products);
+                        String rawRequestId = call.argument("requestId");
+                        UUID requestId = UUID.fromString(rawRequestId);
+                        CreateTransactionWithCpm req = new CreateTransactionWithCpm(cpmToken, accountId, amount, products, requestId);
                         Pokepay.setEnv(env);
                         UserTransaction res = req.send(accessToken);
                         return new TaskResult(null, res.toString());
@@ -704,6 +715,8 @@ public class PokepaySdkPlugin implements FlutterPlugin, MethodCallHandler {
                         String rawStrategy = call.argument("tx_strategy");
                         TransactionStrategy txStrategy = parseTxStrategy(rawStrategy);
                         String privateMoneyId = call.argument("privateMoneyId");
+                        String rawRequestId = call.argument("requestId");
+                        UUID requestId = UUID.fromString(rawRequestId);
                         Pokepay.Client client;
                         UserTransaction userTransaction;
 
@@ -715,9 +728,9 @@ public class PokepaySdkPlugin implements FlutterPlugin, MethodCallHandler {
 
                         Double amount = call.argument("amount");
                         if (amount != null){
-                            userTransaction = client.scanToken(scanToken,amount,accountId,products, couponId,txStrategy);
+                            userTransaction = client.scanToken(scanToken,amount,accountId,products, couponId,txStrategy, requestId);
                         }else {
-                            userTransaction = client.scanToken(scanToken,0.0,accountId,products, couponId,txStrategy);
+                            userTransaction = client.scanToken(scanToken,0.0,accountId,products, couponId,txStrategy, requestId);
                         }
                         return new TaskResult(null, userTransaction.toString());
                     }
@@ -868,6 +881,15 @@ public class PokepaySdkPlugin implements FlutterPlugin, MethodCallHandler {
                         UpdateUser req = new UpdateUser(id, name);
                         Pokepay.setEnv(env);
                         User res = req.send(accessToken);
+                        return new TaskResult(null, res.toString());
+                    }
+                    case "getUserWithAuthFactors": {
+                        Env env = flutterEnvToSDKEnv((int)call.argument("env"));
+                        String accessToken = call.argument("accessToken");
+                        String userId = call.argument("userId");
+                        GetUserWithAuthFactors req = new GetUserWithAuthFactors(userId);
+                        Pokepay.setEnv(env);
+                        UserWithAuthFactors res = req.send(accessToken);
                         return new TaskResult(null, res.toString());
                     }
                     default:

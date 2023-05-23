@@ -18,6 +18,7 @@ Account _$AccountFromJson(Map<String, dynamic> json) => Account(
       nearestExpiresAt: json['nearest_expires_at'] == null
           ? null
           : DateTime.parse(json['nearest_expires_at'] as String),
+      pointDebt: (json['point_debt'] as num?)?.toDouble(),
     );
 
 Map<String, dynamic> _$AccountToJson(Account instance) => <String, dynamic>{
@@ -29,4 +30,5 @@ Map<String, dynamic> _$AccountToJson(Account instance) => <String, dynamic>{
       'is_suspended': instance.isSuspended,
       'private_money': instance.privateMoney.toJson(),
       'nearest_expires_at': instance.nearestExpiresAt?.toIso8601String(),
+      'point_debt': instance.pointDebt,
     };

@@ -13,6 +13,7 @@ class Account {
   final bool? isSuspended;
   final PrivateMoney privateMoney;
   final DateTime? nearestExpiresAt;
+  final double? pointDebt;
 
   Account({
     required this.id,
@@ -23,9 +24,11 @@ class Account {
     this.isSuspended,
     required this.privateMoney,
     this.nearestExpiresAt,
+    this.pointDebt,
   });
 
-  factory Account.fromJson(Map<String, dynamic> json) => _$AccountFromJson(json);
+  factory Account.fromJson(Map<String, dynamic> json) =>
+      _$AccountFromJson(json);
 
   Map<String, dynamic> toJson() => _$AccountToJson(this);
 

@@ -114,7 +114,8 @@ void setLogLevel(LogLevel lev) {
 
 const MethodChannel channel = const MethodChannel('jp.pokepay/pokepay_sdk');
 
-Future<T> invokeMethod<T>(T factory(Map<String, dynamic> data), String methodName, Map<String, dynamic> args) async {
+Future<T> invokeMethod<T>(T factory(Map<String, dynamic> data),
+    String methodName, Map<String, dynamic> args) async {
   try {
     logger.d("methodName: " + methodName + " args: " + args.toString());
     final String json = await channel.invokeMethod(methodName, args);
@@ -127,7 +128,8 @@ Future<T> invokeMethod<T>(T factory(Map<String, dynamic> data), String methodNam
       final APIRequestError err = APIRequestError.fromJson(jsonDecode(message));
       throw err;
     } else if (code == "OAuthRequestError") {
-      final OAuthRequestError err = OAuthRequestError.fromJson(jsonDecode(message));
+      final OAuthRequestError err =
+          OAuthRequestError.fromJson(jsonDecode(message));
       throw err;
     } else {
       final ProcessingError err = ProcessingError.fromJson(jsonDecode(message));
@@ -164,8 +166,8 @@ String parseAsPokeregiToken(String token) {
   final V1_QR_REG = RegExp(r'^([0-9A-Z]{25})$');
   // * https://www.pokepay.jp/pd?={25 ALNUM} - (Pokeregi_V1 OfflineMode NFC)
   // * https://www.pokepay.jp/pd/{25 ALNUM}  - (Pokeregi_V2 OfflineMode QR & NFC)
-  final RegExp V1_NFC_V2_QR_NFC_REG =
-      RegExp(r'^https://www(?:-dev|-sandbox|-qa|)\.pokepay\.jp/pd(?:/|\\?d=)([0-9A-Z]{25})$');
+  final RegExp V1_NFC_V2_QR_NFC_REG = RegExp(
+      r'^https://www(?:-dev|-sandbox|-qa|)\.pokepay\.jp/pd(?:/|\\?d=)([0-9A-Z]{25})$');
   // matching
   final v1 = V1_QR_REG.allMatches(token);
   if (V1_QR_REG.hasMatch(token)) {
@@ -186,32 +188,40 @@ class PokepayClient {
     required String accessToken,
     APIEnv env = APIEnv.PRODUCTION,
     required String privateMoneyId,
-  }) : this.api = PokepayAPI(
+  })  : this.api = PokepayAPI(
           accessToken: accessToken,
           env: env,
-        ),this.privateMoneyId = privateMoneyId;
+        ),
+        this.privateMoneyId = privateMoneyId;
 
   Future<Terminal> getTerminalInfo() async {
     return this.api.getTerminal();
   }
 
-  Future<String> getWebBaseURL(APIEnv env) async {
+  String getDefaultWebBaseURL(APIEnv env) {
     String name = envNameMap[env]!;
     String suffix = ((name.length > 0) ? ("-" + name) : "");
-    return (await this.api.getPrivateMoney(privateMoneyId: this.privateMoneyId)).customDomainName ?? "https://www" + suffix + ".pokepay"
-        ".jp";
+    return "https://www" + suffix + ".pokepay.jp";
+  }
+
+  Future<String> getWebBaseURL(APIEnv env) async {
+    return (await this.api.getPrivateMoney(privateMoneyId: this.privateMoneyId))
+            .customDomainName ??
+        getDefaultWebBaseURL(env);
   }
 
   Future<TokenInfo> getTokenInfo(String token, APIEnv env) async {
     final webBaseURL = await getWebBaseURL(env);
-    if (token.startsWith(webBaseURL + "/cashtrays/")) {
+    final prefixURL =
+        token.startsWith(webBaseURL) ? webBaseURL : getDefaultWebBaseURL(env);
+    if (token.startsWith(prefixURL + "/cashtrays/")) {
       return TokenInfo(type: TokenType.CASHTRAY, token: "");
-    } else if (token.startsWith(webBaseURL + "/bills/")) {
-      final String uuid = token.substring((webBaseURL + "/bills/").length);
+    } else if (token.startsWith(prefixURL + "/bills/")) {
+      final String uuid = token.substring((prefixURL + "/bills/").length);
       final bill = await api.getBill(id: uuid);
       return TokenInfo(type: TokenType.BILL, token: bill);
-    } else if (token.startsWith(webBaseURL + "/checks/")) {
-      final String uuid = token.substring((webBaseURL + "/checks/").length);
+    } else if (token.startsWith(prefixURL + "/checks/")) {
+      final String uuid = token.substring((prefixURL + "/checks/").length);
       final check = await api.getCheck(id: uuid);
       return TokenInfo(type: TokenType.CHECK, token: check);
     } else if (RegExp(r'^([0-9A-Z]{25})$').hasMatch(token)) {
@@ -221,7 +231,7 @@ class PokepayClient {
       String key = parseAsPokeregiToken(token);
       if (key.length > 0) {
         return TokenInfo(type: TokenType.PAYREGI, token: "");
-      }else{
+      } else {
         return TokenInfo(type: TokenType.UNKNOWN, token: "");
       }
     }
@@ -245,8 +255,10 @@ class PokepayClient {
         );
   }
 
-  Future<UserTransaction> topup({required Check check, String? accountId}) async {
-    return await this.api.createUserTransactionWithCheck(checkId: 'check.id', accountId: accountId);
+  Future<UserTransaction> topup(
+      {required Check check, String? accountId}) async {
+    return await this.api.createUserTransactionWithCheck(
+        checkId: 'check.id', accountId: accountId);
   }
 
   Future<UserTransaction> invokeToken({
@@ -290,6 +302,7 @@ class PokepayClient {
     List<Product>? products,
     String? couponId,
     TransactionStrategy strategy = TransactionStrategy.POINT_PREFERRED,
+    String? requestId,
   }) async {
     String json = await channel.invokeMethod('scanToken', {
       'env': envToInt(this.api.env),
@@ -300,7 +313,8 @@ class PokepayClient {
       'products': products,
       'couponId': couponId,
       'tx_strategy': strategy.value,
-      'privateMoneyId': this.privateMoneyId
+      'privateMoneyId': this.privateMoneyId,
+      'requestId': requestId,
     });
 
     return UserTransaction.fromJson(jsonDecode(json));
@@ -325,7 +339,10 @@ class PokepayOAuthClient {
   }
 
   String getAuthorizationUrl({String contact = ""}) {
-    String base = getWebBaseURL(this.env) + "/oauth/authorize?client_id=" + this.clientId + "&response_type=code";
+    String base = getWebBaseURL(this.env) +
+        "/oauth/authorize?client_id=" +
+        this.clientId +
+        "&response_type=code";
     if (contact.length > 0) {
       return base + "&contact=" + Uri.encodeFull(contact);
     } else {
@@ -335,7 +352,8 @@ class PokepayOAuthClient {
 
   Future<AccessToken> getAccessToken(String code) async {
     final api = PokepayOAuthAPI(env: this.env);
-    final result = await api.exchangeAuthCode(code: code, clientId: this.clientId, clientSecret: this.clientSecret);
+    final result = await api.exchangeAuthCode(
+        code: code, clientId: this.clientId, clientSecret: this.clientSecret);
     return result;
   }
 }
