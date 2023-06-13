@@ -1,7 +1,7 @@
 import 'package:json_annotation/json_annotation.dart';
-import 'package:pokepay_flutter_sdk/responses/private_money.dart';
-import 'package:pokepay_flutter_sdk/responses/user.dart';
-import 'package:pokepay_flutter_sdk/responses/user_transaction.dart';
+import 'private_money.dart';
+import 'user.dart';
+import 'user_transaction.dart';
 
 import 'cashtray_attempt.dart';
 
@@ -33,7 +33,8 @@ class Cashtray {
     this.transaction,
   });
 
-  factory Cashtray.fromJson(Map<String, dynamic> json) => _$CashtrayFromJson(json);
+  factory Cashtray.fromJson(Map<String, dynamic> json) =>
+      _$CashtrayFromJson(json);
 
   Map<String, dynamic> toJson() => _$CashtrayToJson(this);
 

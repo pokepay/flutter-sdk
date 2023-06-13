@@ -1,10 +1,10 @@
 #
 # To learn more about a Podspec see http://guides.cocoapods.org/syntax/podspec.html.
-# Run 'pod lib lint pokepay_flutter_sdk.podspec' to validate before publishing.
+# Run 'pod lib lint pokepay_sdk.podspec' to validate before publishing.
 #
 Pod::Spec.new do |s|
-  s.name             = 'pokepay_flutter_sdk'
-  s.version          = '2.0.3'
+  s.name             = 'pokepay_sdk'
+  s.version          = '1.0.1'
   s.summary          = 'Pokepay flutter SDK'
   s.description      = <<-DESC
 Pokepay flutter SDK

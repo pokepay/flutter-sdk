@@ -1,5 +1,5 @@
-import 'package:pokepay_flutter_sdk/responses/coupon_detail.dart';
-import 'package:pokepay_flutter_sdk/responses/paginated_coupons.dart';
+import '../responses/coupon_detail.dart';
+import '../responses/paginated_coupons.dart';
 
 import '../pokepay_sdk.dart';
 import '../responses.dart';

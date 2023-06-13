@@ -1,5 +1,5 @@
 import 'package:json_annotation/json_annotation.dart';
-import 'package:pokepay_flutter_sdk/responses/private_money.dart';
+import 'private_money.dart';
 
 part 'message_attachment.g.dart';
 
@@ -19,7 +19,8 @@ class MessageAttachment {
     this.expiresAt,
   });
 
-  factory MessageAttachment.fromJson(Map<String, dynamic> json) => _$MessageAttachmentFromJson(json);
+  factory MessageAttachment.fromJson(Map<String, dynamic> json) =>
+      _$MessageAttachmentFromJson(json);
 
   Map<String, dynamic> toJson() => _$MessageAttachmentToJson(this);
 

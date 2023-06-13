@@ -1,5 +1,5 @@
 import 'package:json_annotation/json_annotation.dart';
-import 'package:pokepay_flutter_sdk/responses/user_transaction.dart';
+import 'user_transaction.dart';
 
 import 'account.dart';
 
@@ -23,7 +23,8 @@ class AccountCpmToken {
     this.metadata,
   });
 
-  factory AccountCpmToken.fromJson(Map<String, dynamic> json) => _$AccountCpmTokenFromJson(json);
+  factory AccountCpmToken.fromJson(Map<String, dynamic> json) =>
+      _$AccountCpmTokenFromJson(json);
 
   Map<String, dynamic> toJson() => _$AccountCpmTokenToJson(this);
 

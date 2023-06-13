@@ -1,4 +1,4 @@
-## 2.0.3
+## 2.0.4
 **Sync with Native SDK versions**
 * Added custom fallback for scanning token
 * Added `RequestId` parameter for create transactions with `Bill`, `Cashtray`, `Check`, and `CPM`

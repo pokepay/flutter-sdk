@@ -3,8 +3,8 @@ import 'dart:convert';
 
 import 'package:flutter/services.dart';
 import 'package:logger/logger.dart';
-import 'package:pokepay_flutter_sdk/bank_api/private_money.dart';
-import 'package:pokepay_flutter_sdk/parameters/transaction_strategy.dart';
+import 'bank_api/private_money.dart';
+import 'parameters/transaction_strategy.dart';
 
 import 'bank_api/bill.dart';
 import 'bank_api/check.dart';

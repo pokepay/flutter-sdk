@@ -1,6 +1,6 @@
 import 'package:json_annotation/json_annotation.dart';
-import 'package:pokepay_flutter_sdk/responses/coupon.dart';
-import 'package:pokepay_flutter_sdk/responses/user.dart';
+import 'coupon.dart';
+import 'user.dart';
 
 part 'coupon_detail.g.dart';
 
@@ -46,7 +46,8 @@ class CouponDetail extends Coupon {
             isHidden: isHidden,
             couponImage: couponImage);
 
-  factory CouponDetail.fromJson(Map<String, dynamic> json) => _$CouponDetailFromJson(json);
+  factory CouponDetail.fromJson(Map<String, dynamic> json) =>
+      _$CouponDetailFromJson(json);
 
   Map<String, dynamic> toJson() => _$CouponDetailToJson(this);
 

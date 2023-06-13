@@ -1,5 +1,5 @@
 import 'package:json_annotation/json_annotation.dart';
-import 'package:pokepay_flutter_sdk/responses/user.dart';
+import 'user.dart';
 
 import 'account.dart';
 
@@ -25,7 +25,8 @@ class CashtrayAttempt {
     this.strategy,
   });
 
-  factory CashtrayAttempt.fromJson(Map<String, dynamic> json) => _$CashtrayAttemptFromJson(json);
+  factory CashtrayAttempt.fromJson(Map<String, dynamic> json) =>
+      _$CashtrayAttemptFromJson(json);
 
   Map<String, dynamic> toJson() => _$CashtrayAttemptToJson(this);
 
