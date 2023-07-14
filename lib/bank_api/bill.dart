@@ -1,7 +1,5 @@
 import 'dart:convert';
 
-import 'package:pokepay_sdk/responses/bill_with_additional_private_moneys.dart';
-
 import '../parameters/product.dart';
 import '../pokepay_sdk.dart';
 import '../responses.dart';
@@ -43,11 +41,11 @@ extension BillAPI on PokepayAPI {
     );
   }
 
-  Future<BillWithAdditionalPrivateMoneys> getBill({
+  Future<Bill> getBill({
     required String id,
   }) async {
-    return await invokeMethod<BillWithAdditionalPrivateMoneys>(
-      (j) => BillWithAdditionalPrivateMoneys.fromJson(j),
+    return await invokeMethod<Bill>(
+      (j) => Bill.fromJson(j),
       'getBill',
       {
         'env': this.env.index,

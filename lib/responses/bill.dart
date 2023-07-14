@@ -16,19 +16,20 @@ class Bill {
   final String token;
   final double? minAmount;
   final double? maxAmount;
+  final List<PrivateMoney>? additionalPrivateMoneys;
 
-  Bill({
-    required this.id,
-    this.amount,
-    required this.description,
-    required this.user,
-    required this.privateMoney,
-    required this.isOnetime,
-    required this.isDisabled,
-    required this.token,
-    this.minAmount,
-    this.maxAmount,
-  });
+  Bill(
+      {required this.id,
+      this.amount,
+      required this.description,
+      required this.user,
+      required this.privateMoney,
+      required this.isOnetime,
+      required this.isDisabled,
+      required this.token,
+      this.minAmount,
+      this.maxAmount,
+      this.additionalPrivateMoneys});
 
   factory Bill.fromJson(Map<String, dynamic> json) => _$BillFromJson(json);
 
