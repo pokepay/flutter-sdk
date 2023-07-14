@@ -1,5 +1,5 @@
 import 'package:json_annotation/json_annotation.dart';
-import 'package:pokepay_flutter_sdk/responses/user.dart';
+import 'user.dart';
 
 import 'account.dart';
 part 'user_transfer.g.dart';
@@ -32,7 +32,8 @@ class UserTransfer {
     this.transactionId,
   });
 
-  factory UserTransfer.fromJson(Map<String, dynamic> json) => _$UserTransferFromJson(json);
+  factory UserTransfer.fromJson(Map<String, dynamic> json) =>
+      _$UserTransferFromJson(json);
 
   Map<String, dynamic> toJson() => _$UserTransferToJson(this);
 

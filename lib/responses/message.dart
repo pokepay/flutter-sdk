@@ -1,5 +1,5 @@
 import 'package:json_annotation/json_annotation.dart';
-import 'package:pokepay_flutter_sdk/responses/user.dart';
+import 'user.dart';
 
 import 'message_attachment.dart';
 
@@ -31,7 +31,8 @@ class Message {
     required this.attachment,
   });
 
-  factory Message.fromJson(Map<String, dynamic> json) => _$MessageFromJson(json);
+  factory Message.fromJson(Map<String, dynamic> json) =>
+      _$MessageFromJson(json);
 
   Map<String, dynamic> toJson() => _$MessageToJson(this);
 

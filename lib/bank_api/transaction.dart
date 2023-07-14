@@ -1,6 +1,6 @@
 import 'dart:convert';
 
-import 'package:pokepay_flutter_sdk/parameters/transaction_strategy.dart';
+import '../parameters/transaction_strategy.dart';
 
 import '../parameters/product.dart';
 import '../pokepay_sdk.dart';

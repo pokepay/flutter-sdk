@@ -5,7 +5,7 @@ Please refer to [this document](https://docs.pokepay.jp/guidelines/app-sdk/java.
 1. In the pubspec.yaml of the project, add the following:
  ```yaml  
  dependencies:
-    pokepay_flutter_sdk: ^YOUR_VERSION
+    pokepay_sdk: ^YOUR_VERSION
  ```
 2. Then run this
 ```sh

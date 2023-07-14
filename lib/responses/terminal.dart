@@ -1,5 +1,5 @@
 import 'package:json_annotation/json_annotation.dart';
-import 'package:pokepay_flutter_sdk/responses/user.dart';
+import 'user.dart';
 
 import 'account.dart';
 
@@ -25,7 +25,8 @@ class Terminal {
     required this.account,
   });
 
-  factory Terminal.fromJson(Map<String, dynamic> json) => _$TerminalFromJson(json);
+  factory Terminal.fromJson(Map<String, dynamic> json) =>
+      _$TerminalFromJson(json);
 
   Map<String, dynamic> toJson() => _$TerminalToJson(this);
 

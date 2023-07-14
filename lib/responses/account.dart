@@ -1,5 +1,5 @@
 import 'package:json_annotation/json_annotation.dart';
-import 'package:pokepay_flutter_sdk/responses/private_money.dart';
+import 'private_money.dart';
 
 part 'account.g.dart';
 

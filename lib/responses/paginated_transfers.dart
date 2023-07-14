@@ -1,5 +1,5 @@
 import 'package:json_annotation/json_annotation.dart';
-import 'package:pokepay_flutter_sdk/responses/user_transfer.dart';
+import 'user_transfer.dart';
 
 part 'paginated_transfers.g.dart';
 
@@ -19,7 +19,8 @@ class PaginatedTransfers {
     required this.items,
   });
 
-  factory PaginatedTransfers.fromJson(Map<String, dynamic> json) => _$PaginatedTransfersFromJson(json);
+  factory PaginatedTransfers.fromJson(Map<String, dynamic> json) =>
+      _$PaginatedTransfersFromJson(json);
 
   Map<String, dynamic> toJson() => _$PaginatedTransfersToJson(this);
 

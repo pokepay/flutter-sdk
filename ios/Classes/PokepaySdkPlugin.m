@@ -1,6 +1,6 @@
 #import "PokepaySdkPlugin.h"
-#if __has_include(<pokepay_flutter_sdk/pokepay_flutter_sdk-Swift.h>)
-#import <pokepay_flutter_sdk/pokepay_flutter_sdk-Swift.h>
+#if __has_include(<pokepay_sdk/pokepay_sdk-Swift.h>)
+#import <pokepay_sdk/pokepay_sdk-Swift.h>
 #else
 // Support project import fallback if the generated compatibility header
 // is not copied when this plugin is created as a library.
