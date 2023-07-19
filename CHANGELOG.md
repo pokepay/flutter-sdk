@@ -1,3 +1,6 @@
+## 2.0.5
+* Added `additionalPrivateMoneys` field on `Bill` response
+
 ## 2.0.4
 **Sync with Native SDK versions**
 * Added custom fallback for scanning token
