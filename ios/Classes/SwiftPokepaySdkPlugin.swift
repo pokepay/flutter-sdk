@@ -604,14 +604,14 @@ private class MethodCallTask {
             let id = args["id"] as! String
             let callbackUrl = args["callbackUrl"] as! String
             let privateMoneyId = args["privateMoneyId"] as! String
-            client.send(BankAPI.User.GetUserWithAuthFactors(id: id, callbackUrl: callbackUrl, privateMoneyId: privateMoneyId), handler: self.after)
+            client.send(BankAPI.User.CreateBankPay(id: id, callbackUrl: callbackUrl, privateMoneyId: privateMoneyId), handler: self.after)
         case "getBankPay":
             let env = flutterEnvToSDKEnv(ienv: args["env"] as! Int32)
             let accessToken = args["accessToken"] as! String
             let client = Pokepay.Client(accessToken:accessToken, env: env)
             let id = args["id"] as! String
             let privateMoneyId = args["privateMoneyId"] as? String
-            client.send(BankAPI.User.GetUserWithAuthFactors(id: id, privateMoneyId: privateMoneyId), handler: self.after)
+            client.send(BankAPI.User.GetBankPay(id: id, privateMoneyId: privateMoneyId), handler: self.after)
         case "bankpayTopUp":
             let env = flutterEnvToSDKEnv(ienv: args["env"] as! Int32)
             let accessToken = args["accessToken"] as! String
@@ -620,7 +620,7 @@ private class MethodCallTask {
             let accountId = args["accountId"] as! String
             let bankId = args["bankId"] as! String
             let amount = args["amount"] as! String
-            client.send(BankAPI.User.GetUserWithAuthFactors(id: id, accountId: accountId, bankId: bankId, amount: amount), handler: self.after)
+            client.send(BankAPI.User.BankPayTopUp(id: id, accountId: accountId, bankId: bankId, amount: amount), handler: self.after)
         default:
             self.result(FlutterMethodNotImplemented)
         }
