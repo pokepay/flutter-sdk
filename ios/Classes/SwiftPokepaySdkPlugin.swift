@@ -597,6 +597,19 @@ private class MethodCallTask {
             let client = Pokepay.Client(accessToken:accessToken, env: env)
             let userId = args["userId"] as! String
             client.send(BankAPI.User.GetUserWithAuthFactors(userId: userId), handler: self.after)
+        case "identifyIndividual":
+            let env = flutterEnvToSDKEnv(ienv: args["env"] as! Int32)
+            let accessToken = args["accessToken"] as! String
+            let client = Pokepay.Client(accessToken:accessToken, env: env)
+            let accountId = args["accountId"] as! String
+            let signature = args["signature"] as! String
+            let signingCert = args["signingCert"] as! String
+            let expectedHash = args["expectedHash"] as! String
+            let name = args["name"] as? String
+            let gender = args["gender"] as? Gender
+            let address = args["address"] as? String
+            let dateOfBirth = args["dateOfBirth"] as? Date
+            client.send(BankAPI.Account.IdentifyIndividual(accountId: accountId, signature: signature, signingCert: signingCert, expectedHash: expectedHash, name: name, gender: gender, address: address, dateOfBirth: dateOfBirth), handler: self.after)
         default:
             self.result(FlutterMethodNotImplemented)
         }
