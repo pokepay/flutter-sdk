@@ -70,6 +70,9 @@ import jp.pokepay.pokepaylib.BankAPI.User.RegisterUserEmail;
 import jp.pokepay.pokepaylib.BankAPI.User.SendConfirmationEmail;
 import jp.pokepay.pokepaylib.BankAPI.User.UpdateUser;
 import jp.pokepay.pokepaylib.BankAPI.User.GetUserWithAuthFactors;
+import jp.pokepay.pokepaylib.BankAPI.User.CreateBankPay;
+import jp.pokepay.pokepaylib.BankAPI.User.GetBankPay;
+import jp.pokepay.pokepaylib.BankAPI.User.BankPayTopUp;
 import jp.pokepay.pokepaylib.Env;
 import jp.pokepay.pokepaylib.JsonConverter;
 import jp.pokepay.pokepaylib.MessagingAPI.GetMessage;
@@ -110,6 +113,8 @@ import jp.pokepay.pokepaylib.Responses.Terminal;
 import jp.pokepay.pokepaylib.Responses.User;
 import jp.pokepay.pokepaylib.Responses.UserTransaction;
 import jp.pokepay.pokepaylib.Responses.UserWithAuthFactors;
+import jp.pokepay.pokepaylib.Responses.BankPay;
+import jp.pokepay.pokepaylib.Responses.BankPayRedirectUrl;
 import jp.pokepay.pokepaylib.TokenInfo;
 
 /** PokepaySdkPlugin */
@@ -890,6 +895,39 @@ public class PokepaySdkPlugin implements FlutterPlugin, MethodCallHandler {
                         GetUserWithAuthFactors req = new GetUserWithAuthFactors(userId);
                         Pokepay.setEnv(env);
                         UserWithAuthFactors res = req.send(accessToken);
+                        return new TaskResult(null, res.toString());
+                    }
+                    case "createBankPay": {
+                        Env env = flutterEnvToSDKEnv((int)call.argument("env"));
+                        String accessToken = call.argument("accessToken");
+                        String id = call.argument("id");
+                        String callbackUrl = call.argument("callbackUrl");
+                        String privateMoneyId = call.argument("privateMoneyId");
+                        CreateBankPay req = new CreateBankPay(id, callbackUrl, privateMoneyId);
+                        Pokepay.setEnv(env);
+                        BankPayRedirectUrl res = req.send(accessToken);
+                        return new TaskResult(null, res.toString());
+                    }
+                    case "getBankPay": {
+                        Env env = flutterEnvToSDKEnv((int)call.argument("env"));
+                        String accessToken = call.argument("accessToken");
+                        String id = call.argument("id");
+                        String privateMoneyId = call.argument("privateMoneyId");
+                        GetBankPay req = new GetBankPay(id, privateMoneyId);
+                        Pokepay.setEnv(env);
+                        BankPay[] res = req.send(accessToken);
+                        return new TaskResult(null, res.toString());
+                    }
+                    case "bankpayTopUp": {
+                        Env env = flutterEnvToSDKEnv((int)call.argument("env"));
+                        String accessToken = call.argument("accessToken");
+                        String id = call.argument("id");
+                        String accountId = call.argument("accountId");
+                        String bankId = call.argument("bankId");
+                        String amount = call.argument("amount");
+                        BankPayTopUp req = new BankPayTopUp(id, accountId, bankId, amount);
+                        Pokepay.setEnv(env);
+                        UserTransaction res = req.send(accessToken);
                         return new TaskResult(null, res.toString());
                     }
                     default:
