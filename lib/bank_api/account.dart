@@ -170,7 +170,7 @@ extension AccountAPI on PokepayAPI {
     String? name,
     Gender? gender,
     String? address,
-    DateTime? dateOfBirth,
+    String? dateOfBirth,
   }) async {
     return await invokeMethod<IdentificationResult>(
       (j) => IdentificationResult.fromJson(j),
@@ -183,9 +183,9 @@ extension AccountAPI on PokepayAPI {
         'signingCert': signingCert,
         'expectedHash': expectedHash,
         'name': name,
-        'gender': gender,
+        'gender': gender?.value,
         'address': address,
-        'dateOfBirth': dateOfBirth,
+        'dateOfBirth': dateOfBirth,        
       },
     );
   }

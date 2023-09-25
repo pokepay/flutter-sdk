@@ -184,6 +184,17 @@ public class PokepaySdkPlugin implements FlutterPlugin, MethodCallHandler {
             }
         }
 
+        private Gender parseGender(String gender){
+            if (gender == null) return null;
+
+            switch (gender){
+                case "male": return Gender.MALE;
+                case "female": return Gender.FEMALE;
+                case "other": return Gender.OTHER;
+                default: return null;
+            }
+        }
+
         private Date stringToDate(String s) {
             if (s == null) return null;
             try {
@@ -903,9 +914,10 @@ public class PokepaySdkPlugin implements FlutterPlugin, MethodCallHandler {
                         String signingCert = call.argument("signingCert");
                         String expectedHash = call.argument("expectedHash");
                         String name = call.argument("name");
-                        Gender gender = call.argument("gender");
+                        String rawGender = call.argument("gender");
+                        Gender gender = parseGender(rawGender);
                         String address = call.argument("address");
-                        Date dateOfBirth = call.argument("dateOfBirth");
+                        String dateOfBirth = call.argument("dateOfBirth");
 
                         IdentifyIndividual req = new IdentifyIndividual(accountId, signature, signingCert, expectedHash, name, gender, address, dateOfBirth);
                         Pokepay.setEnv(env);

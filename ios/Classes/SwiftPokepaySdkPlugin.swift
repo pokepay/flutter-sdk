@@ -64,6 +64,20 @@ private class MethodCallTask {
             default: return TransactionStrategy.pointPreferred;
         }
     }
+
+    private func parseGender(raw:String?) -> Gender?{
+        if (raw == nil) {
+            return nil;
+        }
+
+        switch raw {
+            case "male": return Gender.male;
+            case "female": return Gender.female;
+            case "other": return Gender.other;
+            default: return nil;
+        }
+    }
+
     private func stringToDate(s: String?) -> Date? {
         if (s == nil) {
             return nil;
@@ -606,9 +620,10 @@ private class MethodCallTask {
             let signingCert = args["signingCert"] as! String
             let expectedHash = args["expectedHash"] as! String
             let name = args["name"] as? String
-            let gender = args["gender"] as? Gender
+            let rawGender =  args["gender"] as? String
+            let gender = parseGender(raw: rawGender)
             let address = args["address"] as? String
-            let dateOfBirth = args["dateOfBirth"] as? Date
+            let dateOfBirth = args["dateOfBirth"] as? String
             client.send(BankAPI.Account.IdentifyIndividual(accountId: accountId, signature: signature, signingCert: signingCert, expectedHash: expectedHash, name: name, gender: gender, address: address, dateOfBirth: dateOfBirth), handler: self.after)
         default:
             self.result(FlutterMethodNotImplemented)
