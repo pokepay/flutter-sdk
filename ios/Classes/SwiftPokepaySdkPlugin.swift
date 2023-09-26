@@ -64,6 +64,20 @@ private class MethodCallTask {
             default: return TransactionStrategy.pointPreferred;
         }
     }
+
+    private func parseGender(raw:String?) -> Gender?{
+        if (raw == nil) {
+            return nil;
+        }
+
+        switch raw {
+            case "male": return Gender.male;
+            case "female": return Gender.female;
+            case "other": return Gender.other;
+            default: return nil;
+        }
+    }
+
     private func stringToDate(s: String?) -> Date? {
         if (s == nil) {
             return nil;
@@ -621,6 +635,20 @@ private class MethodCallTask {
             let bankId = args["bankId"] as! String
             let amount = args["amount"] as! String
             client.send(BankAPI.User.BankPayTopUp(id: id, accountId: accountId, bankId: bankId, amount: amount), handler: self.after)
+        case "identifyIndividual":
+            let env = flutterEnvToSDKEnv(ienv: args["env"] as! Int32)
+            let accessToken = args["accessToken"] as! String
+            let client = Pokepay.Client(accessToken:accessToken, env: env)
+            let accountId = args["accountId"] as! String
+            let signature = args["signature"] as! String
+            let signingCert = args["signingCert"] as! String
+            let expectedHash = args["expectedHash"] as! String
+            let name = args["name"] as? String
+            let rawGender =  args["gender"] as? String
+            let gender = parseGender(raw: rawGender)
+            let address = args["address"] as? String
+            let dateOfBirth = args["dateOfBirth"] as? String
+            client.send(BankAPI.Account.IdentifyIndividual(accountId: accountId, signature: signature, signingCert: signingCert, expectedHash: expectedHash, name: name, gender: gender, address: address, dateOfBirth: dateOfBirth), handler: self.after)
         default:
             self.result(FlutterMethodNotImplemented)
         }

@@ -1,3 +1,5 @@
+import '../parameters/gender.dart';
+import '../responses/identification_result.dart';
 import '../responses/coupon_detail.dart';
 import '../responses/paginated_coupons.dart';
 
@@ -156,6 +158,34 @@ extension AccountAPI on PokepayAPI {
         'accountId': accountId,
         'couponId': couponId,
         'is_received': isReceived,
+      },
+    );
+  }
+
+  Future<IdentificationResult> identifyIndividual({
+    required String accountId,
+    required String signature,
+    required String signingCert,
+    required String expectedHash,
+    String? name,
+    Gender? gender,
+    String? address,
+    String? dateOfBirth,
+  }) async {
+    return await invokeMethod<IdentificationResult>(
+      (j) => IdentificationResult.fromJson(j),
+      'identifyIndividual',
+      {
+        'env': this.env.index,
+        'accessToken': this.accessToken,
+        'accountId': accountId,
+        'signature': signature,
+        'signingCert': signingCert,
+        'expectedHash': expectedHash,
+        'name': name,
+        'gender': gender?.value,
+        'address': address,
+        'dateOfBirth': dateOfBirth,        
       },
     );
   }
