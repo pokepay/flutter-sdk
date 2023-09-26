@@ -1,3 +1,7 @@
+## 2.0.6
+* Added `identifyIndividual` API for My Number
+* Added `createBankPay`, `getBankPay`, `bankpayTopup` APIs for BankPay
+
 ## 2.0.5
 * Added `additionalPrivateMoneys` field on `Bill` response
 
