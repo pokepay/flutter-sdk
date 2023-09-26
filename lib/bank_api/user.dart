@@ -1,3 +1,6 @@
+import '../responses/bankpay.dart';
+import '../responses/user_transaction.dart';
+import '../responses/bankpay_redirect_url.dart';
 import '../pokepay_sdk.dart';
 import '../responses/no_content.dart';
 import '../responses/paginated_accounts.dart';
@@ -118,6 +121,60 @@ extension UserAPI on PokepayAPI {
         'accessToken': this.accessToken,
         'id': id,
         'name': name,
+      },
+    );
+  }
+
+  Future<BankPayRedirectUrl> createBankPay({
+    required String id,
+    required String callbackUrl,
+    required String privateMoneyId,
+  }) async {
+    return await invokeMethod<BankPayRedirectUrl>(
+      (j) => BankPayRedirectUrl.fromJson(j),
+      'createBankPay',
+      {
+        'env': this.env.index,
+        'accessToken': this.accessToken,
+        'id': id,
+        'callbackUrl': callbackUrl,
+        'privateMoneyId': privateMoneyId,
+      },
+    );
+  }
+
+  Future<List<BankPay>> getBankPay({
+    required String id,
+    String? privateMoneyId,
+  }) async {
+    return await invokeMethod<List<BankPay>>(
+      (j) => (j as List<Map<String, dynamic>>).map(BankPay.fromJson).toList(),
+      'getBankPay',
+      {
+        'env': this.env.index,
+        'accessToken': this.accessToken,
+        'id': id,
+        'privateMoneyId': privateMoneyId,
+      },
+    );
+  }
+
+  Future<UserTransaction> bankpayTopUp({
+    required String id,
+    required String accountId,
+    required String bankId,
+    required String amount,
+  }) async {
+    return await invokeMethod<UserTransaction>(
+      (j) => UserTransaction.fromJson(j),
+      'bankpayTopUp',
+      {
+        'env': this.env.index,
+        'accessToken': this.accessToken,
+        'id': id,
+        'accountId': accountId,
+        'bankId': bankId,
+        'amount': amount,
       },
     );
   }
