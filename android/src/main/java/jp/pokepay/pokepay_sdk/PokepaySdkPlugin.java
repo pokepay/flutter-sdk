@@ -32,6 +32,7 @@ import jp.pokepay.pokepaylib.BankAPI.Account.GetAccountCouponDetail;
 import jp.pokepay.pokepaylib.BankAPI.Account.GetAccountCoupons;
 import jp.pokepay.pokepaylib.BankAPI.Account.GetAccountTransactions;
 import jp.pokepay.pokepaylib.BankAPI.Account.PatchAccountCouponDetail;
+import jp.pokepay.pokepaylib.BankAPI.Account.IdentifyIndividual;
 import jp.pokepay.pokepaylib.BankAPI.BankRequestError;
 import jp.pokepay.pokepaylib.BankAPI.Bill.CreateBill;
 import jp.pokepay.pokepaylib.BankAPI.Bill.DeleteBill;
@@ -81,6 +82,7 @@ import jp.pokepay.pokepaylib.OAuthAPI.OAuthRequestError;
 import jp.pokepay.pokepaylib.OAuthAPI.Token.ExchangeAuthCode;
 import jp.pokepay.pokepaylib.OAuthAPI.Token.RefreshAccessToken;
 import jp.pokepay.pokepaylib.Parameters.TransactionStrategy;
+import jp.pokepay.pokepaylib.Parameters.Gender;
 import jp.pokepay.pokepaylib.Parameters.Product;
 import jp.pokepay.pokepaylib.Parameters.Metadata;
 import jp.pokepay.pokepaylib.Pokepay;
@@ -110,6 +112,7 @@ import jp.pokepay.pokepaylib.Responses.Terminal;
 import jp.pokepay.pokepaylib.Responses.User;
 import jp.pokepay.pokepaylib.Responses.UserTransaction;
 import jp.pokepay.pokepaylib.Responses.UserWithAuthFactors;
+import jp.pokepay.pokepaylib.Responses.IdentificationResult;
 import jp.pokepay.pokepaylib.TokenInfo;
 
 /** PokepaySdkPlugin */
@@ -178,6 +181,17 @@ public class PokepaySdkPlugin implements FlutterPlugin, MethodCallHandler {
                 case "money-only": return TransactionStrategy.MONEY_ONLY;
                 case "point-preferred": return TransactionStrategy.POINT_PREFERRED;
                 default: return TransactionStrategy.POINT_PREFERRED;
+            }
+        }
+
+        private Gender parseGender(String gender){
+            if (gender == null) return null;
+
+            switch (gender){
+                case "male": return Gender.MALE;
+                case "female": return Gender.FEMALE;
+                case "other": return Gender.OTHER;
+                default: return null;
             }
         }
 
@@ -890,6 +904,24 @@ public class PokepaySdkPlugin implements FlutterPlugin, MethodCallHandler {
                         GetUserWithAuthFactors req = new GetUserWithAuthFactors(userId);
                         Pokepay.setEnv(env);
                         UserWithAuthFactors res = req.send(accessToken);
+                        return new TaskResult(null, res.toString());
+                    }
+                    case "identifyIndividual": {
+                        Env env = flutterEnvToSDKEnv((int)call.argument("env"));
+                        String accessToken = call.argument("accessToken");
+                        String accountId = call.argument("accountId");
+                        String signature = call.argument("signature");
+                        String signingCert = call.argument("signingCert");
+                        String expectedHash = call.argument("expectedHash");
+                        String name = call.argument("name");
+                        String rawGender = call.argument("gender");
+                        Gender gender = parseGender(rawGender);
+                        String address = call.argument("address");
+                        String dateOfBirth = call.argument("dateOfBirth");
+
+                        IdentifyIndividual req = new IdentifyIndividual(accountId, signature, signingCert, expectedHash, name, gender, address, dateOfBirth);
+                        Pokepay.setEnv(env);
+                        IdentificationResult res = req.send(accessToken);
                         return new TaskResult(null, res.toString());
                     }
                     default:
