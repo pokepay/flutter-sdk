@@ -1,3 +1,6 @@
+## 2.0.7
+* Fixed `getBankPay`, `createBankPay` response from API
+
 ## 2.0.6
 * Added `identifyIndividual` API for My Number
 * Added `createBankPay`, `getBankPay`, `bankpayTopup` APIs for BankPay

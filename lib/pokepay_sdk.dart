@@ -114,7 +114,7 @@ void setLogLevel(LogLevel lev) {
 
 const MethodChannel channel = const MethodChannel('jp.pokepay/pokepay_sdk');
 
-Future<T> invokeMethod<T>(T factory(Map<String, dynamic> data),
+Future<T> invokeMethod<T>(T factory(dynamic data),
     String methodName, Map<String, dynamic> args) async {
   try {
     logger.d("methodName: " + methodName + " args: " + args.toString());

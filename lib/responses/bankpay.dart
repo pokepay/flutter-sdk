@@ -9,7 +9,7 @@ class BankPay {
   final String bankCode;
   final String branchNumber;
   final String branchName;
-  final int depositType;
+  final String depositType;
   final String maskedAccountNumber;
   final String accountName;
   final String? privateMoneyId;

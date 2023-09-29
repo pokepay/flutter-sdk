@@ -148,7 +148,9 @@ extension UserAPI on PokepayAPI {
     String? privateMoneyId,
   }) async {
     return await invokeMethod<List<BankPay>>(
-      (j) => (j as List<Map<String, dynamic>>).map(BankPay.fromJson).toList(),
+      (j) {
+        return (j as List<dynamic>).map((k) => BankPay.fromJson(k)).toList();
+      },
       'getBankPay',
       {
         'env': this.env.index,

@@ -17,6 +17,7 @@ import java.io.Writer;
 import java.util.Date;
 import java.util.Map;
 import java.util.UUID;
+import java.util.Arrays;
 
 import io.flutter.embedding.engine.plugins.FlutterPlugin;
 import io.flutter.plugin.common.MethodCall;
@@ -930,7 +931,7 @@ public class PokepaySdkPlugin implements FlutterPlugin, MethodCallHandler {
                         GetBankPay req = new GetBankPay(id, privateMoneyId);
                         Pokepay.setEnv(env);
                         BankPay[] res = req.send(accessToken);
-                        return new TaskResult(null, res.toString());
+                        return new TaskResult(null, Arrays.toString(res));
                     }
                     case "bankpayTopUp": {
                         Env env = flutterEnvToSDKEnv((int)call.argument("env"));
@@ -943,6 +944,7 @@ public class PokepaySdkPlugin implements FlutterPlugin, MethodCallHandler {
                         Pokepay.setEnv(env);
                         UserTransaction res = req.send(accessToken);
                       return new TaskResult(null, res.toString());
+                    }
                     case "identifyIndividual": {
                         Env env = flutterEnvToSDKEnv((int)call.argument("env"));
                         String accessToken = call.argument("accessToken");
