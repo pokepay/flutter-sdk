@@ -12,7 +12,7 @@ BankPay _$BankPayFromJson(Map<String, dynamic> json) => BankPay(
       bankCode: json['bank_code'] as String,
       branchNumber: json['branch_number'] as String,
       branchName: json['branch_name'] as String,
-      depositType: json['deposit_type'] as int,
+      depositType: json['deposit_type'] as String,
       maskedAccountNumber: json['masked_account_number'] as String,
       accountName: json['account_name'] as String,
       privateMoneyId: json['private_money_id'] as String?,
