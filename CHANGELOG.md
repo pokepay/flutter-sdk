@@ -1,3 +1,7 @@
+## 2.0.8
+* Added `can_use_c2c_transfer` to `GetPrivateMoney` and `SearchPrivateMoney` API responses
+* Added `GetAccountCampaignPointAmounts` API
+
 ## 2.0.7
 * Fixed `getBankPay`, `createBankPay` response from API
 
@@ -14,16 +18,20 @@
 * Added `RequestId` parameter for create transactions with `Bill`, `Cashtray`, `Check`, and `CPM`
 * Added `pointDept` parameter for `Account` response
 
-##1.0.6
+## 1.0.6
 * Upgrade to flutter 3.0
 * Null safety
 * Make the transaction can choose to use points or not.
 * Support custom domain.
-##1.0.4
+
+## 1.0.4
 * Modified API
+
 ## 1.0.3
 * Add Coupon feature.
+
 ## 1.0.1
 * Add Readme let user more know how to use SDK.
+
 ## 1.0.0
 * First version

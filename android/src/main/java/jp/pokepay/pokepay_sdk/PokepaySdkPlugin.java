@@ -34,6 +34,7 @@ import jp.pokepay.pokepaylib.BankAPI.Account.GetAccountCoupons;
 import jp.pokepay.pokepaylib.BankAPI.Account.GetAccountTransactions;
 import jp.pokepay.pokepaylib.BankAPI.Account.PatchAccountCouponDetail;
 import jp.pokepay.pokepaylib.BankAPI.Account.IdentifyIndividual;
+import jp.pokepay.pokepaylib.BankAPI.Account.GetAccountCampaignPointAmounts;
 import jp.pokepay.pokepaylib.BankAPI.BankRequestError;
 import jp.pokepay.pokepaylib.BankAPI.Bill.CreateBill;
 import jp.pokepay.pokepaylib.BankAPI.Bill.DeleteBill;
@@ -119,6 +120,7 @@ import jp.pokepay.pokepaylib.Responses.UserWithAuthFactors;
 import jp.pokepay.pokepaylib.Responses.BankPay;
 import jp.pokepay.pokepaylib.Responses.BankPayRedirectUrl;
 import jp.pokepay.pokepaylib.Responses.IdentificationResult;
+import jp.pokepay.pokepaylib.Responses.AccountCampaignPointAmounts;
 import jp.pokepay.pokepaylib.TokenInfo;
 
 /** PokepaySdkPlugin */
@@ -962,6 +964,16 @@ public class PokepaySdkPlugin implements FlutterPlugin, MethodCallHandler {
                         Pokepay.setEnv(env);
                         IdentificationResult res = req.send(accessToken);
                         return new TaskResult(null, res.toString());
+                    }
+                    case "getAccountCampaignPointAmounts": {
+                        Env env = flutterEnvToSDKEnv((int)call.argument("env"));
+                        String accessToken = call.argument("accessToken");
+                        String accountId = call.argument("accountId");
+                        String campaignId = call.argument("campaignId");
+                        GetAccountCampaignPointAmounts req = new GetAccountCampaignPointAmounts(accountId, campaignId);
+                        Pokepay.setEnv(env);
+                        AccountCampaignPointAmounts res = req.send(accessToken);
+                      return new TaskResult(null, res.toString());
                     }
                     default:
                         throw new java.lang.UnsupportedOperationException();
