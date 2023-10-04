@@ -25,6 +25,7 @@ class PrivateMoney {
   final String? paymentActUrl;
   final String? commercialActUrl;
   final bool canUseCreditCard;
+  final bool canUseC2CTransfer;
   final String? customDomainName;
 
   PrivateMoney({
@@ -46,6 +47,7 @@ class PrivateMoney {
     this.paymentActUrl,
     this.commercialActUrl,
     required this.canUseCreditCard,
+    required this.canUseC2CTransfer,
     this.customDomainName,
   });
 

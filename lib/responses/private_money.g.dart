@@ -25,6 +25,7 @@ PrivateMoney _$PrivateMoneyFromJson(Map<String, dynamic> json) => PrivateMoney(
       paymentActUrl: json['payment_act_url'] as String?,
       commercialActUrl: json['commercial_act_url'] as String?,
       canUseCreditCard: json['can_use_credit_card'] as bool,
+      canUseC2CTransfer: json['can_use_c2c_transfer'] as bool,
       customDomainName: json['custom_domain_name'] as String?,
     );
 
@@ -47,5 +48,6 @@ Map<String, dynamic> _$PrivateMoneyToJson(PrivateMoney instance) => <String, dyn
       'payment_act_url': instance.paymentActUrl,
       'commercial_act_url': instance.commercialActUrl,
       'can_use_credit_card': instance.canUseCreditCard,
+      'can_use_c2c_transfer': instance.canUseC2CTransfer,
       'custom_domain_name': instance.customDomainName,
     };
