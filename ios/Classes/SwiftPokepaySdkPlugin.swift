@@ -649,6 +649,13 @@ private class MethodCallTask {
             let address = args["address"] as? String
             let dateOfBirth = args["dateOfBirth"] as? String
             client.send(BankAPI.Account.IdentifyIndividual(accountId: accountId, signature: signature, signingCert: signingCert, expectedHash: expectedHash, name: name, gender: gender, address: address, dateOfBirth: dateOfBirth), handler: self.after)
+        case "getAccountCampaignPointAmounts":
+            let env = flutterEnvToSDKEnv(ienv: args["env"] as! Int32)
+            let accessToken = args["accessToken"] as! String
+            let client = Pokepay.Client(accessToken:accessToken, env: env)
+            let accountId = args["accountId"] as! String
+            let campaignId = args["campaignId"] as! String
+            client.send(BankAPI.Account.GetAccountCampaignPointAmounts(accountId: accountId, campaignId: campaignId), handler: self.after)
         default:
             self.result(FlutterMethodNotImplemented)
         }

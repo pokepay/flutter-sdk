@@ -2,6 +2,7 @@ import '../parameters/gender.dart';
 import '../responses/identification_result.dart';
 import '../responses/coupon_detail.dart';
 import '../responses/paginated_coupons.dart';
+import '../responses/account_campaign_point_amounts.dart';
 
 import '../pokepay_sdk.dart';
 import '../responses.dart';
@@ -186,6 +187,22 @@ extension AccountAPI on PokepayAPI {
         'gender': gender?.value,
         'address': address,
         'dateOfBirth': dateOfBirth,        
+      },
+    );
+  }
+
+  Future<AccountCampaignPointAmounts> getAccountCampaignPointAmounts({
+    required String accountId,
+    required String campaignId,
+  }) async {
+    return await invokeMethod<AccountCampaignPointAmounts>(
+      (j) => AccountCampaignPointAmounts.fromJson(j),
+      'getAccountCampaignPointAmounts',
+      {
+        'env': this.env.index,
+        'accessToken': this.accessToken,
+        'accountId': accountId,
+        'campaignId': campaignId,       
       },
     );
   }
