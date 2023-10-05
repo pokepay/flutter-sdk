@@ -618,7 +618,8 @@ private class MethodCallTask {
             let id = args["id"] as! String
             let callbackUrl = args["callbackUrl"] as! String
             let privateMoneyId = args["privateMoneyId"] as! String
-            client.send(BankAPI.User.CreateBankPay(id: id, callbackUrl: callbackUrl, privateMoneyId: privateMoneyId), handler: self.after)
+            let kana = args["kana"] as? String
+            client.send(BankAPI.User.CreateBankPay(id: id, callbackUrl: callbackUrl, privateMoneyId: privateMoneyId, kana: kana), handler: self.after)
         case "getBankPay":
             let env = flutterEnvToSDKEnv(ienv: args["env"] as! Int32)
             let accessToken = args["accessToken"] as! String

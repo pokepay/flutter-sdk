@@ -129,6 +129,7 @@ extension UserAPI on PokepayAPI {
     required String id,
     required String callbackUrl,
     required String privateMoneyId,
+    String? kana,
   }) async {
     return await invokeMethod<BankPayRedirectUrl>(
       (j) => BankPayRedirectUrl.fromJson(j),
@@ -139,6 +140,7 @@ extension UserAPI on PokepayAPI {
         'id': id,
         'callbackUrl': callbackUrl,
         'privateMoneyId': privateMoneyId,
+        'kana': kana,
       },
     );
   }
