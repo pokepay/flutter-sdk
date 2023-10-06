@@ -920,7 +920,8 @@ public class PokepaySdkPlugin implements FlutterPlugin, MethodCallHandler {
                         String id = call.argument("id");
                         String callbackUrl = call.argument("callbackUrl");
                         String privateMoneyId = call.argument("privateMoneyId");
-                        CreateBankPay req = new CreateBankPay(id, callbackUrl, privateMoneyId);
+                        String kana = call.argument("kana");
+                        CreateBankPay req = new CreateBankPay(id, callbackUrl, privateMoneyId, kana);
                         Pokepay.setEnv(env);
                         BankPayRedirectUrl res = req.send(accessToken);
                         return new TaskResult(null, res.toString());

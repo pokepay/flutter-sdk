@@ -5,9 +5,11 @@ part 'bankpay_redirect_url.g.dart';
 @JsonSerializable()
 class BankPayRedirectUrl {
   final String redirectUrl;
+  final String? paytreeCustomerNumber;
 
   BankPayRedirectUrl({
     required this.redirectUrl,
+    this.paytreeCustomerNumber,
   });
 
   factory BankPayRedirectUrl.fromJson(Map<String, dynamic> json) =>

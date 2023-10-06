@@ -1,3 +1,6 @@
+## 2.0.9
+* Added `kana` to request params and `paytreeCustomerNumber ` to response from CreateBankPay API
+
 ## 2.0.8
 * Added `can_use_c2c_transfer` to `GetPrivateMoney` and `SearchPrivateMoney` API responses
 * Added `GetAccountCampaignPointAmounts` API
