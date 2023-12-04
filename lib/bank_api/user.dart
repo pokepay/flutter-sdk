@@ -182,4 +182,20 @@ extension UserAPI on PokepayAPI {
       },
     );
   }
+
+  Future<NoContent> deleteBankPay({
+    required String id,
+    required String bankId,
+  }) async {
+    return await invokeMethod<NoContent>(
+      (j) => NoContent.fromJson(j),
+      'deleteBankPay',
+      {
+        'env': this.env.index,
+        'accessToken': this.accessToken,
+        'id': id,
+        'bankId': bankId,
+      },
+    );
+  }
 }
