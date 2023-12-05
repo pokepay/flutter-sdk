@@ -75,6 +75,7 @@ import jp.pokepay.pokepaylib.BankAPI.User.UpdateUser;
 import jp.pokepay.pokepaylib.BankAPI.User.GetUserWithAuthFactors;
 import jp.pokepay.pokepaylib.BankAPI.User.CreateBankPay;
 import jp.pokepay.pokepaylib.BankAPI.User.GetBankPay;
+import jp.pokepay.pokepaylib.BankAPI.User.DeleteBankPay;
 import jp.pokepay.pokepaylib.BankAPI.User.BankPayTopUp;
 import jp.pokepay.pokepaylib.Env;
 import jp.pokepay.pokepaylib.JsonConverter;
@@ -947,6 +948,16 @@ public class PokepaySdkPlugin implements FlutterPlugin, MethodCallHandler {
                         Pokepay.setEnv(env);
                         UserTransaction res = req.send(accessToken);
                       return new TaskResult(null, res.toString());
+                    }
+                    case "deleteBankPay": {
+                        Env env = flutterEnvToSDKEnv((int)call.argument("env"));
+                        String accessToken = call.argument("accessToken");
+                        String id = call.argument("id");
+                        String bankId = call.argument("bankId");
+                        DeleteBankPay req = new DeleteBankPay(id, bankId);
+                        Pokepay.setEnv(env);
+                        NoContent res = req.send(accessToken);
+                        return new TaskResult(null, res.toString());
                     }
                     case "identifyIndividual": {
                         Env env = flutterEnvToSDKEnv((int)call.argument("env"));
