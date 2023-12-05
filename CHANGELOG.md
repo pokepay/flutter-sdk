@@ -1,3 +1,7 @@
+## 2.0.11
+**Sync with Native SDK versions**
+* Added `deleteBankPay` API for BankPay
+
 ## 2.0.9
 * Added `kana` to request params and `paytreeCustomerNumber ` to response from CreateBankPay API
 
