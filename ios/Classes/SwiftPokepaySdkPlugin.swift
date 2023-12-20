@@ -635,8 +635,7 @@ private class MethodCallTask {
             let accountId = args["accountId"] as! String
             let bankId = args["bankId"] as! String
             let amount = args["amount"] as! String
-            let requestId = args["requestId"] as? String
-            client.send(BankAPI.User.BankPayTopUp(id: id, accountId: accountId, bankId: bankId, amount: amount, requestId: requestId), handler: self.after)
+            client.send(BankAPI.User.BankPayTopUp(id: id, accountId: accountId, bankId: bankId, amount: amount), handler: self.after)
         case "deleteBankPay":
             let env = flutterEnvToSDKEnv(ienv: args["env"] as! Int32)
             let accessToken = args["accessToken"] as! String

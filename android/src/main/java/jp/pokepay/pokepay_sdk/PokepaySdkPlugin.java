@@ -944,8 +944,7 @@ public class PokepaySdkPlugin implements FlutterPlugin, MethodCallHandler {
                         String accountId = call.argument("accountId");
                         String bankId = call.argument("bankId");
                         String amount = call.argument("amount");
-                        String requestId = call.argument("requestId");
-                        BankPayTopUp req = new BankPayTopUp(id, accountId, bankId, amount, requestId);
+                        BankPayTopUp req = new BankPayTopUp(id, accountId, bankId, amount);
                         Pokepay.setEnv(env);
                         UserTransaction res = req.send(accessToken);
                       return new TaskResult(null, res.toString());
