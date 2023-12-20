@@ -1,3 +1,6 @@
+## 2.0.12
+* Added optional `requestId` to `bankPayTopUp` API
+
 ## 2.0.11
 **Sync with Native SDK versions**
 * Added `deleteBankPay` API for BankPay
