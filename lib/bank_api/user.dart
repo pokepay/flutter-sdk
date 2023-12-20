@@ -168,6 +168,7 @@ extension UserAPI on PokepayAPI {
     required String accountId,
     required String bankId,
     required String amount,
+    String? requestId,
   }) async {
     return await invokeMethod<UserTransaction>(
       (j) => UserTransaction.fromJson(j),
@@ -179,6 +180,7 @@ extension UserAPI on PokepayAPI {
         'accountId': accountId,
         'bankId': bankId,
         'amount': amount,
+        'requestId': requestId,
       },
     );
   }
