@@ -1,3 +1,6 @@
+## 2.0.13
+* Fix `deleteBankPay` API
+
 ## 2.0.12
 * Added optional `requestId` to `bankPayTopUp` API
 
