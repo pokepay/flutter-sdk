@@ -4,7 +4,7 @@
 #
 Pod::Spec.new do |s|
   s.name             = 'pokepay_sdk'
-  s.version          = '2.0.12'
+  s.version          = '2.0.13'
   s.summary          = 'Pokepay flutter SDK'
   s.description      = <<-DESC
 Pokepay flutter SDK
@@ -15,7 +15,7 @@ Pokepay flutter SDK
   s.source           = { :path => '.' }
   s.source_files = 'Classes/**/*'
   s.dependency 'Flutter'
-  s.dependency 'Pokepay', '2.0.12'
+  s.dependency 'Pokepay', '2.0.13'
   s.platform = :ios, '12.0'
 
   # Flutter.framework does not contain a i386 slice. Only x86_64 simulators are supported.
