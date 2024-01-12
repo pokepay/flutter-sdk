@@ -1,3 +1,6 @@
+## 2.0.14
+* Fix `createAccountCPMToken` API to handle multiple key values in metadata
+
 ## 2.0.13
 * Fix `deleteBankPay` API
 
