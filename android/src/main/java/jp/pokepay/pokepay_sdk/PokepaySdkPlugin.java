@@ -1005,11 +1005,7 @@ public class PokepaySdkPlugin implements FlutterPlugin, MethodCallHandler {
                         String organizationCode = call.argument("organizationCode");
                         String userId = call.argument("userId");
 
-                        CreateCreditCard req = new CreateCreditCard(userId, token, organizationCode);
-
-                        if(isCardholderNameSpecified != null){
-                            req.isCardholderNameSpecified(isCardholderNameSpecified);
-                        }
+                        CreateCreditCard req = new CreateCreditCard(userId, token, organizationCode).isCardholderNameSpecified(isCardholderNameSpecified);
 
                         Pokepay.setEnv(env);
                         CreditCard res = req.send(accessToken);
