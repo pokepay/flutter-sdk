@@ -1,3 +1,7 @@
+## 2.0.16
+* Added `GetVeritransToken` endpoint
+* Added CreditCard endpoints (create, get, delete, topup)
+
 ## 2.0.14
 * Fix `createAccountCPMToken` API to handle multiple key values in metadata
 
