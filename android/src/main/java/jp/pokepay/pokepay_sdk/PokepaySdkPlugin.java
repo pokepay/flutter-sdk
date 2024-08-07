@@ -1077,8 +1077,9 @@ public class PokepaySdkPlugin implements FlutterPlugin, MethodCallHandler {
                         String cardExpiryDate = call.argument("cardExpiryDate");
                         String securityCode = call.argument("securityCode");
                         String tokenApiKey = call.argument("tokenApiKey");
+                        String cardholderName = call.argument("cardholderName");
 
-                        GetVeritransToken req = new GetVeritransToken(cardNumber, cardExpiryDate, securityCode, tokenApiKey);
+                        GetVeritransToken req = new GetVeritransToken(cardNumber, cardExpiryDate, securityCode, tokenApiKey, cardholderName);
                         VeritransToken res = req.send();
                         return new TaskResult(null, res.toString());
                     }

@@ -8,6 +8,7 @@ class VeritransAPI {
     required String cardExpiryDate,
     required String securityCode,
     required String tokenApiKey,
+    required String cardholderName,
   }) async {
     return await invokeMethod<VeritransToken>(
       (j) => VeritransToken.fromJson(j),
@@ -17,6 +18,7 @@ class VeritransAPI {
         'cardExpiryDate': cardExpiryDate,
         'securityCode': securityCode,
         'tokenApiKey': tokenApiKey,
+        'cardholderName': cardholderName,
       },
     );
   }

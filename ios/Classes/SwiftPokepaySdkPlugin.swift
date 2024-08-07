@@ -720,7 +720,8 @@ private class MethodCallTask {
             let cardExpiryDate = args["cardExpiryDate"] as! String
             let securityCode = args["securityCode"] as! String
             let tokenApiKey = args["tokenApiKey"] as! String
-            veritransClient.send(VeritransAPI.Token.GetVeritransToken(cardNumber: cardNumber, cardExpiryDate: cardExpiryDate, securityCode: securityCode, tokenApiKey: tokenApiKey), handler: self.after)
+            let cardholderName = args["cardholderName"] as! String
+            veritransClient.send(VeritransAPI.Token.GetVeritransToken(cardNumber: cardNumber, cardExpiryDate: cardExpiryDate, securityCode: securityCode, tokenApiKey: tokenApiKey, cardholderName: cardholderName), handler: self.after)
         default:
             self.result(FlutterMethodNotImplemented)
         }
