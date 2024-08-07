@@ -120,6 +120,7 @@ Future<T> invokeMethod<T>(T factory(dynamic data),
     logger.d("methodName: " + methodName + " args: " + args.toString());
     final String json = await channel.invokeMethod(methodName, args);
     logger.d("json: " + json);
+    if (T == String) return factory(json);
     return factory(jsonDecode(json));
   } on PlatformException catch (e) {
     final String code = e.code;

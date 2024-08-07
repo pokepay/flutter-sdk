@@ -77,6 +77,11 @@ import jp.pokepay.pokepaylib.BankAPI.User.CreateBankPay;
 import jp.pokepay.pokepaylib.BankAPI.User.GetBankPay;
 import jp.pokepay.pokepaylib.BankAPI.User.DeleteBankPay;
 import jp.pokepay.pokepaylib.BankAPI.User.BankPayTopUp;
+import jp.pokepay.pokepaylib.BankAPI.autogen.requests.CreateCreditCard;
+import jp.pokepay.pokepaylib.BankAPI.autogen.requests.DeleteCreditCard;
+import jp.pokepay.pokepaylib.BankAPI.autogen.requests.GetCreditCards;
+import jp.pokepay.pokepaylib.BankAPI.autogen.requests.TopupWithCreditCardMdkToken;
+import jp.pokepay.pokepaylib.BankAPI.autogen.requests.TopupWithCreditCardMembership;
 import jp.pokepay.pokepaylib.Env;
 import jp.pokepay.pokepaylib.JsonConverter;
 import jp.pokepay.pokepaylib.MessagingAPI.GetMessage;
@@ -87,6 +92,7 @@ import jp.pokepay.pokepaylib.MessagingAPI.SendMessage;
 import jp.pokepay.pokepaylib.OAuthAPI.OAuthRequestError;
 import jp.pokepay.pokepaylib.OAuthAPI.Token.ExchangeAuthCode;
 import jp.pokepay.pokepaylib.OAuthAPI.Token.RefreshAccessToken;
+import jp.pokepay.pokepaylib.ExternalServiceAPI.Veritrans.GetVeritransToken;
 import jp.pokepay.pokepaylib.Parameters.TransactionStrategy;
 import jp.pokepay.pokepaylib.Parameters.Gender;
 import jp.pokepay.pokepaylib.Parameters.Product;
@@ -122,6 +128,9 @@ import jp.pokepay.pokepaylib.Responses.BankPay;
 import jp.pokepay.pokepaylib.Responses.BankPayRedirectUrl;
 import jp.pokepay.pokepaylib.Responses.IdentificationResult;
 import jp.pokepay.pokepaylib.Responses.AccountCampaignPointAmounts;
+import jp.pokepay.pokepaylib.Responses.VeritransToken;
+import jp.pokepay.pokepaylib.BankAPI.autogen.responses.CreditCard;
+import jp.pokepay.pokepaylib.BankAPI.autogen.responses.PaginatedCreditCards;;
 import jp.pokepay.pokepaylib.TokenInfo;
 
 /** PokepaySdkPlugin */
@@ -948,7 +957,7 @@ public class PokepaySdkPlugin implements FlutterPlugin, MethodCallHandler {
                         BankPayTopUp req = new BankPayTopUp(id, accountId, bankId, amount, requestId);
                         Pokepay.setEnv(env);
                         UserTransaction res = req.send(accessToken);
-                      return new TaskResult(null, res.toString());
+                        return new TaskResult(null, res.toString());
                     }
                     case "deleteBankPay": {
                         Env env = flutterEnvToSDKEnv((int)call.argument("env"));
@@ -986,7 +995,89 @@ public class PokepaySdkPlugin implements FlutterPlugin, MethodCallHandler {
                         GetAccountCampaignPointAmounts req = new GetAccountCampaignPointAmounts(accountId, campaignId);
                         Pokepay.setEnv(env);
                         AccountCampaignPointAmounts res = req.send(accessToken);
-                      return new TaskResult(null, res.toString());
+                        return new TaskResult(null, res.toString());
+                    }
+                    case "createCreditCard": {
+                        Env env = flutterEnvToSDKEnv((int)call.argument("env"));
+                        String accessToken = call.argument("accessToken");
+                        String token = call.argument("token");
+                        Boolean isCardholderNameSpecified = call.argument("isCardholderNameSpecified");
+                        String organizationCode = call.argument("organizationCode");
+                        String userId = call.argument("userId");
+
+                        CreateCreditCard req = new CreateCreditCard(userId, token, organizationCode).isCardholderNameSpecified(isCardholderNameSpecified);
+
+                        Pokepay.setEnv(env);
+                        CreditCard res = req.send(accessToken);
+                        return new TaskResult(null, res.toString());
+                    }
+                    case "deleteCreditCard": {
+                        Env env = flutterEnvToSDKEnv((int)call.argument("env"));
+                        String accessToken = call.argument("accessToken");
+                        String cardRegisteredAt = call.argument("cardRegisteredAt");
+                        String organizationCode = call.argument("organizationCode");
+                        String userId = call.argument("userId");
+
+                        DeleteCreditCard req = new DeleteCreditCard(userId, cardRegisteredAt, organizationCode);
+                        Pokepay.setEnv(env);
+                        NoContent res = req.send(accessToken);
+                        return new TaskResult(null, res.toString());
+                    }
+                    case "getCreditCards": {
+                        Env env = flutterEnvToSDKEnv((int)call.argument("env"));
+                        String accessToken = call.argument("accessToken");
+                        String userId = call.argument("userId");
+                        String before = call.argument("before");
+                        String after = call.argument("after");
+                        Integer perPage = call.argument("perPage");
+                        String organizationCode = call.argument("organizationCode");
+
+                        GetCreditCards req = new GetCreditCards(userId, organizationCode).before(before).after(after).perPage(perPage);
+
+                        Pokepay.setEnv(env);
+                        PaginatedCreditCards res = req.send(accessToken);
+                        return new TaskResult(null, res.toString());
+                    }
+                    case "topupWithCreditCardMdkToken": {
+                        Env env = flutterEnvToSDKEnv((int)call.argument("env"));
+                        String accessToken = call.argument("accessToken");
+                        String userId = call.argument("userId");
+                        String token = call.argument("token");
+                        String accountId = call.argument("accountId");
+                        Integer amount = call.argument("amount");
+                        String organizationCode = call.argument("organizationCode");
+                        Boolean isCardholderNameSpecified = call.argument("isCardholderNameSpecified");
+
+                        TopupWithCreditCardMdkToken req = new TopupWithCreditCardMdkToken(userId, token, accountId, amount, organizationCode).isCardholderNameSpecified(isCardholderNameSpecified);
+                        Pokepay.setEnv(env);
+                        String res = req.send(accessToken);
+                        return new TaskResult(null, res);
+                    }
+                    case "topupWithCreditCardMembership": {
+                        Env env = flutterEnvToSDKEnv((int)call.argument("env"));
+                        String accessToken = call.argument("accessToken");
+                        String userId = call.argument("userId");
+                        String cardRegisteredAt = call.argument("cardRegisteredAt");
+                        String accountId = call.argument("accountId");
+                        Integer amount = call.argument("amount");
+                        Boolean deleteCardIfAuthFail = call.argument("deleteCardIfAuthFail");
+                        String organizationCode = call.argument("organizationCode");
+
+                        TopupWithCreditCardMembership req = new TopupWithCreditCardMembership(userId, cardRegisteredAt, accountId, amount, organizationCode).deleteCardIfAuthFail(deleteCardIfAuthFail);
+                        Pokepay.setEnv(env);
+                        String res = req.send(accessToken);
+                        return new TaskResult(null, res);
+                    }
+                    case "getVeritransToken": {
+                        String cardNumber = call.argument("cardNumber");
+                        String cardExpiryDate = call.argument("cardExpiryDate");
+                        String securityCode = call.argument("securityCode");
+                        String tokenApiKey = call.argument("tokenApiKey");
+                        String cardholderName = call.argument("cardholderName");
+
+                        GetVeritransToken req = new GetVeritransToken(cardNumber, cardExpiryDate, securityCode, tokenApiKey, cardholderName);
+                        VeritransToken res = req.send();
+                        return new TaskResult(null, res.toString());
                     }
                     default:
                         throw new java.lang.UnsupportedOperationException();
