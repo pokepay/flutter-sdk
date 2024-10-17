@@ -1,3 +1,6 @@
+## 2.0.17
+* Added `requestId` to `topupWithCreditCardMdkToken` and `TopupWithCreditCardMembership` endpoints
+
 ## 2.0.16
 * Added `GetVeritransToken` endpoint
 * Added CreditCard endpoints (create, get, delete, topup)
