@@ -1047,8 +1047,9 @@ public class PokepaySdkPlugin implements FlutterPlugin, MethodCallHandler {
                         Integer amount = call.argument("amount");
                         String organizationCode = call.argument("organizationCode");
                         Boolean isCardholderNameSpecified = call.argument("isCardholderNameSpecified");
+                        String requestId = call.argument("requestId");
 
-                        TopupWithCreditCardMdkToken req = new TopupWithCreditCardMdkToken(userId, token, accountId, amount, organizationCode).isCardholderNameSpecified(isCardholderNameSpecified);
+                        TopupWithCreditCardMdkToken req = new TopupWithCreditCardMdkToken(userId, token, accountId, amount, organizationCode).isCardholderNameSpecified(isCardholderNameSpecified).requestId(requestId);
                         Pokepay.setEnv(env);
                         String res = req.send(accessToken);
                         return new TaskResult(null, res);
@@ -1062,8 +1063,9 @@ public class PokepaySdkPlugin implements FlutterPlugin, MethodCallHandler {
                         Integer amount = call.argument("amount");
                         Boolean deleteCardIfAuthFail = call.argument("deleteCardIfAuthFail");
                         String organizationCode = call.argument("organizationCode");
+                        String requestId = call.argument("requestId");
 
-                        TopupWithCreditCardMembership req = new TopupWithCreditCardMembership(userId, cardRegisteredAt, accountId, amount, organizationCode).deleteCardIfAuthFail(deleteCardIfAuthFail);
+                        TopupWithCreditCardMembership req = new TopupWithCreditCardMembership(userId, cardRegisteredAt, accountId, amount, organizationCode).deleteCardIfAuthFail(deleteCardIfAuthFail).requestId(requestId);
                         Pokepay.setEnv(env);
                         String res = req.send(accessToken);
                         return new TaskResult(null, res);

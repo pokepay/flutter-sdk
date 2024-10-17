@@ -702,7 +702,8 @@ private class MethodCallTask {
             let amount = args["amount"] as! Int
             let organizationCode = args["organizationCode"] as? String
             let isCardholderNameSpecified = args["isCardholderNameSpecified"] as? Bool
-            client.send(BankAPI.CreditCard.TopupWithCreditCardMdkToken(userId: userId, token: token, accountId: accountId, amount: amount, organizationCode: organizationCode, isCardholderNameSpecified: isCardholderNameSpecified), handler: self.after)
+            let requestId = args["requestId"] as? String
+            client.send(BankAPI.CreditCard.TopupWithCreditCardMdkToken(userId: userId, token: token, accountId: accountId, amount: amount, organizationCode: organizationCode, isCardholderNameSpecified: isCardholderNameSpecified, requestId: requestId), handler: self.after)
         case "topupWithCreditCardMembership":
             let env = flutterEnvToSDKEnv(ienv: args["env"] as! Int32)
             let accessToken = args["accessToken"] as! String
@@ -713,7 +714,8 @@ private class MethodCallTask {
             let amount = args["amount"] as! Int
             let deleteCardIfAuthFail = args["deleteCardIfAuthFail"] as? Bool
             let organizationCode = args["organizationCode"] as? String
-            client.send(BankAPI.CreditCard.TopupWithCreditCardMembership(userId: userId, cardRegisteredAt: cardRegisteredAt, accountId: accountId, amount: amount, deleteCardIfAuthFail: deleteCardIfAuthFail, organizationCode: organizationCode), handler: self.after)
+            let requestId = args["requestId"] as? String
+            client.send(BankAPI.CreditCard.TopupWithCreditCardMembership(userId: userId, cardRegisteredAt: cardRegisteredAt, accountId: accountId, amount: amount, deleteCardIfAuthFail: deleteCardIfAuthFail, organizationCode: organizationCode, requestId: requestId), handler: self.after)
         case "getVeritransToken":
             let veritransClient = Pokepay.VeritransClient()
             let cardNumber = args["cardNumber"] as! String

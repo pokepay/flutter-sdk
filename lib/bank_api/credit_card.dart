@@ -73,6 +73,7 @@ extension CreditCardAPI on PokepayAPI {
     required int amount,
     String? organizationCode,
     bool? isCardholderNameSpecified,
+    String? requestId,
   }) async {
     return await invokeMethod<String>(
       (j) => j,
@@ -86,6 +87,7 @@ extension CreditCardAPI on PokepayAPI {
         'amount': amount,
         'organizationCode': organizationCode,
         'isCardholderNameSpecified': isCardholderNameSpecified,
+        'requestId': requestId,
       },
     );
   }
@@ -97,6 +99,7 @@ extension CreditCardAPI on PokepayAPI {
     required int amount,
     bool? deleteCardIfAuthFail,
     String? organizationCode,
+    String? requestId,
   }) async {
     return await invokeMethod<String>(
       (j) => j,
@@ -110,6 +113,7 @@ extension CreditCardAPI on PokepayAPI {
         'amount': amount,
         'deleteCardIfAuthFail': deleteCardIfAuthFail,
         'organizationCode': organizationCode,
+        'requestId': requestId,
       },
     );
   }
