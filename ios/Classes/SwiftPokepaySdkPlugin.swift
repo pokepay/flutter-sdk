@@ -5,7 +5,7 @@ import Result
 import Pokepay
 import Foundation
 
-private class APIJSONEncoder : JSONEncoder {
+private class APIJSONEncoder : JSONEncoder, @unchecked Sendable {
     override init() {
         super.init()
         let dateFormatter = DateFormatter()
@@ -703,7 +703,7 @@ private class MethodCallTask {
             let organizationCode = args["organizationCode"] as? String
             let isCardholderNameSpecified = args["isCardholderNameSpecified"] as? Bool
             let requestId = args["requestId"] as? String
-            client.send(BankAPI.CreditCard.TopupWithCreditCardMdkToken(userId: userId, token: token, accountId: accountId, amount: amount, organizationCode: organizationCode, isCardholderNameSpecified: isCardholderNameSpecified, requestId: requestId), handler: self.after)
+            client.send(BankAPI.CreditCard.TopupWithCreditCardMdkToken(userId: userId, token: token, accountId: accountId, amount: amount, requestId: requestId, organizationCode: organizationCode, isCardholderNameSpecified: isCardholderNameSpecified), handler: self.after)
         case "topupWithCreditCardMembership":
             let env = flutterEnvToSDKEnv(ienv: args["env"] as! Int32)
             let accessToken = args["accessToken"] as! String
@@ -715,7 +715,7 @@ private class MethodCallTask {
             let deleteCardIfAuthFail = args["deleteCardIfAuthFail"] as? Bool
             let organizationCode = args["organizationCode"] as? String
             let requestId = args["requestId"] as? String
-            client.send(BankAPI.CreditCard.TopupWithCreditCardMembership(userId: userId, cardRegisteredAt: cardRegisteredAt, accountId: accountId, amount: amount, deleteCardIfAuthFail: deleteCardIfAuthFail, organizationCode: organizationCode, requestId: requestId), handler: self.after)
+            client.send(BankAPI.CreditCard.TopupWithCreditCardMembership(userId: userId, cardRegisteredAt: cardRegisteredAt, accountId: accountId, amount: amount, requestId: requestId, deleteCardIfAuthFail: deleteCardIfAuthFail, organizationCode: organizationCode), handler: self.after)
         case "getVeritransToken":
             let veritransClient = Pokepay.VeritransClient()
             let cardNumber = args["cardNumber"] as! String
