@@ -1,3 +1,6 @@
+## 2.0.19
+* Add `GetAccountTopupStats` and `GetTransactionByRequestId`
+
 ## 2.0.17
 * Added `requestId` to `topupWithCreditCardMdkToken` and `TopupWithCreditCardMembership` endpoints
 
