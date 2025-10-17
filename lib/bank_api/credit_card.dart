@@ -1,4 +1,3 @@
-
 import 'package:pokepay_sdk/responses/credit_card.dart';
 import 'package:pokepay_sdk/responses/paginated_credit_cards.dart';
 
@@ -9,7 +8,7 @@ extension CreditCardAPI on PokepayAPI {
   Future<CreditCard> createCreditCard({
     required String token,
     bool? isCardholderNameSpecified,
-    String? organizationCode,
+    required String organizationCode,
     required String userId,
   }) async {
     return await invokeMethod<CreditCard>(
@@ -27,8 +26,9 @@ extension CreditCardAPI on PokepayAPI {
   }
 
   Future<NoContent> deleteCreditCard({
-    required String cardRegisteredAt,
-    String? organizationCode,
+    String? cardRegisteredAt,
+    String? cardUuid,
+    required organizationCode,
     required String userId,
   }) async {
     return await invokeMethod<NoContent>(
@@ -38,6 +38,7 @@ extension CreditCardAPI on PokepayAPI {
         'env': this.env.index,
         'accessToken': this.accessToken,
         'cardRegisteredAt': cardRegisteredAt,
+        'cardUuid': cardUuid,
         'organizationCode': organizationCode,
         'userId': userId,
       },
@@ -49,7 +50,7 @@ extension CreditCardAPI on PokepayAPI {
     String? before,
     String? after,
     int? perPage,
-    String? organizationCode,
+    required organizationCode,
   }) async {
     return await invokeMethod<PaginatedCreditCards>(
       (j) => PaginatedCreditCards.fromJson(j),
@@ -71,9 +72,10 @@ extension CreditCardAPI on PokepayAPI {
     required String token,
     required String accountId,
     required int amount,
-    String? organizationCode,
+    required organizationCode,
     bool? isCardholderNameSpecified,
     String? requestId,
+    int? topupQuotaId,
   }) async {
     return await invokeMethod<String>(
       (j) => j,
@@ -88,18 +90,21 @@ extension CreditCardAPI on PokepayAPI {
         'organizationCode': organizationCode,
         'isCardholderNameSpecified': isCardholderNameSpecified,
         'requestId': requestId,
+        'topupQuotaId': topupQuotaId,
       },
     );
   }
 
   Future<String> TopupWithCreditCardMembership({
     required String userId,
-    required String cardRegisteredAt,
+    String? cardRegisteredAt,
+    String? cardUuid,
     required String accountId,
     required int amount,
     bool? deleteCardIfAuthFail,
-    String? organizationCode,
+    required organizationCode,
     String? requestId,
+    int? topupQuotaId,
   }) async {
     return await invokeMethod<String>(
       (j) => j,
@@ -109,11 +114,13 @@ extension CreditCardAPI on PokepayAPI {
         'accessToken': this.accessToken,
         'userId': userId,
         'cardRegisteredAt': cardRegisteredAt,
+        'cardUuid': cardUuid,
         'accountId': accountId,
         'amount': amount,
         'deleteCardIfAuthFail': deleteCardIfAuthFail,
         'organizationCode': organizationCode,
         'requestId': requestId,
+        'topupQuotaId': topupQuotaId,
       },
     );
   }

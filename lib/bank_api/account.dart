@@ -1,3 +1,5 @@
+import 'package:pokepay_sdk/responses/account_topup_stats.dart';
+
 import '../parameters/gender.dart';
 import '../responses/identification_result.dart';
 import '../responses/coupon_detail.dart';
@@ -186,7 +188,7 @@ extension AccountAPI on PokepayAPI {
         'name': name,
         'gender': gender?.value,
         'address': address,
-        'dateOfBirth': dateOfBirth,        
+        'dateOfBirth': dateOfBirth,
       },
     );
   }
@@ -202,7 +204,21 @@ extension AccountAPI on PokepayAPI {
         'env': this.env.index,
         'accessToken': this.accessToken,
         'accountId': accountId,
-        'campaignId': campaignId,       
+        'campaignId': campaignId,
+      },
+    );
+  }
+
+  Future<AccountTopupStats> getAccountTopupStats({
+    required String accountId,
+  }) async {
+    return await invokeMethod<AccountTopupStats>(
+      (j) => AccountTopupStats.fromJson(j),
+      'getAccountTopupStats',
+      {
+        'env': this.env.index,
+        'accessToken': this.accessToken,
+        'accountId': accountId,
       },
     );
   }
