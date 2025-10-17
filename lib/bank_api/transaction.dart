@@ -1,5 +1,7 @@
 import 'dart:convert';
 
+import 'package:pokepay_sdk/responses/user_transaction_with_transfers.dart';
+
 import '../parameters/transaction_strategy.dart';
 
 import '../parameters/product.dart';
@@ -181,6 +183,20 @@ extension TransactionAPI on PokepayAPI {
         'receiverTerminalId': receiverTerminalId,
         'senderAccountId': senderAccountId,
         'description': description,
+      },
+    );
+  }
+
+  Future<UserTransactionWithTransfers> getTransactionByRequestId({
+    required String requestId,
+  }) async {
+    return await invokeMethod<UserTransactionWithTransfers>(
+      (j) => UserTransactionWithTransfers.fromJson(j),
+      'getTransactionByRequestId',
+      {
+        'env': this.env.index,
+        'accessToken': this.accessToken,
+        'requestId': requestId,
       },
     );
   }

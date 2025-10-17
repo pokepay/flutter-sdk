@@ -35,6 +35,7 @@ import jp.pokepay.pokepaylib.BankAPI.Account.GetAccountTransactions;
 import jp.pokepay.pokepaylib.BankAPI.Account.PatchAccountCouponDetail;
 import jp.pokepay.pokepaylib.BankAPI.Account.IdentifyIndividual;
 import jp.pokepay.pokepaylib.BankAPI.Account.GetAccountCampaignPointAmounts;
+import jp.pokepay.pokepaylib.BankAPI.Account.GetAccountTopupStats;
 import jp.pokepay.pokepaylib.BankAPI.BankRequestError;
 import jp.pokepay.pokepaylib.BankAPI.Bill.CreateBill;
 import jp.pokepay.pokepaylib.BankAPI.Bill.DeleteBill;
@@ -66,6 +67,7 @@ import jp.pokepay.pokepaylib.BankAPI.Transaction.CreateTransactionWithJwt;
 import jp.pokepay.pokepaylib.BankAPI.Transaction.GetTransaction;
 import jp.pokepay.pokepaylib.BankAPI.Transaction.SendToAccount;
 import jp.pokepay.pokepaylib.BankAPI.Transaction.SendToUser;
+import jp.pokepay.pokepaylib.BankAPI.Transaction.GetTransactionByRequestId;
 import jp.pokepay.pokepaylib.BankAPI.User.DeleteUserEmail;
 import jp.pokepay.pokepaylib.BankAPI.User.GetUserAccounts;
 import jp.pokepay.pokepaylib.BankAPI.User.GetUserTransactions;
@@ -129,6 +131,8 @@ import jp.pokepay.pokepaylib.Responses.BankPayRedirectUrl;
 import jp.pokepay.pokepaylib.Responses.IdentificationResult;
 import jp.pokepay.pokepaylib.Responses.AccountCampaignPointAmounts;
 import jp.pokepay.pokepaylib.Responses.VeritransToken;
+import jp.pokepay.pokepaylib.Responses.AccountTopupStats;
+import jp.pokepay.pokepaylib.Responses.UserTransactionWithTransfers;
 import jp.pokepay.pokepaylib.BankAPI.autogen.responses.CreditCard;
 import jp.pokepay.pokepaylib.BankAPI.autogen.responses.PaginatedCreditCards;;
 import jp.pokepay.pokepaylib.TokenInfo;
@@ -850,6 +854,15 @@ public class PokepaySdkPlugin implements FlutterPlugin, MethodCallHandler {
                         UserTransaction res = req.send(accessToken);
                         return new TaskResult(null, res.toString());
                     }
+                    case "getTransactionByRequestId": {
+                        Env env = flutterEnvToSDKEnv((int)call.argument("env"));
+                        String accessToken = call.argument("accessToken");
+                        String requestId = call.argument("requestId");
+                        GetTransactionByRequestId req = new GetTransactionByRequestId(userId);
+                        Pokepay.setEnv(env);
+                        UserTransactionWithTransfers res = req.send(accessToken);
+                        return new TaskResult(null, res.toString());
+                    }
                     case "updateBill": {
                         Env env = flutterEnvToSDKEnv((int)call.argument("env"));
                         UpdateBill req;
@@ -997,6 +1010,15 @@ public class PokepaySdkPlugin implements FlutterPlugin, MethodCallHandler {
                         AccountCampaignPointAmounts res = req.send(accessToken);
                         return new TaskResult(null, res.toString());
                     }
+                    case "getAccountTopupStats": {
+                        Env env = flutterEnvToSDKEnv((int)call.argument("env"));
+                        String accessToken = call.argument("accessToken");
+                        String accountId = call.argument("accountId");
+                        GetAccountTopupStats req = new GetAccountTopupStats(accountId);
+                        Pokepay.setEnv(env);
+                        AccountTopupStats res = req.send(accessToken);
+                        return new TaskResult(null, res.toString());
+                    }
                     case "createCreditCard": {
                         Env env = flutterEnvToSDKEnv((int)call.argument("env"));
                         String accessToken = call.argument("accessToken");
@@ -1015,10 +1037,11 @@ public class PokepaySdkPlugin implements FlutterPlugin, MethodCallHandler {
                         Env env = flutterEnvToSDKEnv((int)call.argument("env"));
                         String accessToken = call.argument("accessToken");
                         String cardRegisteredAt = call.argument("cardRegisteredAt");
+                        String cardUuid = call.argument("cardUuid");
                         String organizationCode = call.argument("organizationCode");
                         String userId = call.argument("userId");
 
-                        DeleteCreditCard req = new DeleteCreditCard(userId, cardRegisteredAt, organizationCode);
+                        DeleteCreditCard req = new DeleteCreditCard(userId, organizationCode).cardRegisteredAt(cardRegisteredAt).cardUuid(cardUuid);
                         Pokepay.setEnv(env);
                         NoContent res = req.send(accessToken);
                         return new TaskResult(null, res.toString());
@@ -1048,8 +1071,9 @@ public class PokepaySdkPlugin implements FlutterPlugin, MethodCallHandler {
                         String organizationCode = call.argument("organizationCode");
                         Boolean isCardholderNameSpecified = call.argument("isCardholderNameSpecified");
                         String requestId = call.argument("requestId");
+                        Integer topupQuotaId = call.argument("topupQuotaId");
 
-                        TopupWithCreditCardMdkToken req = new TopupWithCreditCardMdkToken(userId, token, accountId, amount, organizationCode).isCardholderNameSpecified(isCardholderNameSpecified).requestId(requestId);
+                        TopupWithCreditCardMdkToken req = new TopupWithCreditCardMdkToken(userId, token, accountId, amount, organizationCode).isCardholderNameSpecified(isCardholderNameSpecified).requestId(requestId).topupQuotaId(topupQuotaId);
                         Pokepay.setEnv(env);
                         String res = req.send(accessToken);
                         return new TaskResult(null, res);
@@ -1059,13 +1083,15 @@ public class PokepaySdkPlugin implements FlutterPlugin, MethodCallHandler {
                         String accessToken = call.argument("accessToken");
                         String userId = call.argument("userId");
                         String cardRegisteredAt = call.argument("cardRegisteredAt");
+                        String cardUuid = call.argument("cardUuid");
                         String accountId = call.argument("accountId");
                         Integer amount = call.argument("amount");
                         Boolean deleteCardIfAuthFail = call.argument("deleteCardIfAuthFail");
                         String organizationCode = call.argument("organizationCode");
                         String requestId = call.argument("requestId");
+                        Integer topupQuotaId = call.argument("topupQuotaId");
 
-                        TopupWithCreditCardMembership req = new TopupWithCreditCardMembership(userId, cardRegisteredAt, accountId, amount, organizationCode).deleteCardIfAuthFail(deleteCardIfAuthFail).requestId(requestId);
+                        TopupWithCreditCardMembership req = new TopupWithCreditCardMembership(userId, accountId, amount, organizationCode).cardRegisteredAt(cardRegisteredAt).cardUuid(cardUuid).deleteCardIfAuthFail(deleteCardIfAuthFail).requestId(requestId).topupQuotaId(topupQuotaId);
                         Pokepay.setEnv(env);
                         String res = req.send(accessToken);
                         return new TaskResult(null, res);
