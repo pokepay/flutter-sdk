@@ -28,7 +28,7 @@ extension CreditCardAPI on PokepayAPI {
   Future<NoContent> deleteCreditCard({
     String? cardRegisteredAt,
     String? cardUuid,
-    required organizationCode,
+    required String organizationCode,
     required String userId,
   }) async {
     return await invokeMethod<NoContent>(
@@ -50,7 +50,7 @@ extension CreditCardAPI on PokepayAPI {
     String? before,
     String? after,
     int? perPage,
-    required organizationCode,
+    required String organizationCode,
   }) async {
     return await invokeMethod<PaginatedCreditCards>(
       (j) => PaginatedCreditCards.fromJson(j),
@@ -72,7 +72,7 @@ extension CreditCardAPI on PokepayAPI {
     required String token,
     required String accountId,
     required int amount,
-    required organizationCode,
+    required String organizationCode,
     bool? isCardholderNameSpecified,
     String? requestId,
     int? topupQuotaId,
@@ -102,7 +102,7 @@ extension CreditCardAPI on PokepayAPI {
     required String accountId,
     required int amount,
     bool? deleteCardIfAuthFail,
-    required organizationCode,
+    required String organizationCode,
     String? requestId,
     int? topupQuotaId,
   }) async {
