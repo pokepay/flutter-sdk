@@ -717,7 +717,7 @@ private class MethodCallTask {
             let isCardholderNameSpecified = args["isCardholderNameSpecified"] as? Bool
             let requestId = args["requestId"] as? String
             let topupQuotaId = args["topupQuotaId"] as? Int
-            client.send(BankAPI.CreditCard.TopupWithCreditCardMdkToken(userId: userId, token: token, accountId: accountId, amount: amount, requestId: requestId, topupQuotaId: topupQuotaId, organizationCode: organizationCode, isCardholderNameSpecified: isCardholderNameSpecified), handler: self.after)
+            client.send(BankAPI.CreditCard.TopupWithCreditCardMdkToken(userId: userId, token: token, accountId: accountId, amount: amount, organizationCode: organizationCode, isCardholderNameSpecified: isCardholderNameSpecified, requestId: requestId, topupQuotaId: topupQuotaId), handler: self.after)
         case "topupWithCreditCardMembership":
             let env = flutterEnvToSDKEnv(ienv: args["env"] as! Int32)
             let accessToken = args["accessToken"] as! String
@@ -731,7 +731,7 @@ private class MethodCallTask {
             let organizationCode = args["organizationCode"] as! String
             let requestId = args["requestId"] as? String
             let topupQuotaId = args["topupQuotaId"] as? Int
-            client.send(BankAPI.CreditCard.TopupWithCreditCardMembership(userId: userId, cardRegisteredAt: cardRegisteredAt, cardUuid: cardUuid, accountId: accountId, amount: amount, requestId: requestId, topupQuotaId: topupQuotaId, deleteCardIfAuthFail: deleteCardIfAuthFail, organizationCode: organizationCode), handler: self.after)
+            client.send(BankAPI.CreditCard.TopupWithCreditCardMembership(userId: userId, cardRegisteredAt: cardRegisteredAt, cardUuid: cardUuid, accountId: accountId, amount: amount, deleteCardIfAuthFail: deleteCardIfAuthFail, organizationCode: organizationCode, requestId: requestId, topupQuotaId: topupQuotaId), handler: self.after)
         case "getVeritransToken":
             let veritransClient = Pokepay.VeritransClient()
             let cardNumber = args["cardNumber"] as! String
