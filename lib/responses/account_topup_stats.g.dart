@@ -11,7 +11,7 @@ AccountTopupStats _$AccountTopupStatsFromJson(Map<String, dynamic> json) =>
       currentAmount: (json['current_amount'] as num).toDouble(),
       limitAmount: (json['limit_amount'] as num).toDouble(),
       remainingAmount: (json['remaining_amount'] as num).toDouble(),
-      startedAt: json['started_at'] as String,
+      startedAt: json['started_at'] as String?,
     );
 
 Map<String, dynamic> _$AccountTopupStatsToJson(AccountTopupStats instance) =>
