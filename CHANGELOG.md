@@ -1,4 +1,7 @@
 ## 2.0.20
+* Fix `AccountTopupStats` response
+
+## 2.0.20
 * Fix CreditCard endpoints for iOS and Android
 
 ## 2.0.19
