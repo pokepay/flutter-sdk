@@ -7,13 +7,13 @@ class AccountTopupStats {
   final double currentAmount;
   final double limitAmount;
   final double remainingAmount;
-  final String startedAt;
+  final String? startedAt;
 
   AccountTopupStats({
     required this.currentAmount,
     required this.limitAmount,
     required this.remainingAmount,
-    required this.startedAt,
+    this.startedAt,
   });
 
   factory AccountTopupStats.fromJson(Map<String, dynamic> json) =>
