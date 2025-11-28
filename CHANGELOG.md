@@ -1,3 +1,6 @@
+## 2.0.22
+* Added test environments (topic1, topic2, topic3, loadtest)
+
 ## 2.0.21
 * Fix `AccountTopupStats` response
 
