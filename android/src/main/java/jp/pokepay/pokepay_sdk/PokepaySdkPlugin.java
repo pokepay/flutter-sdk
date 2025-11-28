@@ -194,6 +194,10 @@ public class PokepaySdkPlugin implements FlutterPlugin, MethodCallHandler {
                 case 1: return Env.SANDBOX;
                 case 2: return Env.QA;
                 case 3: return Env.DEVELOPMENT;
+                case 4: return Env.TOPIC1;
+                case 5: return Env.TOPIC2;
+                case 6: return Env.TOPIC3;
+                case 7: return Env.LOADTEST;
                 default: return Env.DEVELOPMENT;
             }
         }

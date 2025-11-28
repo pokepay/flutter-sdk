@@ -20,6 +20,10 @@ enum APIEnv {
   SANDBOX,
   QA,
   DEVELOPMENT,
+  TOPIC1,
+  TOPIC2,
+  TOPIC3,
+  LOADTEST,
 }
 
 // In Android and iOS SDK plugin, flutterEnvToSDKEnv
@@ -38,6 +42,14 @@ int envToInt(APIEnv apiEnv) {
       return 2;
     case APIEnv.DEVELOPMENT:
       return 3;
+    case APIEnv.TOPIC1:
+      return 4;
+    case APIEnv.TOPIC2:
+      return 5;
+    case APIEnv.TOPIC3:
+      return 6;
+    case APIEnv.LOADTEST:
+      return 7;
     default:
       return 3;
   }
@@ -114,8 +126,8 @@ void setLogLevel(LogLevel lev) {
 
 const MethodChannel channel = const MethodChannel('jp.pokepay/pokepay_sdk');
 
-Future<T> invokeMethod<T>(T factory(dynamic data),
-    String methodName, Map<String, dynamic> args) async {
+Future<T> invokeMethod<T>(T factory(dynamic data), String methodName,
+    Map<String, dynamic> args) async {
   try {
     logger.d("methodName: " + methodName + " args: " + args.toString());
     final String json = await channel.invokeMethod(methodName, args);
@@ -144,6 +156,10 @@ const Map<APIEnv, String> envNameMap = {
   APIEnv.SANDBOX: "sandbox",
   APIEnv.QA: "qa",
   APIEnv.DEVELOPMENT: "dev",
+  APIEnv.TOPIC1: "topic1",
+  APIEnv.TOPIC2: "topic2",
+  APIEnv.TOPIC3: "topic3",
+  APIEnv.LOADTEST: "loadtest",
 };
 
 String getAPIBaseURL(APIEnv env) {

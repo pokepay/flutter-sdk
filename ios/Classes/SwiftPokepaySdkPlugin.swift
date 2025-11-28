@@ -53,6 +53,10 @@ private class MethodCallTask {
             case 1: return Env.sandbox;
             case 2: return Env.qa;
             case 3: return Env.development;
+            case 4: return Env.topic1;
+            case 5: return Env.topic2;
+            case 6: return Env.topic3;
+            case 7: return Env.loadtest;
             default: return Env.development;
         }
     }
