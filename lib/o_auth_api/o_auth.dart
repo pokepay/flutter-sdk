@@ -23,8 +23,8 @@ class PokepayOAuthAPI {
 
   Future<AccessToken> exchangeDelegationCode({
     required String code,
-    String? clientId,
-    String? clientSecret,
+    required String clientId,
+    required String clientSecret,
     String grantType = "urn:pokepay:delegation-code",
   }) async {
     return await invokeMethod<AccessToken>((j) => AccessToken.fromJson(j), 'exchangeDelegationCode', {
@@ -52,8 +52,8 @@ class PokepayOAuthAPI {
   }
 
   Future<ExchangedToken> exchangeToken({
-    String? clientId,
-    String? clientSecret,
+    required String clientId,
+    required String clientSecret,
     String? resource,
     String? audience,
     required String subjectToken,

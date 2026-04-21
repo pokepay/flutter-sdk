@@ -332,14 +332,14 @@ private class MethodCallTask {
         case "exchangeDelegationCode":
             let env = flutterEnvToSDKEnv(ienv: args["env"] as! Int32)
             let code = args["code"] as! String
-            let clientId = args["clientId"] as? String
-            let clientSecret = args["clientSecret"] as? String
+            let clientId = args["clientId"] as! String
+            let clientSecret = args["clientSecret"] as! String
             let client = Pokepay.OAuthClient(clientId: clientId, clientSecret: clientSecret, env: env)
             client.send(OAuthAPI.Token.ExchangeDelegationCode(code: code, clientId: clientId, clientSecret: clientSecret), handler: self.after)
         case "exchangeToken": 
             let env = flutterEnvToSDKEnv(ienv: args["env"] as! Int32)
-            let clientId = args["clientId"] as? String
-            let clientSecret = args["clientSecret"] as? String
+            let clientId = args["clientId"] as! String
+            let clientSecret = args["clientSecret"] as! String
             let resource = args["resource"] as? String
             let audience = args["audience"] as? String
             let subjectToken = args["subjectToken"] as! String
@@ -356,7 +356,7 @@ private class MethodCallTask {
                           audience: audience,
                           subjectToken: subjectToken,
                           subjectTokenType: subjectTokenType,
-                          requestedTokenType: requestedTokenType,
+                          requestedTokenType: requestedTokenType ?? "",
                           scopes: scopes,
                           actorTokenType: actorTokenType,
                           actorToken: actorToken

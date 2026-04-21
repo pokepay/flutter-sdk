@@ -369,8 +369,38 @@ class PokepayOAuthClient {
 
   Future<AccessToken> getAccessToken(String code) async {
     final api = PokepayOAuthAPI(env: this.env);
-    final result = await api.exchangeAuthCode(
+    return await api.exchangeAuthCode(
         code: code, clientId: this.clientId, clientSecret: this.clientSecret);
-    return result;
+  }
+
+  Future<AccessToken> exchangeDelegationCode(String code) async {
+    final api = PokepayOAuthAPI(env: this.env);
+    return await api.exchangeDelegationCode(
+        code: code, clientId: this.clientId, clientSecret: this.clientSecret);
+  }
+
+  Future<ExchangedToken> exchangeToken({
+    required String subjectToken,
+    required String subjectTokenType,
+    String? resource,
+    String? audience,
+    String? requestedTokenType,
+    List<String>? scopes,
+    String? actorTokenType,
+    String? actorToken,
+  }) async {
+    final api = PokepayOAuthAPI(env: this.env);
+    return await api.exchangeToken(
+      clientId: this.clientId,
+      clientSecret: this.clientSecret,
+      subjectToken: subjectToken,
+      subjectTokenType: subjectTokenType,
+      resource: resource,
+      audience: audience,
+      requestedTokenType: requestedTokenType,
+      scopes: scopes,
+      actorTokenType: actorTokenType,
+      actorToken: actorToken,
+    );
   }
 }
