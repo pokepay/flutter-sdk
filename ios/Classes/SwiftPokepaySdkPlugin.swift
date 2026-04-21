@@ -329,6 +329,38 @@ private class MethodCallTask {
             let clientSecret = args["clientSecret"] as! String
             let client = Pokepay.OAuthClient(clientId: clientId, clientSecret: clientSecret, env: env)
             client.send(OAuthAPI.Token.ExchangeAuthCode(code: code, clientId: clientId, clientSecret: clientSecret), handler: self.after)
+        case "exchangeDelegationCode":
+            let env = flutterEnvToSDKEnv(ienv: args["env"] as! Int32)
+            let code = args["code"] as! String
+            let clientId = args["clientId"] as? String
+            let clientSecret = args["clientSecret"] as? String
+            let client = Pokepay.OAuthClient(clientId: clientId, clientSecret: clientSecret, env: env)
+            client.send(OAuthAPI.Token.ExchangeDelegationCode(code: code, clientId: clientId, clientSecret: clientSecret), handler: self.after)
+        case "exchangeToken": 
+            let env = flutterEnvToSDKEnv(ienv: args["env"] as! Int32)
+            let clientId = args["clientId"] as? String
+            let clientSecret = args["clientSecret"] as? String
+            let resource = args["resource"] as? String
+            let audience = args["audience"] as? String
+            let subjectToken = args["subjectToken"] as! String
+            let subjectTokenType = args["subjectTokenType"] as! String
+            let requestedTokenType = args["requestedTokenType"] as? String
+            let scopes = args["scopes"] as? [String]
+            let actorTokenType = args["actorTokenType"] as? String
+            let actorToken = args["actorToken"] as? String
+            let client = Pokepay.OAuthClient(clientId: clientId, clientSecret: clientSecret, env: env)
+            client.send(OAuthAPI.Token.TokenExchange(
+                          clientId: clientId,
+                          clientSecret: clientSecret,
+                          resource: resource,
+                          audience: audience,
+                          subjectToken: subjectToken,
+                          subjectTokenType: subjectTokenType,
+                          requestedTokenType: requestedTokenType,
+                          scopes: scopes,
+                          actorTokenType: actorTokenType,
+                          actorToken: actorToken
+                        ), handler: self.after)
         case "getAccount":
             let env = flutterEnvToSDKEnv(ienv: args["env"] as! Int32)
             let accessToken = args["accessToken"] as! String
