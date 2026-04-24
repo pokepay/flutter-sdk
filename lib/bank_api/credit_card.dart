@@ -1,6 +1,3 @@
-import 'package:pokepay_sdk/responses/credit_card.dart';
-import 'package:pokepay_sdk/responses/paginated_credit_cards.dart';
-
 import '../pokepay_sdk.dart';
 import '../responses.dart';
 
