@@ -4,15 +4,18 @@ part 'credit_card.g.dart';
 
 @JsonSerializable()
 class CreditCard {
+  final String id;
   final String cardNumber;
   final String registeredAt;
 
   CreditCard({
+    required this.id,
     required this.cardNumber,
     required this.registeredAt,
   });
 
-  factory CreditCard.fromJson(Map<String, dynamic> json) => _$CreditCardFromJson(json);
+  factory CreditCard.fromJson(Map<String, dynamic> json) =>
+      _$CreditCardFromJson(json);
 
   Map<String, dynamic> toJson() => _$CreditCardToJson(this);
 

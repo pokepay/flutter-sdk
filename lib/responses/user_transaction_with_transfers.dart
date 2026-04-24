@@ -16,6 +16,8 @@ class UserTransactionWithTransfers {
   final double? amount;
   final double? moneyAmount;
   final double? pointAmount;
+  final double? rawPointAmount;
+  final double? campaignPointAmount;
   final Account account;
   final String description;
   final String doneAt;
@@ -30,6 +32,8 @@ class UserTransactionWithTransfers {
     this.amount,
     this.moneyAmount,
     this.pointAmount,
+    this.rawPointAmount,
+    this.campaignPointAmount,
     required this.account,
     required this.description,
     required this.doneAt,

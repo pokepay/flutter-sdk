@@ -222,4 +222,38 @@ extension AccountAPI on PokepayAPI {
       },
     );
   }
+
+  Future<SevenAtmSession> createAccountSevenAtmSession({
+    required String accountId,
+    required String qrInfo,
+    required double amount,
+    int? topupQuotaId,
+  }) async {
+    return await invokeMethod<SevenAtmSession>(
+      (j) => SevenAtmSession.fromJson(j),
+      'createAccountSevenAtmSession',
+      {
+        'env': this.env.index,
+        'accessToken': this.accessToken,
+        'accountId': accountId,
+        'qrInfo': qrInfo,
+        'amount': amount,
+        'topupQuotaId': topupQuotaId,
+      },
+    );
+  }
+
+  Future<SevenAtmSession> getAccountSevenAtmSession({
+    required String qrInfo,
+  }) async {
+    return await invokeMethod<SevenAtmSession>(
+      (j) => SevenAtmSession.fromJson(j),
+      'getAccountSevenAtmSession',
+      {
+        'env': this.env.index,
+        'accessToken': this.accessToken,
+        'qrInfo': qrInfo,
+      },
+    );
+  }
 }

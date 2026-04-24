@@ -1,0 +1,35 @@
+import 'package:json_annotation/json_annotation.dart';
+import 'package:pokepay_sdk/responses/account.dart';
+import 'package:pokepay_sdk/responses/jihanpi_vending_machine.dart';
+import 'package:pokepay_sdk/responses/user_transaction_with_transfers.dart';
+
+part 'jihanpi_transaction.g.dart';
+
+@JsonSerializable()
+class JihanpiTransaction {
+  final String orderId;
+  final UserTransactionWithTransfers? transaction;
+  final Account account;
+  final JihanpiVendingMachine vendingMachineInfo;
+  final String state;
+  final String? errorReason;
+  final String strategy;
+
+  JihanpiTransaction({
+    required this.orderId,
+    this.transaction,
+    required this.account,
+    required this.vendingMachineInfo,
+    required this.state,
+    this.errorReason,
+    required this.strategy,
+  });
+
+  factory JihanpiTransaction.fromJson(Map<String, dynamic> json) =>
+      _$JihanpiTransactionFromJson(json);
+
+  Map<String, dynamic> toJson() => _$JihanpiTransactionToJson(this);
+
+  @override
+  String toString() => this.toJson().toString();
+}

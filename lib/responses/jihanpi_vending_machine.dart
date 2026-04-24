@@ -1,0 +1,24 @@
+import 'package:json_annotation/json_annotation.dart';
+
+part 'jihanpi_vending_machine.g.dart';
+
+@JsonSerializable()
+class JihanpiVendingMachine {
+  final String nfcTagId;
+  final String shopId;
+  final String shopName;
+
+  JihanpiVendingMachine({
+    required this.nfcTagId,
+    required this.shopId,
+    required this.shopName,
+  });
+
+  factory JihanpiVendingMachine.fromJson(Map<String, dynamic> json) =>
+      _$JihanpiVendingMachineFromJson(json);
+
+  Map<String, dynamic> toJson() => _$JihanpiVendingMachineToJson(this);
+
+  @override
+  String toString() => this.toJson().toString();
+}
