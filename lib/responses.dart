@@ -29,6 +29,14 @@ export 'responses/terminal.dart';
 export 'responses/token_info.dart';
 export 'responses/user.dart';
 export 'responses/user_transaction.dart';
+export 'responses/user_transaction_with_transfers.dart';
+export 'responses/jihanpi_transaction.dart';
+export 'responses/jihanpi_vending_machine.dart';
+export 'responses/credit_card.dart';
+export 'responses/paginated_credit_cards.dart';
+export 'responses/cvs_authorization.dart';
+export 'responses/paginated_cvs_authorizations.dart';
+export 'responses/seven_atm_session.dart';
 
 class Response {
   static const String indent = '  ';

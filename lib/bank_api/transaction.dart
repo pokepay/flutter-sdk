@@ -1,9 +1,6 @@
 import 'dart:convert';
 
-import 'package:pokepay_sdk/responses/user_transaction_with_transfers.dart';
-
 import '../parameters/transaction_strategy.dart';
-
 import '../parameters/product.dart';
 import '../pokepay_sdk.dart';
 import '../responses.dart';
@@ -39,6 +36,7 @@ extension TransactionAPI on PokepayAPI {
     String? couponId,
     TransactionStrategy strategy = TransactionStrategy.POINT_PREFERRED,
     String? requestId,
+    int? topupQuotaId,
   }) async {
     return await invokeMethod<UserTransaction>(
       (j) => UserTransaction.fromJson(j),
@@ -51,6 +49,7 @@ extension TransactionAPI on PokepayAPI {
         'couponId': couponId,
         'tx_strategy': strategy.value,
         'requestId': requestId,
+        'topupQuotaId': topupQuotaId,
       },
     );
   }
@@ -59,6 +58,7 @@ extension TransactionAPI on PokepayAPI {
     required String checkId,
     String? accountId,
     String? requestId,
+    int? topupQuotaId,
   }) async {
     return await invokeMethod<UserTransaction>(
       (j) => UserTransaction.fromJson(j),
@@ -69,6 +69,7 @@ extension TransactionAPI on PokepayAPI {
         'checkId': checkId,
         'accountId': accountId,
         'requestId': requestId,
+        'topupQuotaId': topupQuotaId,
       },
     );
   }
@@ -79,6 +80,7 @@ extension TransactionAPI on PokepayAPI {
     required double amount,
     List<Product>? products,
     String? requestId,
+    int? topupQuotaId,
   }) async {
     return await invokeMethod<UserTransaction>(
       (j) => UserTransaction.fromJson(j),
@@ -91,6 +93,7 @@ extension TransactionAPI on PokepayAPI {
         'amount': amount,
         'products': jsonEncode(products),
         'requestId': requestId,
+        'topupQuotaId': topupQuotaId,
       },
     );
   }
@@ -100,6 +103,7 @@ extension TransactionAPI on PokepayAPI {
     String? accountId,
     String? couponId,
     TransactionStrategy strategy = TransactionStrategy.POINT_PREFERRED,
+    int? topupQuotaId,
   }) async {
     return await invokeMethod<JwtResult>(
       (j) => JwtResult.fromJson(j),
@@ -111,6 +115,7 @@ extension TransactionAPI on PokepayAPI {
         'accountId': accountId,
         'couponId': couponId,
         'tx_strategy': strategy.value,
+        'topupQuotaId': topupQuotaId,
       },
     );
   }

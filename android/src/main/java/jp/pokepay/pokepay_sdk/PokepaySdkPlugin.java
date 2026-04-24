@@ -35,6 +35,8 @@ import jp.pokepay.pokepaylib.BankAPI.Account.GetAccountTransactions;
 import jp.pokepay.pokepaylib.BankAPI.Account.PatchAccountCouponDetail;
 import jp.pokepay.pokepaylib.BankAPI.Account.IdentifyIndividual;
 import jp.pokepay.pokepaylib.BankAPI.Account.GetAccountCampaignPointAmounts;
+import jp.pokepay.pokepaylib.BankAPI.Account.CreateAccountSevenElevenAtmSession;
+import jp.pokepay.pokepaylib.BankAPI.Account.GetAccountSevenElevenAtmSession;
 import jp.pokepay.pokepaylib.BankAPI.BankRequestError;
 import jp.pokepay.pokepaylib.BankAPI.Bill.CreateBill;
 import jp.pokepay.pokepaylib.BankAPI.Bill.DeleteBill;
@@ -84,6 +86,13 @@ import jp.pokepay.pokepaylib.BankAPI.autogen.requests.TopupWithCreditCardMdkToke
 import jp.pokepay.pokepaylib.BankAPI.autogen.requests.TopupWithCreditCardMembership;
 import jp.pokepay.pokepaylib.BankAPI.autogen.requests.GetAccountTopupStats;
 import jp.pokepay.pokepaylib.BankAPI.autogen.requests.GetTransactionByRequestId;
+import jp.pokepay.pokepaylib.BankAPI.autogen.requests.CVSAuthorizeRequest;
+import jp.pokepay.pokepaylib.BankAPI.autogen.requests.GetCVSAuthorization;
+import jp.pokepay.pokepaylib.BankAPI.autogen.requests.GetCVSAuthorizations;
+import jp.pokepay.pokepaylib.BankAPI.autogen.requests.CancelCVSAuthorization;
+import jp.pokepay.pokepaylib.BankAPI.autogen.requests.CreateJihanpiTransaction;
+import jp.pokepay.pokepaylib.BankAPI.autogen.requests.GetJihanpiTransactionByOrderId;
+import jp.pokepay.pokepaylib.BankAPI.autogen.requests.GetJihanpiTransactionByRequestId;
 import jp.pokepay.pokepaylib.Env;
 import jp.pokepay.pokepaylib.JsonConverter;
 import jp.pokepay.pokepaylib.MessagingAPI.GetMessage;
@@ -130,11 +139,15 @@ import jp.pokepay.pokepaylib.Responses.BankPay;
 import jp.pokepay.pokepaylib.Responses.BankPayRedirectUrl;
 import jp.pokepay.pokepaylib.Responses.IdentificationResult;
 import jp.pokepay.pokepaylib.Responses.AccountCampaignPointAmounts;
+import jp.pokepay.pokepaylib.Responses.SevenElevenAtmSession;
 import jp.pokepay.pokepaylib.Responses.VeritransToken;
 import jp.pokepay.pokepaylib.BankAPI.autogen.responses.AccountTopupStats;
 import jp.pokepay.pokepaylib.BankAPI.autogen.responses.UserTransactionWithTransfers;
 import jp.pokepay.pokepaylib.BankAPI.autogen.responses.CreditCard;
-import jp.pokepay.pokepaylib.BankAPI.autogen.responses.PaginatedCreditCards;;
+import jp.pokepay.pokepaylib.BankAPI.autogen.responses.PaginatedCreditCards;
+import jp.pokepay.pokepaylib.BankAPI.autogen.responses.CVSAuthorization;
+import jp.pokepay.pokepaylib.BankAPI.autogen.responses.PaginatedCVSAuthorizations;
+import jp.pokepay.pokepaylib.BankAPI.autogen.responses.JihanpiTransaction;
 import jp.pokepay.pokepaylib.TokenInfo;
 
 /** PokepaySdkPlugin */
@@ -389,7 +402,8 @@ public class PokepaySdkPlugin implements FlutterPlugin, MethodCallHandler {
                         String rawRequestId = call.argument("requestId");
                         UUID requestId = UUID.fromString(rawRequestId);
                         TransactionStrategy txStrategy = parseTxStrategy(rawStrategy);
-                        CreateTransactionWithCashtray req = new CreateTransactionWithCashtray(cashtrayId, accountId, couponId,txStrategy,requestId);
+                        Integer topupQuotaId = call.argument("topupQuotaId");
+                        CreateTransactionWithCashtray req = new CreateTransactionWithCashtray(cashtrayId, accountId, couponId,txStrategy,requestId).topupQuotaId(topupQuotaId);
                         Pokepay.setEnv(env);
                         UserTransaction res = req.send(accessToken);
                         return new TaskResult(null, res.toString());
@@ -401,7 +415,8 @@ public class PokepaySdkPlugin implements FlutterPlugin, MethodCallHandler {
                         String accountId = call.argument("accountId");
                         String rawRequestId = call.argument("requestId");
                         UUID requestId = UUID.fromString(rawRequestId);
-                        CreateTransactionWithCheck req = new CreateTransactionWithCheck(checkId, accountId, requestId);
+                        Integer topupQuotaId = call.argument("topupQuotaId");
+                        CreateTransactionWithCheck req = new CreateTransactionWithCheck(checkId, accountId, requestId).topupQuotaId(topupQuotaId);
                         Pokepay.setEnv(env);
                         UserTransaction res = req.send(accessToken);
                         return new TaskResult(null, res.toString());
@@ -417,7 +432,8 @@ public class PokepaySdkPlugin implements FlutterPlugin, MethodCallHandler {
                         Product[] products = mapper.readValue(productsString,  Product[].class);
                         String rawRequestId = call.argument("requestId");
                         UUID requestId = UUID.fromString(rawRequestId);
-                        CreateTransactionWithCpm req = new CreateTransactionWithCpm(cpmToken, accountId, amount, products, requestId);
+                        Integer topupQuotaId = call.argument("topupQuotaId");
+                        CreateTransactionWithCpm req = new CreateTransactionWithCpm(cpmToken, accountId, amount, products, requestId).topupQuotaId(topupQuotaId);
                         Pokepay.setEnv(env);
                         UserTransaction res = req.send(accessToken);
                         return new TaskResult(null, res.toString());
@@ -430,7 +446,8 @@ public class PokepaySdkPlugin implements FlutterPlugin, MethodCallHandler {
                         String couponId = call.argument("couponId");
                         String rawStrategy = call.argument("tx_strategy");
                         TransactionStrategy txStrategy = parseTxStrategy(rawStrategy);
-                        CreateTransactionWithJwt req = new CreateTransactionWithJwt(accountId, data, couponId,txStrategy);
+                        Integer topupQuotaId = call.argument("topupQuotaId");
+                        CreateTransactionWithJwt req = new CreateTransactionWithJwt(data, accountId, couponId,txStrategy).topupQuotaId(topupQuotaId);
                         Pokepay.setEnv(env);
                         JwtResult res = req.send(accessToken);
                         return new TaskResult(null, res.toString());
@@ -972,7 +989,8 @@ public class PokepaySdkPlugin implements FlutterPlugin, MethodCallHandler {
                         String bankId = call.argument("bankId");
                         String amount = call.argument("amount");
                         String requestId = call.argument("requestId");
-                        BankPayTopUp req = new BankPayTopUp(id, accountId, bankId, amount, requestId);
+                        Integer topupQuotaId = call.argument("topupQuotaId");
+                        BankPayTopUp req = new BankPayTopUp(id, accountId, bankId, amount, requestId).topupQuotaId(topupQuotaId);
                         Pokepay.setEnv(env);
                         UserTransaction res = req.send(accessToken);
                         return new TaskResult(null, res.toString());
@@ -1110,6 +1128,113 @@ public class PokepaySdkPlugin implements FlutterPlugin, MethodCallHandler {
 
                         GetVeritransToken req = new GetVeritransToken(cardNumber, cardExpiryDate, securityCode, tokenApiKey, cardholderName);
                         VeritransToken res = req.send();
+                        return new TaskResult(null, res.toString());
+                    }
+                    case "createAccountSevenAtmSession": {
+                        Env env = flutterEnvToSDKEnv((int)call.argument("env"));
+                        String accessToken = call.argument("accessToken");
+                        String accountId = call.argument("accountId");
+                        String qrInfo = call.argument("qrInfo");
+                        double amount = call.argument("amount");
+                        Integer topupQuotaId = call.argument("topupQuotaId");
+
+                        CreateAccountSevenElevenAtmSession req = new CreateAccountSevenElevenAtmSession(accountId, qrInfo, amount).topupQuotaId(topupQuotaId);
+                        Pokepay.setEnv(env);
+                        SevenElevenAtmSession res = req.send(accessToken);
+                        return new TaskResult(null, res.toString());
+                    }
+                    case "getAccountSevenAtmSession": {
+                        Env env = flutterEnvToSDKEnv((int)call.argument("env"));
+                        String accessToken = call.argument("accessToken");
+                        String qrInfo = call.argument("qrInfo");
+
+                        GetAccountSevenElevenAtmSession req = new GetAccountSevenElevenAtmSession(qrInfo);
+                        Pokepay.setEnv(env);
+                        SevenElevenAtmSession res = req.send(accessToken);
+                        return new TaskResult(null, res.toString());
+                    }
+                    case "createCvsAuthorization": {
+                        Env env = flutterEnvToSDKEnv((int)call.argument("env"));
+                        String accessToken = call.argument("accessToken");
+                        String accountId = call.argument("accountId");
+                        String serviceOptionType = call.argument("serviceOptionType");
+                        int amount = call.argument("amount");
+                        String name1 = call.argument("name1");
+                        String name2 = call.argument("name2");
+                        String tel = call.argument("tel");
+                        Integer topupQuotaId = call.argument("topupQuotaId");
+
+                        CVSAuthorizeRequest req = new CVSAuthorizeRequest(accountId, serviceOptionType, amount, name1, name2, tel).topupQuotaId(topupQuotaId);
+                        Pokepay.setEnv(env);
+                        CVSAuthorization res = req.send(accessToken);
+                        return new TaskResult(null, res.toString());
+                    }
+                    case "getCvsAuthorization": {
+                        Env env = flutterEnvToSDKEnv((int)call.argument("env"));
+                        String accessToken = call.argument("accessToken");
+                        String accountId = call.argument("accountId");
+                        String orderId = call.argument("orderId");
+
+                        GetCVSAuthorization req = new GetCVSAuthorization(accountId, orderId);
+                        Pokepay.setEnv(env);
+                        CVSAuthorization res = req.send(accessToken);
+                        return new TaskResult(null, res.toString());
+                    }
+                    case "getCvsAuthorizations": {
+                        Env env = flutterEnvToSDKEnv((int)call.argument("env"));
+                        String accessToken = call.argument("accessToken");
+                        String accountId = call.argument("accountId");
+                        String before = call.argument("before");
+                        String after = call.argument("after");
+                        Integer perPage = call.argument("perPage");
+
+                        GetCVSAuthorizations req = new GetCVSAuthorizations(accountId).before(before).after(after).perPage(perPage);
+                        Pokepay.setEnv(env);
+                        PaginatedCVSAuthorizations res = req.send(accessToken);
+                        return new TaskResult(null, res.toString());
+                    }
+                    case "cancelCvsAuthorization": {
+                        Env env = flutterEnvToSDKEnv((int)call.argument("env"));
+                        String accessToken = call.argument("accessToken");
+                        String accountId = call.argument("accountId");
+                        String orderId = call.argument("orderId");
+
+                        CancelCVSAuthorization req = new CancelCVSAuthorization(accountId, orderId);
+                        Pokepay.setEnv(env);
+                        NoContent res = req.send(accessToken);
+                        return new TaskResult(null, res.toString());
+                    }
+                    case "createJihanpiTransaction": {
+                        Env env = flutterEnvToSDKEnv((int)call.argument("env"));
+                        String accessToken = call.argument("accessToken");
+                        String nfcTagId = call.argument("nfcTagId");
+                        String accountId = call.argument("accountId");
+                        String requestId = call.argument("requestId");
+                        String strategy = call.argument("strategy");
+
+                        CreateJihanpiTransaction req = new CreateJihanpiTransaction(nfcTagId, accountId).requestId(requestId).strategy(strategy);
+                        Pokepay.setEnv(env);
+                        JihanpiTransaction res = req.send(accessToken);
+                        return new TaskResult(null, res.toString());
+                    }
+                    case "getJihanpiTransactionByOrderId": {
+                        Env env = flutterEnvToSDKEnv((int)call.argument("env"));
+                        String accessToken = call.argument("accessToken");
+                        String orderId = call.argument("orderId");
+
+                        GetJihanpiTransactionByOrderId req = new GetJihanpiTransactionByOrderId(orderId);
+                        Pokepay.setEnv(env);
+                        JihanpiTransaction res = req.send(accessToken);
+                        return new TaskResult(null, res.toString());
+                    }
+                    case "getJihanpiTransactionByRequestId": {
+                        Env env = flutterEnvToSDKEnv((int)call.argument("env"));
+                        String accessToken = call.argument("accessToken");
+                        String requestId = call.argument("requestId");
+
+                        GetJihanpiTransactionByRequestId req = new GetJihanpiTransactionByRequestId(requestId);
+                        Pokepay.setEnv(env);
+                        JihanpiTransaction res = req.send(accessToken);
                         return new TaskResult(null, res.toString());
                     }
                     default:

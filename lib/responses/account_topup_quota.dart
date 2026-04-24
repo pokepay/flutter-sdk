@@ -1,0 +1,38 @@
+import 'package:json_annotation/json_annotation.dart';
+
+part 'account_topup_quota.g.dart';
+
+@JsonSerializable()
+class AccountTopupQuota {
+  final int id;
+  final double amount;
+  final String description;
+  final String eventName;
+  final bool isSplittable;
+  final double usedAmount;
+  final String status;
+  final String startsAt;
+  final String endsAt;
+  final String endsAtBuffer;
+
+  AccountTopupQuota({
+    required this.id,
+    required this.amount,
+    required this.description,
+    required this.eventName,
+    required this.isSplittable,
+    required this.usedAmount,
+    required this.status,
+    required this.startsAt,
+    required this.endsAt,
+    required this.endsAtBuffer,
+  });
+
+  factory AccountTopupQuota.fromJson(Map<String, dynamic> json) =>
+      _$AccountTopupQuotaFromJson(json);
+
+  Map<String, dynamic> toJson() => _$AccountTopupQuotaToJson(this);
+
+  @override
+  String toString() => this.toJson().toString();
+}
