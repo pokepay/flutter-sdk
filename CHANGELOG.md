@@ -1,3 +1,9 @@
+## 2.0.23
+* Added Seven ATM Session related APIs to support Seven Bank feature
+* Added topupQuotaId on check, cashtray, cpm, JWT transactions and Bankpay Topup to support lottery feature
+* Added CVS related APIs to support convenience store feature
+* Added Jihanpi related APIs to support Jihanpi feature
+
 ## 2.0.22
 * Added test environments (topic1, topic2, topic3, loadtest)
 
