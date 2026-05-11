@@ -15,6 +15,7 @@ import java.io.PrintWriter;
 import java.io.StringWriter;
 import java.io.Writer;
 import java.util.Date;
+import java.util.List;
 import java.util.Map;
 import java.util.UUID;
 import java.util.Arrays;
@@ -102,7 +103,10 @@ import jp.pokepay.pokepaylib.MessagingAPI.ReceiveMessageAttachment;
 import jp.pokepay.pokepaylib.MessagingAPI.SendMessage;
 import jp.pokepay.pokepaylib.OAuthAPI.OAuthRequestError;
 import jp.pokepay.pokepaylib.OAuthAPI.Token.ExchangeAuthCode;
+import jp.pokepay.pokepaylib.OAuthAPI.Token.ExchangeDelegationCode;
 import jp.pokepay.pokepaylib.OAuthAPI.Token.RefreshAccessToken;
+import jp.pokepay.pokepaylib.OAuthAPI.Token.TokenExchange;
+import jp.pokepay.pokepaylib.Responses.ExchangedToken;
 import jp.pokepay.pokepaylib.ExternalServiceAPI.Veritrans.GetVeritransToken;
 import jp.pokepay.pokepaylib.Parameters.TransactionStrategy;
 import jp.pokepay.pokepaylib.Parameters.Gender;
@@ -497,6 +501,41 @@ public class PokepaySdkPlugin implements FlutterPlugin, MethodCallHandler {
                         ExchangeAuthCode req = new ExchangeAuthCode(code, clientId, clientSecret);
                         Pokepay.setEnv(env);
                         AccessToken res = req.send();
+                        return new TaskResult(null, res.toString());
+                    }
+                    case "exchangeDelegationCode": {
+                        Env env = flutterEnvToSDKEnv((int)call.argument("env"));
+                        String code = call.argument("code");
+                        String clientId = call.argument("clientId");
+                        String clientSecret = call.argument("clientSecret");
+                        ExchangeDelegationCode req = new ExchangeDelegationCode(code, clientId, clientSecret);
+                        Pokepay.setEnv(env);
+                        AccessToken res = req.send();
+                        return new TaskResult(null, res.toString());
+                    }
+                    case "exchangeToken": {
+                        Env env = flutterEnvToSDKEnv((int)call.argument("env"));
+                        String subjectToken = call.argument("subjectToken");
+                        String subjectTokenType = call.argument("subjectTokenType");
+                        String clientId = call.argument("clientId");
+                        String clientSecret = call.argument("clientSecret");
+                        String resource = call.argument("resource");
+                        String audience = call.argument("audience");
+                        String requestedTokenType = call.argument("requestedTokenType");
+                        List<String> scopes = call.argument("scopes");
+                        String actorTokenType = call.argument("actorTokenType");
+                        String actorToken = call.argument("actorToken");
+                        TokenExchange req = new TokenExchange(subjectToken, subjectTokenType)
+                            .clientId(clientId)
+                            .clientSecret(clientSecret)
+                            .resource(resource)
+                            .audience(audience)
+                            .requestedTokenType(requestedTokenType)
+                            .scopes(scopes)
+                            .actorTokenType(actorTokenType)
+                            .actorToken(actorToken);
+                        Pokepay.setEnv(env);
+                        ExchangedToken res = req.send();
                         return new TaskResult(null, res.toString());
                     }
                     case "getAccount": {

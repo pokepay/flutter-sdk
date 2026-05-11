@@ -10,6 +10,7 @@ export 'responses/cashtray_attempt.dart';
 export 'responses/cashtray_attempts.dart';
 export 'responses/check.dart';
 export 'responses/error.dart';
+export 'responses/exchanged_token.dart';
 export 'responses/images.dart';
 export 'responses/jwt_result.dart';
 export 'responses/message.dart';
