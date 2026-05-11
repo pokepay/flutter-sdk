@@ -1,3 +1,6 @@
+## 2.0.24
+* Added exchangeDelegationCode and exchangeToken
+
 ## 2.0.23
 * Added Seven ATM Session related APIs to support Seven Bank feature
 * Added topupQuotaId on check, cashtray, cpm, JWT transactions and Bankpay Topup to support lottery feature
