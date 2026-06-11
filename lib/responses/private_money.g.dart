@@ -15,7 +15,8 @@ PrivateMoney _$PrivateMoneyFromJson(Map<String, dynamic> json) => PrivateMoney(
       onlineMessage: json['oneline_message'] as String,
       accountImage: json['account_image'] as String?,
       images: Images.fromJson(json['images'] as Map<String, dynamic>),
-      organization: Organization.fromJson(json['organization'] as Map<String, dynamic>),
+      organization:
+          Organization.fromJson(json['organization'] as Map<String, dynamic>),
       maxBalance: (json['max_balance'] as num?)?.toDouble(),
       transferLimit: (json['transfer_limit'] as num?)?.toDouble(),
       expirationType: json['expiration_type'] as String,
@@ -27,9 +28,13 @@ PrivateMoney _$PrivateMoneyFromJson(Map<String, dynamic> json) => PrivateMoney(
       canUseCreditCard: json['can_use_credit_card'] as bool,
       canUseC2CTransfer: json['can_use_c2c_transfer'] as bool,
       customDomainName: json['custom_domain_name'] as String?,
+      topupMethods: (json['topup_methods'] as List<dynamic>?)
+          ?.map((e) => TopupMethod.fromJson(e as Map<String, dynamic>))
+          .toList(),
     );
 
-Map<String, dynamic> _$PrivateMoneyToJson(PrivateMoney instance) => <String, dynamic>{
+Map<String, dynamic> _$PrivateMoneyToJson(PrivateMoney instance) =>
+    <String, dynamic>{
       'id': instance.id,
       'name': instance.name,
       'type': instance.type,
@@ -50,4 +55,5 @@ Map<String, dynamic> _$PrivateMoneyToJson(PrivateMoney instance) => <String, dyn
       'can_use_credit_card': instance.canUseCreditCard,
       'can_use_c2c_transfer': instance.canUseC2CTransfer,
       'custom_domain_name': instance.customDomainName,
+      'topup_methods': instance.topupMethods,
     };

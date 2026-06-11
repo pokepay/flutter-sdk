@@ -38,6 +38,7 @@ export 'responses/paginated_credit_cards.dart';
 export 'responses/cvs_authorization.dart';
 export 'responses/paginated_cvs_authorizations.dart';
 export 'responses/seven_atm_session.dart';
+export 'responses/topup_method.dart';
 
 class Response {
   static const String indent = '  ';
