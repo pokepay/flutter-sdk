@@ -2,6 +2,7 @@ import 'package:json_annotation/json_annotation.dart';
 
 import 'images.dart';
 import 'organization.dart';
+import 'topup_method.dart';
 
 part 'private_money.g.dart';
 
@@ -27,6 +28,7 @@ class PrivateMoney {
   final bool canUseCreditCard;
   final bool canUseC2CTransfer;
   final String? customDomainName;
+  final List<TopupMethod>? topupMethods;
 
   PrivateMoney({
     required this.id,
@@ -49,6 +51,7 @@ class PrivateMoney {
     required this.canUseCreditCard,
     required this.canUseC2CTransfer,
     this.customDomainName,
+    this.topupMethods,
   });
 
   factory PrivateMoney.fromJson(Map<String, dynamic> json) => _$PrivateMoneyFromJson(json);
