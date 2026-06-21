@@ -355,16 +355,18 @@ class PokepayOAuthClient {
     return "https://www" + suffix + ".pokepay.jp";
   }
 
-  String getAuthorizationUrl({String contact = ""}) {
+  String getAuthorizationUrl({String contact = "", String? mode}) {
     String base = getWebBaseURL(this.env) +
-        "/oauth/authorize?client_id=" +
-        this.clientId +
-        "&response_type=code";
-    if (contact.length > 0) {
-      return base + "&contact=" + Uri.encodeFull(contact);
-    } else {
-      return base;
+      "/oauth/authorize?client_id=" +
+      this.clientId +
+      "&response_type=code";
+    if (contact.isNotEmpty) {
+      base += "&contact=" + Uri.encodeFull(contact);
     }
+    if (mode != null && (mode == "login" || mode == "register")) {
+      base += "&mode=" + Uri.encodeFull(mode);
+    }
+    return base;
   }
 
   Future<AccessToken> getAccessToken(String code) async {
