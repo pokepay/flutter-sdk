@@ -3,6 +3,48 @@ import '../../pokepay_sdk.dart';
 import '../responses.dart';
 
 extension AccountAPI on PokepayAPI {
+  Future<IndividualNumberIdentificationStatus> getAccountIndividualNumberIdentification({
+    required String accountId,
+  }) async {
+    return await invokeMethod<IndividualNumberIdentificationStatus>(
+      (j) => IndividualNumberIdentificationStatus.fromJson(j),
+      'getAccountIndividualNumberIdentification',
+      {
+        'env': this.env.index,
+        'accessToken': this.accessToken,
+        'account_id': accountId,
+      },
+    );
+  }
+
+  Future<IdentificationResult> identifyIndividual({
+    required String accountId,
+    required String signature,
+    required String signingCert,
+    required String expectedHash,
+    String? name,
+    String? gender,
+    String? address,
+    String? dateOfBirth,
+  }) async {
+    return await invokeMethod<IdentificationResult>(
+      (j) => IdentificationResult.fromJson(j),
+      'identifyIndividual',
+      {
+        'env': this.env.index,
+        'accessToken': this.accessToken,
+        'account_id': accountId,
+        'signature': signature,
+        'signing_cert': signingCert,
+        'expected_hash': expectedHash,
+        'name': name,
+        'gender': gender,
+        'address': address,
+        'date_of_birth': dateOfBirth,
+      },
+    );
+  }
+
   Future<AccountTopupQuotas> getAccountTopupQuotas({
     required String accountId,
   }) async {
