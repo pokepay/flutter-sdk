@@ -807,30 +807,30 @@ private class MethodCallTask {
             let tel = args["tel"] as! String
             let topupQuotaId = args["topupQuotaId"] as? Int
             let accountId = args["accountId"] as! String
-            client.send(BankAPI.Cvs.CVSAuthorizeRequest(serviceOptionType: serviceOptionType, amount: amount, name1: name1, name2: name2, tel: tel, topupQuotaId: topupQuotaId, accountId: accountId), handler: self.after)
+            client.send(BankAPI.Cvs.CvsAuthorizeRequest(serviceOptionType: serviceOptionType, amount: amount, name1: name1, name2: name2, tel: tel, topupQuotaId: topupQuotaId, accountId: accountId), handler: self.after)
         case "getCvsAuthorization":
             let env = flutterEnvToSDKEnv(ienv: args["env"] as! Int32)
             let accessToken = args["accessToken"] as! String
             let client = Pokepay.Client(accessToken:accessToken, env: env)
-            let accountId = args["accountId"] as! String
-            let orderId = args["orderId"] as! String
-            client.send(BankAPI.Cvs.GetCVSAuthorization(accountId: accountId, orderId: orderId), handler: self.after)
+            let accountId = (args["account_id"] as? String) ?? (args["accountId"] as! String)
+            let orderId = (args["order_id"] as? String) ?? (args["orderId"] as! String)
+            client.send(BankAPI.Cvs.GetCvsAuthorization(accountId: accountId, orderId: orderId), handler: self.after)
         case "getCvsAuthorizations":
             let env = flutterEnvToSDKEnv(ienv: args["env"] as! Int32)
             let accessToken = args["accessToken"] as! String
             let client = Pokepay.Client(accessToken:accessToken, env: env)
-            let accountId = args["accountId"] as! String
+            let accountId = (args["account_id"] as? String) ?? (args["accountId"] as! String)
             let before = args["before"] as? String
             let after = args["after"] as? String
             let perPage = args["perPage"] as? Int
-            client.send(BankAPI.Cvs.GetCVSAuthorizations(accountId: accountId, before: before, after: after, perPage: perPage), handler: self.after)
+            client.send(BankAPI.Cvs.GetCvsAuthorizations(accountId: accountId, before: before, after: after, perPage: perPage), handler: self.after)
         case "cancelCvsAuthorization":
             let env = flutterEnvToSDKEnv(ienv: args["env"] as! Int32)
             let accessToken = args["accessToken"] as! String
             let client = Pokepay.Client(accessToken:accessToken, env: env)
-            let accountId = args["accountId"] as! String
-            let orderId = args["orderId"] as! String
-            client.send(BankAPI.Cvs.CancelCVSAuthorization(accountId: accountId, orderId: orderId), handler: self.after)
+            let accountId = (args["account_id"] as? String) ?? (args["accountId"] as! String)
+            let orderId = (args["order_id"] as? String) ?? (args["orderId"] as! String)
+            client.send(BankAPI.Cvs.CancelCvsAuthorization(accountId: accountId, orderId: orderId), handler: self.after)
         case "createJihanpiTransaction":
             let env = flutterEnvToSDKEnv(ienv: args["env"] as! Int32)
             let accessToken = args["accessToken"] as! String
@@ -852,6 +852,49 @@ private class MethodCallTask {
             let client = Pokepay.Client(accessToken:accessToken, env: env)
             let requestId = args["requestId"] as! String
             client.send(BankAPI.Jihanpi.GetJihanpiTransactionByRequestId(requestId: requestId), handler: self.after)
+        case "getAccountTopupQuotas":
+            let env = flutterEnvToSDKEnv(ienv: args["env"] as! Int32)
+            let accessToken = args["accessToken"] as! String
+            let client = Pokepay.Client(accessToken:accessToken, env: env)
+            let accountId = args["account_id"] as! String
+            client.send(BankAPI.Account.GetAccountTopupQuotas(accountId: accountId), handler: self.after)
+        case "cvsAuthorizeRequest":
+            let env = flutterEnvToSDKEnv(ienv: args["env"] as! Int32)
+            let accessToken = args["accessToken"] as! String
+            let client = Pokepay.Client(accessToken:accessToken, env: env)
+            let accountId = args["account_id"] as! String
+            let serviceOptionType = args["service_option_type"] as! String
+            let amount = args["amount"] as! Int
+            let name1 = args["name1"] as! String
+            let name2 = args["name2"] as! String
+            let tel = args["tel"] as! String
+            let topupQuotaId = args["topup_quota_id"] as? Int
+            client.send(BankAPI.Cvs.CvsAuthorizeRequest(serviceOptionType: serviceOptionType, amount: amount, name1: name1, name2: name2, tel: tel, topupQuotaId: topupQuotaId, accountId: accountId), handler: self.after)
+        case "getDetailedShopInformation":
+            let env = flutterEnvToSDKEnv(ienv: args["env"] as! Int32)
+            let accessToken = args["accessToken"] as! String
+            let client = Pokepay.Client(accessToken:accessToken, env: env)
+            let shopId = args["shop_id"] as! String
+            client.send(BankAPI.Shop.GetDetailedShopInformation(shopId: shopId), handler: self.after)
+        case "getListOfShops":
+            let env = flutterEnvToSDKEnv(ienv: args["env"] as! Int32)
+            let accessToken = args["accessToken"] as! String
+            let client = Pokepay.Client(accessToken:accessToken, env: env)
+            let privateMoneyId = (args["private_money_id"] as? String) ?? ""
+            client.send(BankAPI.Shop.GetListOfShops(privateMoneyId: privateMoneyId), handler: self.after)
+        case "getUserTagGroups":
+            let env = flutterEnvToSDKEnv(ienv: args["env"] as! Int32)
+            let accessToken = args["accessToken"] as! String
+            let client = Pokepay.Client(accessToken:accessToken, env: env)
+            let privateMoneyId = (args["private_money_id"] as? String) ?? ""
+            client.send(BankAPI.UserTag.GetUserTagGroups(privateMoneyId: privateMoneyId), handler: self.after)
+        case "getUserTagGroupItems":
+            let env = flutterEnvToSDKEnv(ienv: args["env"] as! Int32)
+            let accessToken = args["accessToken"] as! String
+            let client = Pokepay.Client(accessToken:accessToken, env: env)
+            let organizationCode = args["organization_code"] as! String
+            let tagGroupId = (args["tag_group_id"] as? String) ?? ""
+            client.send(BankAPI.UserTag.GetUserTagGroupItems(organizationCode: organizationCode, tagGroupId: tagGroupId), handler: self.after)
         default:
             self.result(FlutterMethodNotImplemented)
         }
