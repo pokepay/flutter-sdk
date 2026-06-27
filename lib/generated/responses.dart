@@ -6,6 +6,7 @@ export 'responses/account_topup_stats.dart';
 export 'responses/credit_card.dart';
 export 'responses/cvs_authorization.dart';
 export 'responses/detailed_shop_information.dart';
+export 'responses/identification_result.dart';
 export 'responses/individual_number_identification_status.dart';
 export 'responses/jihanpi_transaction.dart';
 export 'responses/jihanpi_vending_machine.dart';

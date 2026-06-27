@@ -85,6 +85,7 @@ import jp.pokepay.pokepaylib.BankAPI.autogen.requests.DeleteCreditCard;
 import jp.pokepay.pokepaylib.BankAPI.autogen.requests.GetCreditCards;
 import jp.pokepay.pokepaylib.BankAPI.autogen.requests.TopupWithCreditCardMdkToken;
 import jp.pokepay.pokepaylib.BankAPI.autogen.requests.TopupWithCreditCardMembership;
+import jp.pokepay.pokepaylib.BankAPI.autogen.requests.GetAccountIndividualNumberIdentification;
 import jp.pokepay.pokepaylib.BankAPI.autogen.requests.GetAccountTopupQuotas;
 import jp.pokepay.pokepaylib.BankAPI.autogen.requests.GetAccountTopupStats;
 import jp.pokepay.pokepaylib.BankAPI.autogen.requests.GetTransactionByRequestId;
@@ -151,6 +152,7 @@ import jp.pokepay.pokepaylib.Responses.AccountCampaignPointAmounts;
 import jp.pokepay.pokepaylib.Responses.SevenElevenAtmSession;
 import jp.pokepay.pokepaylib.Responses.VeritransToken;
 import jp.pokepay.pokepaylib.BankAPI.autogen.responses.AccountTopupQuotas;
+import jp.pokepay.pokepaylib.BankAPI.autogen.responses.IndividualNumberIdentificationStatus;
 import jp.pokepay.pokepaylib.BankAPI.autogen.responses.AccountTopupStats;
 import jp.pokepay.pokepaylib.BankAPI.autogen.responses.UserTransactionWithTransfers;
 import jp.pokepay.pokepaylib.BankAPI.autogen.responses.CreditCard;
@@ -1284,6 +1286,15 @@ public class PokepaySdkPlugin implements FlutterPlugin, MethodCallHandler {
                         GetJihanpiTransactionByRequestId req = new GetJihanpiTransactionByRequestId(requestId);
                         Pokepay.setEnv(env);
                         JihanpiTransaction res = req.send(accessToken);
+                        return new TaskResult(null, res.toString());
+                    }
+                    case "getAccountIndividualNumberIdentification": {
+                        Env env = flutterEnvToSDKEnv((int)call.argument("env"));
+                        String accessToken = call.argument("accessToken");
+                        String accountId = call.argument("account_id");
+                        GetAccountIndividualNumberIdentification req = new GetAccountIndividualNumberIdentification(accountId);
+                        Pokepay.setEnv(env);
+                        IndividualNumberIdentificationStatus res = req.send(accessToken);
                         return new TaskResult(null, res.toString());
                     }
                     case "getAccountTopupQuotas": {
