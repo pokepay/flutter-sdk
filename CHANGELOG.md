@@ -1,3 +1,7 @@
+## 2.0.27
+* Added individual identification number
+* Sync with Native SDKs version 2.0.27
+
 ## 2.0.25
 * Added topupMethods field on privateMoney when retrieved by getAccount (account.privateMoney.topupMethods).
 * The type for topupMethods can be "credit-card", "sevenbank-atm", "paytree-bank", or "cvs".
