@@ -397,6 +397,12 @@ private class MethodCallTask {
             let accountId = args["accountId"] as! String
             let couponId = args["couponId"] as! String
             client.send(BankAPI.Account.GetCouponDetail(accountId: accountId, couponId: couponId), handler: self.after)
+        case "getAccountIndividualNumberIdentification":
+            let env = flutterEnvToSDKEnv(ienv: args["env"] as! Int32)
+            let accessToken = args["accessToken"] as! String
+            let client = Pokepay.Client(accessToken: accessToken, env: env)
+            let accountId = args["account_id"] as! String
+            client.send(BankAPI.Account.GetAccountIndividualNumberIdentification(accountId: accountId), handler: self.after)
         case "getAccountTransactions":
             let env = flutterEnvToSDKEnv(ienv: args["env"] as! Int32)
             let accessToken = args["accessToken"] as! String
@@ -700,8 +706,7 @@ private class MethodCallTask {
             let signingCert = args["signingCert"] as! String
             let expectedHash = args["expectedHash"] as! String
             let name = args["name"] as? String
-            let rawGender =  args["gender"] as? String
-            let gender = parseGender(raw: rawGender)
+            let gender = args["gender"] as? String
             let address = args["address"] as? String
             let dateOfBirth = args["dateOfBirth"] as? String
             client.send(BankAPI.Account.IdentifyIndividual(accountId: accountId, signature: signature, signingCert: signingCert, expectedHash: expectedHash, name: name, gender: gender, address: address, dateOfBirth: dateOfBirth), handler: self.after)
