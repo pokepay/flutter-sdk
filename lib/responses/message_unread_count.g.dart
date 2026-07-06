@@ -8,7 +8,7 @@ part of 'message_unread_count.dart';
 
 MessageUnreadCount _$MessageUnreadCountFromJson(Map<String, dynamic> json) =>
     MessageUnreadCount(
-      count: json['count'] as int,
+      count: (json['count'] as num).toInt(),
     );
 
 Map<String, dynamic> _$MessageUnreadCountToJson(MessageUnreadCount instance) =>

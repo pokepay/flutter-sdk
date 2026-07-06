@@ -20,7 +20,9 @@ jobs:
           flutter-version: 3.38.3
           channel: stable
           cache: true
-      - run: flutter pub get
+      # .g.dart はコミット済み pubspec.lock の json_serializable が生成したもの。
+      # lock と違うバージョンに解決されると差分チェックが誤検知するため強制する。
+      - run: flutter pub get --enforce-lockfile
       - name: Dart とネイティブプラグインの整合性リント
         run: dart tool/check_native_links.dart
       - name: build_runner の生成物がコミットと一致するか

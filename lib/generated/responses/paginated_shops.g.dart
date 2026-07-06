@@ -8,8 +8,8 @@ part of 'paginated_shops.dart';
 
 PaginatedShops _$PaginatedShopsFromJson(Map<String, dynamic> json) =>
     PaginatedShops(
-      perPage: json['per_page'] as int,
-      count: json['count'] as int,
+      perPage: (json['per_page'] as num).toInt(),
+      count: (json['count'] as num).toInt(),
       next: json['next'] as String?,
       prev: json['prev'] as String?,
       items: (json['items'] as List<dynamic>)

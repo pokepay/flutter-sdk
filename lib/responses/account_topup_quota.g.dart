@@ -8,7 +8,7 @@ part of 'account_topup_quota.dart';
 
 AccountTopupQuota _$AccountTopupQuotaFromJson(Map<String, dynamic> json) =>
     AccountTopupQuota(
-      id: json['id'] as int,
+      id: (json['id'] as num).toInt(),
       amount: (json['amount'] as num).toDouble(),
       description: json['description'] as String,
       eventName: json['event_name'] as String,

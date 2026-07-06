@@ -8,8 +8,8 @@ part of 'paginated_messages.dart';
 
 PaginatedMessages _$PaginatedMessagesFromJson(Map<String, dynamic> json) =>
     PaginatedMessages(
-      perPage: json['per_page'] as int?,
-      count: json['count'] as int?,
+      perPage: (json['per_page'] as num?)?.toInt(),
+      count: (json['count'] as num?)?.toInt(),
       next: json['next'] as String?,
       prev: json['prev'] as String?,
       items: (json['items'] as List<dynamic>)
@@ -23,5 +23,5 @@ Map<String, dynamic> _$PaginatedMessagesToJson(PaginatedMessages instance) =>
       'count': instance.count,
       'next': instance.next,
       'prev': instance.prev,
-      'items': instance.items.map((e) => e.toJson()).toList(),
+      'items': instance.items,
     };
