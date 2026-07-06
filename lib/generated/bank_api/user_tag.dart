@@ -26,7 +26,7 @@ extension UserTagAPI on PokepayAPI {
   Future<PaginatedUserTagGroupItems> getUserTagGroupItems({
     required String organizationCode,
     required String tagGroupId,
-    required String subgroupId,
+    String? subgroupId,
     String? before,
     String? after,
     int? perPage,
@@ -50,8 +50,8 @@ extension UserTagAPI on PokepayAPI {
   Future<PaginatedUserTagSubgroups> getUserTagSubgroups({
     required String organizationCode,
     required String tagGroupId,
-    required String before,
-    required String after,
+    String? before,
+    String? after,
     int? perPage,
   }) async {
     return await invokeMethod<PaginatedUserTagSubgroups>(

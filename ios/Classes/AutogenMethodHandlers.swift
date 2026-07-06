@@ -223,7 +223,7 @@ extension MethodCallTask {
             let client = Pokepay.Client(accessToken: accessToken, env: env)
             let organizationCode = (args["organization_code"] ?? args["organizationCode"]) as! String
             let tagGroupId = (args["tag_group_id"] ?? args["tagGroupId"]) as! String
-            let subgroupId = (args["subgroup_id"] ?? args["subgroupId"]) as! String
+            let subgroupId = (args["subgroup_id"] ?? args["subgroupId"]) as? String
             let before = args["before"] as? String
             let after = args["after"] as? String
             let perPage = (args["per_page"] ?? args["perPage"]) as? Int
@@ -234,8 +234,8 @@ extension MethodCallTask {
             let client = Pokepay.Client(accessToken: accessToken, env: env)
             let organizationCode = (args["organization_code"] ?? args["organizationCode"]) as! String
             let tagGroupId = (args["tag_group_id"] ?? args["tagGroupId"]) as! String
-            let before = args["before"] as! String
-            let after = args["after"] as! String
+            let before = args["before"] as? String
+            let after = args["after"] as? String
             let perPage = (args["per_page"] ?? args["perPage"]) as? Int
             client.send(BankAPI.UserTag.GetUserTagSubgroups(organizationCode: organizationCode, tagGroupId: tagGroupId, before: before, after: after, perPage: perPage), handler: self.after)
         default:
