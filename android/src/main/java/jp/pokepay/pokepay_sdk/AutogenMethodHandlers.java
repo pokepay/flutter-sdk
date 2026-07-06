@@ -8,6 +8,7 @@ import jp.pokepay.pokepaylib.Pokepay;
 import jp.pokepay.pokepaylib.BankAPI.autogen.requests.*;
 import jp.pokepay.pokepaylib.BankAPI.autogen.responses.*;
 import jp.pokepay.pokepaylib.Responses.NoContent;
+import jp.pokepay.pokepaylib.Responses.IdentificationResult;
 
 class AutogenMethodHandlers {
     private static Env flutterEnvToSDKEnv(int env) {
