@@ -6,26 +6,6 @@ part of 'token_info.dart';
 // JsonSerializableGenerator
 // **************************************************************************
 
-TokenInfo _$TokenInfoFromJson(Map<String, dynamic> json) => TokenInfo(
-      type: $enumDecode(_$TokenTypeEnumMap, json['type']),
-      token: json['token'],
-    );
-
-Map<String, dynamic> _$TokenInfoToJson(TokenInfo instance) => <String, dynamic>{
-      'type': _$TokenTypeEnumMap[instance.type]!,
-      'token': instance.token,
-    };
-
-const _$TokenTypeEnumMap = {
-  TokenType.CASHTRAY: 'CASHTRAY',
-  TokenType.BILL: 'BILL',
-  TokenType.CHECK: 'CHECK',
-  TokenType.CPM: 'CPM',
-  TokenType.PAYREGI: 'PAYREGI',
-  TokenType.JWT: 'JWT',
-  TokenType.UNKNOWN: 'UNKNOWN',
-};
-
 TokenInfoMerchant _$TokenInfoMerchantFromJson(Map<String, dynamic> json) =>
     TokenInfoMerchant(
       type: $enumDecode(_$TokenTypeEnumMap, json['type']),
@@ -45,3 +25,13 @@ Map<String, dynamic> _$TokenInfoMerchantToJson(TokenInfoMerchant instance) =>
       'cpm_token': instance.cpmToken,
       'cashtray': instance.cashtray,
     };
+
+const _$TokenTypeEnumMap = {
+  TokenType.CASHTRAY: 'CASHTRAY',
+  TokenType.BILL: 'BILL',
+  TokenType.CHECK: 'CHECK',
+  TokenType.CPM: 'CPM',
+  TokenType.PAYREGI: 'PAYREGI',
+  TokenType.JWT: 'JWT',
+  TokenType.UNKNOWN: 'UNKNOWN',
+};
