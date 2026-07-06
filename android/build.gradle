@@ -22,6 +22,12 @@ rootProject.allprojects {
 apply plugin: 'com.android.library'
 
 android {
+    // AGP 7+ では namespace の指定が必須 (AndroidManifest の package 属性は
+    // AGP 8 でエラーになるため使えない)。古い AGP には namespace プロパティが
+    // 存在しないので条件付きで設定する。
+    if (project.android.hasProperty("namespace")) {
+        namespace 'jp.pokepay.pokepay_sdk'
+    }
     compileSdkVersion 32
 
     defaultConfig {
