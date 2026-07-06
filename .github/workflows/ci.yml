@@ -4,6 +4,11 @@ on:
   push:
     branches: [master]
   pull_request:
+  # android-build / ios-build はネイティブ SDK (pokepaylib / Pokepay pod) が
+  # 同じ bank.yaml から再生成・リリースされるまでコンパイルできないため、
+  # 手動実行のみにしている。ネイティブ SDK リリース後に依存バージョンを上げ、
+  # dispatch で緑を確認したら pull_request でも走らせて required に昇格させること。
+  workflow_dispatch:
 
 jobs:
   # Dart 静的検証 + 生成物の同期チェック + Dart↔ネイティブ整合性リント
@@ -31,11 +36,10 @@ jobs:
           git diff --exit-code -- lib
       - run: flutter analyze --no-fatal-warnings
 
-  # プラグインの Android ネイティブコードのコンパイル検証。
-  # 注意: 生成されたネイティブリンクは bank.yaml と同期した pokepaylib の
-  # リリースを前提とするため、ネイティブ SDK の公開前は失敗しうる。
-  # そのため continue-on-error にしている。緑になったら required に昇格させること。
+  # プラグインの Android ネイティブコードのコンパイル検証 (手動実行のみ)。
+  # 実行方法: gh workflow run ci.yml --ref <branch>
   android-build:
+    if: github.event_name == 'workflow_dispatch'
     runs-on: ubuntu-latest
     continue-on-error: true
     steps:
@@ -55,9 +59,9 @@ jobs:
           flutter pub add pokepay_sdk --path "$GITHUB_WORKSPACE"
           flutter build apk --debug
 
-  # iOS 側のコンパイル検証 (CocoaPods で Pokepay pod を解決する)。
-  # android-build と同じ理由で continue-on-error。
+  # iOS 側のコンパイル検証 (CocoaPods で Pokepay pod を解決する)。手動実行のみ。
   ios-build:
+    if: github.event_name == 'workflow_dispatch'
     runs-on: macos-latest
     continue-on-error: true
     steps:
