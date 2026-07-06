@@ -1,0 +1,67 @@
+name: CI
+
+on:
+  push:
+    branches: [master]
+  pull_request:
+
+jobs:
+  # Dart 静的検証 + 生成物の同期チェック + Dart↔ネイティブ整合性リント
+  check:
+    runs-on: ubuntu-latest
+    steps:
+      - uses: actions/checkout@v4
+      - uses: subosito/flutter-action@v2
+        with:
+          channel: stable
+          cache: true
+      - run: flutter pub get
+      - name: Dart とネイティブプラグインの整合性リント
+        run: dart tool/check_native_links.dart
+      - name: build_runner の生成物がコミットと一致するか
+        run: |
+          flutter pub run build_runner build --delete-conflicting-outputs
+          git diff --exit-code -- lib
+      - run: flutter analyze --no-fatal-warnings
+
+  # プラグインの Android ネイティブコードのコンパイル検証。
+  # 注意: 生成されたネイティブリンクは bank.yaml と同期した pokepaylib の
+  # リリースを前提とするため、ネイティブ SDK の公開前は失敗しうる。
+  # そのため continue-on-error にしている。緑になったら required に昇格させること。
+  android-build:
+    runs-on: ubuntu-latest
+    continue-on-error: true
+    steps:
+      - uses: actions/checkout@v4
+      - uses: actions/setup-java@v4
+        with:
+          distribution: temurin
+          java-version: '17'
+      - uses: subosito/flutter-action@v2
+        with:
+          channel: stable
+          cache: true
+      - name: サンプルアプリ経由でプラグインをコンパイル
+        run: |
+          flutter create --template=app --platforms=android /tmp/example
+          cd /tmp/example
+          flutter pub add pokepay_sdk --path "$GITHUB_WORKSPACE"
+          flutter build apk --debug
+
+  # iOS 側のコンパイル検証 (CocoaPods で Pokepay pod を解決する)。
+  # android-build と同じ理由で continue-on-error。
+  ios-build:
+    runs-on: macos-latest
+    continue-on-error: true
+    steps:
+      - uses: actions/checkout@v4
+      - uses: subosito/flutter-action@v2
+        with:
+          channel: stable
+          cache: true
+      - name: サンプルアプリ経由でプラグインをコンパイル
+        run: |
+          flutter create --template=app --platforms=ios /tmp/example
+          cd /tmp/example
+          flutter pub add pokepay_sdk --path "$GITHUB_WORKSPACE"
+          flutter build ios --debug --no-codesign
