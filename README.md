@@ -29,3 +29,27 @@ PokepayAPI(env: APIEnv.YOUR_ENV,accessToken: YOUR_ACCESS_TOKEN,);
 PokepayAPI api = PokepayAPI(env: APIEnv.YOUR_ENV,accessToken: YOUR_ACCESS_TOKEN,);
 Account createdAccount = await api.createAccount(name:your_wallet_name, privateMoneyId: your_private_money_id);
 ``` 
+
+## Development
+
+### Generated code
+
+`lib/generated/` 以下と `android/.../AutogenMethodHandlers.java` /
+`ios/Classes/AutogenMethodHandlers.swift` はコードジェネレーターによる
+自動生成ファイルです。手で編集しないでください。
+
+再生成後は build_runner で `.g.dart` を更新します:
+
+```sh
+flutter pub run build_runner build --delete-conflicting-outputs
+```
+
+### Consistency lint
+
+Dart が送るメソッド名・引数キーとネイティブプラグイン側の読み取りの
+食い違い (実行時に null になる) を検出します。CI でも実行されます。
+
+```sh
+dart tool/check_native_links.dart          # エラーのみ fail
+dart tool/check_native_links.dart --strict # warning も fail
+```
