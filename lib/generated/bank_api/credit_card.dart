@@ -6,6 +6,10 @@ import '../responses.dart';
 extension CreditCardAPI on PokepayAPI {
   Future<PaginatedCreditCards> getCreditCards({
     required String userId,
+    String? before,
+    String? after,
+    int? perPage,
+    required String organizationCode,
   }) async {
     return await invokeMethod<PaginatedCreditCards>(
       (j) => PaginatedCreditCards.fromJson(j),
@@ -14,6 +18,10 @@ extension CreditCardAPI on PokepayAPI {
         'env': this.env.index,
         'accessToken': this.accessToken,
         'user_id': userId,
+        'before': before,
+        'after': after,
+        'per_page': perPage,
+        'organization_code': organizationCode,
       },
     );
   }
@@ -40,7 +48,7 @@ extension CreditCardAPI on PokepayAPI {
 
   Future<NoContent> deleteCreditCard({
     required String userId,
-    DateTime? cardRegisteredAt,
+    String? cardRegisteredAt,
     String? cardUuid,
     required String organizationCode,
   }) async {
@@ -60,7 +68,7 @@ extension CreditCardAPI on PokepayAPI {
 
   Future<String> topupWithCreditCardMembership({
     required String userId,
-    DateTime? cardRegisteredAt,
+    String? cardRegisteredAt,
     String? cardUuid,
     required String accountId,
     required int amount,

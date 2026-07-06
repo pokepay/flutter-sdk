@@ -10,10 +10,12 @@ UserTagGroupItem _$UserTagGroupItemFromJson(Map<String, dynamic> json) =>
     UserTagGroupItem(
       itemName: json['item_name'] as String,
       id: json['id'] as String,
+      subgroupId: json['subgroup_id'] as String?,
     );
 
 Map<String, dynamic> _$UserTagGroupItemToJson(UserTagGroupItem instance) =>
     <String, dynamic>{
       'item_name': instance.itemName,
       'id': instance.id,
+      'subgroup_id': instance.subgroupId,
     };

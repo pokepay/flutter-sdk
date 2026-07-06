@@ -11,6 +11,7 @@ class DetailedShopInformation {
   final String businessHours;
   final String regularClosedDays;
   final String? url;
+  final String description;
   final String? logoImageUrl;
   final List<String> imageUrls;
   final String? address;
@@ -22,6 +23,7 @@ class DetailedShopInformation {
     required this.businessHours,
     required this.regularClosedDays,
     this.url,
+    required this.description,
     this.logoImageUrl,
     required this.imageUrls,
     this.address,

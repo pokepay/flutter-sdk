@@ -47,6 +47,11 @@ extension AccountAPI on PokepayAPI {
 
   Future<AccountTopupQuotas> getAccountTopupQuotas({
     required String accountId,
+    String? status,
+    bool? showExpiredForFixedPeriod,
+    bool? showStartedQuotas,
+    bool? isWithinApplicablePeriod,
+    bool? isUsableAmountLeft,
   }) async {
     return await invokeMethod<AccountTopupQuotas>(
       (j) => AccountTopupQuotas.fromJson(j),
@@ -55,6 +60,11 @@ extension AccountAPI on PokepayAPI {
         'env': this.env.index,
         'accessToken': this.accessToken,
         'account_id': accountId,
+        'status': status,
+        'show_expired_for_fixed_period': showExpiredForFixedPeriod,
+        'show_started_quotas': showStartedQuotas,
+        'is_within_applicable_period': isWithinApplicablePeriod,
+        'is_usable_amount_left': isUsableAmountLeft,
       },
     );
   }

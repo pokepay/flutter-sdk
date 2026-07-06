@@ -6,6 +6,9 @@ import '../responses.dart';
 extension CvsAPI on PokepayAPI {
   Future<PaginatedCvsAuthorizations> getCvsAuthorizations({
     required String accountId,
+    String? before,
+    String? after,
+    int? perPage,
   }) async {
     return await invokeMethod<PaginatedCvsAuthorizations>(
       (j) => PaginatedCvsAuthorizations.fromJson(j),
@@ -14,6 +17,9 @@ extension CvsAPI on PokepayAPI {
         'env': this.env.index,
         'accessToken': this.accessToken,
         'account_id': accountId,
+        'before': before,
+        'after': after,
+        'per_page': perPage,
       },
     );
   }
