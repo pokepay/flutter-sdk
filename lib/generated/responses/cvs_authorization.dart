@@ -11,8 +11,12 @@ class CvsAuthorization {
   final String name1;
   final String name2;
   final String tel;
-  final String payLimit;
+  final DateTime payLimit;
   final Account account;
+  final String haraikomiUrl;
+  final String receiptNo;
+  final DateTime? doneAt;
+  final DateTime? canceledAt;
   CvsAuthorization({
     required this.id,
     required this.serviceOptionType,
@@ -22,6 +26,10 @@ class CvsAuthorization {
     required this.tel,
     required this.payLimit,
     required this.account,
+    required this.haraikomiUrl,
+    required this.receiptNo,
+    this.doneAt,
+    this.canceledAt,
   });
 
   factory CvsAuthorization.fromJson(Map<String, dynamic> json) =>
