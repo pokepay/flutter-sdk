@@ -8,12 +8,12 @@ part of 'bankpay_redirect_url.dart';
 
 BankPayRedirectUrl _$BankPayRedirectUrlFromJson(Map<String, dynamic> json) =>
     BankPayRedirectUrl(
-      redirectUrl: json['redirectUrl'] as String,
-      paytreeCustomerNumber: json['paytreeCustomerNumber'] as String?,
+      redirectUrl: json['redirect_url'] as String,
+      paytreeCustomerNumber: json['paytree_customer_number'] as String?,
     );
 
 Map<String, dynamic> _$BankPayRedirectUrlToJson(BankPayRedirectUrl instance) =>
     <String, dynamic>{
-      'redirectUrl': instance.redirectUrl,
-      'paytreeCustomerNumber': instance.paytreeCustomerNumber,
+      'redirect_url': instance.redirectUrl,
+      'paytree_customer_number': instance.paytreeCustomerNumber,
     };

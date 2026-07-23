@@ -3,19 +3,33 @@ import '../../pokepay_sdk.dart';
 import '../responses.dart';
 
 extension UserTagAPI on PokepayAPI {
-  Future<PaginatedUserTagGroups> getUserTagGroups() async {
+  Future<PaginatedUserTagGroups> getUserTagGroups({
+    required String privateMoneyId,
+    String? before,
+    String? after,
+    int? perPage,
+  }) async {
     return await invokeMethod<PaginatedUserTagGroups>(
       (j) => PaginatedUserTagGroups.fromJson(j),
       'getUserTagGroups',
       {
         'env': this.env.index,
         'accessToken': this.accessToken,
+        'private_money_id': privateMoneyId,
+        'before': before,
+        'after': after,
+        'per_page': perPage,
       },
     );
   }
 
   Future<PaginatedUserTagGroupItems> getUserTagGroupItems({
     required String organizationCode,
+    required String tagGroupId,
+    String? subgroupId,
+    String? before,
+    String? after,
+    int? perPage,
   }) async {
     return await invokeMethod<PaginatedUserTagGroupItems>(
       (j) => PaginatedUserTagGroupItems.fromJson(j),
@@ -24,6 +38,33 @@ extension UserTagAPI on PokepayAPI {
         'env': this.env.index,
         'accessToken': this.accessToken,
         'organization_code': organizationCode,
+        'tag_group_id': tagGroupId,
+        'subgroup_id': subgroupId,
+        'before': before,
+        'after': after,
+        'per_page': perPage,
+      },
+    );
+  }
+
+  Future<PaginatedUserTagSubgroups> getUserTagSubgroups({
+    required String organizationCode,
+    required String tagGroupId,
+    String? before,
+    String? after,
+    int? perPage,
+  }) async {
+    return await invokeMethod<PaginatedUserTagSubgroups>(
+      (j) => PaginatedUserTagSubgroups.fromJson(j),
+      'getUserTagSubgroups',
+      {
+        'env': this.env.index,
+        'accessToken': this.accessToken,
+        'organization_code': organizationCode,
+        'tag_group_id': tagGroupId,
+        'before': before,
+        'after': after,
+        'per_page': perPage,
       },
     );
   }

@@ -28,7 +28,7 @@ Map<String, dynamic> _$AccountToJson(Account instance) => <String, dynamic>{
       'money_balance': instance.moneyBalance,
       'point_balance': instance.pointBalance,
       'is_suspended': instance.isSuspended,
-      'private_money': instance.privateMoney.toJson(),
+      'private_money': instance.privateMoney,
       'nearest_expires_at': instance.nearestExpiresAt?.toIso8601String(),
       'point_debt': instance.pointDebt,
     };

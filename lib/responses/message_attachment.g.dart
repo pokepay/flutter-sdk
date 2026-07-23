@@ -24,7 +24,7 @@ Map<String, dynamic> _$MessageAttachmentToJson(MessageAttachment instance) =>
     <String, dynamic>{
       'money_amount': instance.moneyAmount,
       'point_amount': instance.pointAmount,
-      'private_money': instance.privateMoney?.toJson(),
+      'private_money': instance.privateMoney,
       'is_received': instance.isReceived,
       'expires_at': instance.expiresAt?.toIso8601String(),
     };

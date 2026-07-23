@@ -15,5 +15,5 @@ CashtrayAttempts _$CashtrayAttemptsFromJson(Map<String, dynamic> json) =>
 
 Map<String, dynamic> _$CashtrayAttemptsToJson(CashtrayAttempts instance) =>
     <String, dynamic>{
-      'rows': instance.rows.map((e) => e.toJson()).toList(),
+      'rows': instance.rows,
     };

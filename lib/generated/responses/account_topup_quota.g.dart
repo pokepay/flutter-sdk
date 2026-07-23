@@ -8,12 +8,12 @@ part of 'account_topup_quota.dart';
 
 AccountTopupQuota _$AccountTopupQuotaFromJson(Map<String, dynamic> json) =>
     AccountTopupQuota(
-      id: json['id'] as int,
-      amount: json['amount'] as int,
+      id: (json['id'] as num).toInt(),
+      amount: (json['amount'] as num).toInt(),
       description: json['description'] as String,
       eventName: json['event_name'] as String,
       isSplittable: json['is_splittable'] as bool,
-      usedAmount: json['used_amount'] as int,
+      usedAmount: (json['used_amount'] as num).toInt(),
       status: json['status'] as String,
       startsAt: DateTime.parse(json['starts_at'] as String),
       endsAt: DateTime.parse(json['ends_at'] as String),

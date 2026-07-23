@@ -9,8 +9,8 @@ part of 'paginated_user_tag_group_items.dart';
 PaginatedUserTagGroupItems _$PaginatedUserTagGroupItemsFromJson(
         Map<String, dynamic> json) =>
     PaginatedUserTagGroupItems(
-      perPage: json['per_page'] as int,
-      count: json['count'] as int,
+      perPage: (json['per_page'] as num).toInt(),
+      count: (json['count'] as num).toInt(),
       next: json['next'] as String?,
       prev: json['prev'] as String?,
       items: (json['items'] as List<dynamic>)

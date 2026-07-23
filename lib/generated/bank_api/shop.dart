@@ -17,13 +17,26 @@ extension ShopAPI on PokepayAPI {
     );
   }
 
-  Future<PaginatedShops> getListOfShops() async {
+  Future<PaginatedShops> getListOfShops({
+    required String privateMoneyId,
+    String? userTagGroupItemId,
+    String? userTagSubgroupId,
+    String? before,
+    String? after,
+    int? perPage,
+  }) async {
     return await invokeMethod<PaginatedShops>(
       (j) => PaginatedShops.fromJson(j),
       'getListOfShops',
       {
         'env': this.env.index,
         'accessToken': this.accessToken,
+        'private_money_id': privateMoneyId,
+        'user_tag_group_item_id': userTagGroupItemId,
+        'user_tag_subgroup_id': userTagSubgroupId,
+        'before': before,
+        'after': after,
+        'per_page': perPage,
       },
     );
   }

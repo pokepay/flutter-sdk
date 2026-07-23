@@ -17,4 +17,72 @@ extension TransactionAPI on PokepayAPI {
     );
   }
 
+  Future<UserTransactionWithFallback> createCashtrayTransaction({
+    required String requestId,
+    required String cashtrayId,
+    String? accountId,
+    String? couponId,
+    String? strategy,
+    int? topupQuotaId,
+  }) async {
+    return await invokeMethod<UserTransactionWithFallback>(
+      (j) => UserTransactionWithFallback.fromJson(j),
+      'createCashtrayTransaction',
+      {
+        'env': this.env.index,
+        'accessToken': this.accessToken,
+        'request_id': requestId,
+        'cashtray_id': cashtrayId,
+        'account_id': accountId,
+        'coupon_id': couponId,
+        'strategy': strategy,
+        'topup_quota_id': topupQuotaId,
+      },
+    );
+  }
+
+  Future<UserTransactionWithFallback> createBillTransaction({
+    required String requestId,
+    required String billId,
+    String? accountId,
+    double? amount,
+    String? couponId,
+    String? strategy,
+  }) async {
+    return await invokeMethod<UserTransactionWithFallback>(
+      (j) => UserTransactionWithFallback.fromJson(j),
+      'createBillTransaction',
+      {
+        'env': this.env.index,
+        'accessToken': this.accessToken,
+        'request_id': requestId,
+        'bill_id': billId,
+        'account_id': accountId,
+        'amount': amount,
+        'coupon_id': couponId,
+        'strategy': strategy,
+      },
+    );
+  }
+
+  Future<UserTransactionWithFallback> createCheckTransaction({
+    String? requestId,
+    required String checkId,
+    String? accountId,
+    int? topupQuotaId,
+  }) async {
+    return await invokeMethod<UserTransactionWithFallback>(
+      (j) => UserTransactionWithFallback.fromJson(j),
+      'createCheckTransaction',
+      {
+        'env': this.env.index,
+        'accessToken': this.accessToken,
+        'request_id': requestId,
+        'check_id': checkId,
+        'account_id': accountId,
+        'topup_quota_id': topupQuotaId,
+      },
+    );
+  }
+
 }

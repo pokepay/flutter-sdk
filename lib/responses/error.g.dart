@@ -27,14 +27,14 @@ Map<String, dynamic> _$OAuthErrorToJson(OAuthError instance) =>
 
 APIRequestError _$APIRequestErrorFromJson(Map<String, dynamic> json) =>
     APIRequestError(
-      statusCode: json['status_code'] as int,
+      statusCode: (json['status_code'] as num).toInt(),
       error: Error.fromJson(json['error'] as Map<String, dynamic>),
     );
 
 Map<String, dynamic> _$APIRequestErrorToJson(APIRequestError instance) =>
     <String, dynamic>{
       'status_code': instance.statusCode,
-      'error': instance.error.toJson(),
+      'error': instance.error,
     };
 
 ProcessingError _$ProcessingErrorFromJson(Map<String, dynamic> json) =>
@@ -49,12 +49,12 @@ Map<String, dynamic> _$ProcessingErrorToJson(ProcessingError instance) =>
 
 OAuthRequestError _$OAuthRequestErrorFromJson(Map<String, dynamic> json) =>
     OAuthRequestError(
-      statusCode: json['status_code'] as int,
+      statusCode: (json['status_code'] as num).toInt(),
       error: OAuthError.fromJson(json['error'] as Map<String, dynamic>),
     );
 
 Map<String, dynamic> _$OAuthRequestErrorToJson(OAuthRequestError instance) =>
     <String, dynamic>{
       'status_code': instance.statusCode,
-      'error': instance.error.toJson(),
+      'error': instance.error,
     };

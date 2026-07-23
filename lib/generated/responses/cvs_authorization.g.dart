@@ -10,7 +10,7 @@ CvsAuthorization _$CvsAuthorizationFromJson(Map<String, dynamic> json) =>
     CvsAuthorization(
       id: json['id'] as String,
       serviceOptionType: json['service_option_type'] as String,
-      amount: json['amount'] as int,
+      amount: (json['amount'] as num).toInt(),
       name1: json['name1'] as String,
       name2: json['name2'] as String,
       tel: json['tel'] as String,

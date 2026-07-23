@@ -25,8 +25,8 @@ AccountCpmToken _$AccountCpmTokenFromJson(Map<String, dynamic> json) =>
 Map<String, dynamic> _$AccountCpmTokenToJson(AccountCpmToken instance) =>
     <String, dynamic>{
       'cpm_token': instance.cpmToken,
-      'account': instance.account.toJson(),
-      'transaction': instance.transaction?.toJson(),
+      'account': instance.account,
+      'transaction': instance.transaction,
       'scopes': instance.scopes,
       'expires_at': instance.expiresAt?.toIso8601String(),
       'metadata': instance.metadata,

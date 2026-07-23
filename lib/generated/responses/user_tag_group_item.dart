@@ -6,9 +6,11 @@ part 'user_tag_group_item.g.dart';
 class UserTagGroupItem {
   final String itemName;
   final String id;
+  final String? subgroupId;
   UserTagGroupItem({
     required this.itemName,
     required this.id,
+    this.subgroupId,
   });
 
   factory UserTagGroupItem.fromJson(Map<String, dynamic> json) =>

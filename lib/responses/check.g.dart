@@ -21,7 +21,7 @@ Check _$CheckFromJson(Map<String, dynamic> json) => Check(
       pointExpiresAt: json['point_expires_at'] == null
           ? null
           : DateTime.parse(json['point_expires_at'] as String),
-      pointExpiresInDays: json['point_expires_in_days'] as int?,
+      pointExpiresInDays: (json['point_expires_in_days'] as num?)?.toInt(),
       token: json['token'] as String,
     );
 
@@ -31,8 +31,8 @@ Map<String, dynamic> _$CheckToJson(Check instance) => <String, dynamic>{
       'money_amount': instance.moneyAmount,
       'point_amount': instance.pointAmount,
       'description': instance.description,
-      'user': instance.user.toJson(),
-      'private_money': instance.privateMoney.toJson(),
+      'user': instance.user,
+      'private_money': instance.privateMoney,
       'is_onetime': instance.isOnetime,
       'is_disabled': instance.isDisabled,
       'expires_at': instance.expiresAt.toIso8601String(),

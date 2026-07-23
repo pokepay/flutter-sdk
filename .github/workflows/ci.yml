@@ -1,0 +1,78 @@
+name: CI
+
+on:
+  push:
+    branches: [master]
+  pull_request:
+  # android-build / ios-build はネイティブ SDK (pokepaylib / Pokepay pod) が
+  # 同じ bank.yaml から再生成・リリースされるまでコンパイルできないため、
+  # 手動実行のみにしている。ネイティブ SDK リリース後に依存バージョンを上げ、
+  # dispatch で緑を確認したら pull_request でも走らせて required に昇格させること。
+  workflow_dispatch:
+
+jobs:
+  # Dart 静的検証 + 生成物の同期チェック + Dart↔ネイティブ整合性リント
+  check:
+    runs-on: ubuntu-latest
+    steps:
+      - uses: actions/checkout@v4
+      - uses: subosito/flutter-action@v2
+        with:
+          # build_runner の生成物比較はツールチェーンのバージョンに依存する。
+          # コミット済み pubspec.lock / .g.dart と整合するバージョンに固定すること
+          # (新しい Flutter だと lock を満たせず json_serializable が上がり、
+          #  全 .g.dart の出力が変わって差分チェックが誤検知する)。
+          flutter-version: 3.38.3
+          channel: stable
+          cache: true
+      # .g.dart はコミット済み pubspec.lock の json_serializable が生成したもの。
+      # lock と違うバージョンに解決されると差分チェックが誤検知するため強制する。
+      - run: flutter pub get --enforce-lockfile
+      - name: Dart とネイティブプラグインの整合性リント
+        run: dart tool/check_native_links.dart
+      - name: build_runner の生成物がコミットと一致するか
+        run: |
+          flutter pub run build_runner build --delete-conflicting-outputs
+          git diff --exit-code -- lib
+      - run: flutter analyze --no-fatal-warnings
+
+  # プラグインの Android ネイティブコードのコンパイル検証 (手動実行のみ)。
+  # 実行方法: gh workflow run ci.yml --ref <branch>
+  android-build:
+    if: github.event_name == 'workflow_dispatch'
+    runs-on: ubuntu-latest
+    continue-on-error: true
+    steps:
+      - uses: actions/checkout@v4
+      - uses: actions/setup-java@v4
+        with:
+          distribution: temurin
+          java-version: '17'
+      - uses: subosito/flutter-action@v2
+        with:
+          channel: stable
+          cache: true
+      - name: サンプルアプリ経由でプラグインをコンパイル
+        run: |
+          flutter create --template=app --platforms=android /tmp/example
+          cd /tmp/example
+          flutter pub add pokepay_sdk --path "$GITHUB_WORKSPACE"
+          flutter build apk --debug
+
+  # iOS 側のコンパイル検証 (CocoaPods で Pokepay pod を解決する)。手動実行のみ。
+  ios-build:
+    if: github.event_name == 'workflow_dispatch'
+    runs-on: macos-latest
+    continue-on-error: true
+    steps:
+      - uses: actions/checkout@v4
+      - uses: subosito/flutter-action@v2
+        with:
+          channel: stable
+          cache: true
+      - name: サンプルアプリ経由でプラグインをコンパイル
+        run: |
+          flutter create --template=app --platforms=ios /tmp/example
+          cd /tmp/example
+          flutter pub add pokepay_sdk --path "$GITHUB_WORKSPACE"
+          flutter build ios --debug --no-codesign

@@ -17,6 +17,7 @@ DetailedShopInformation _$DetailedShopInformationFromJson(
       businessHours: json['business_hours'] as String,
       regularClosedDays: json['regular_closed_days'] as String,
       url: json['url'] as String?,
+      description: json['description'] as String,
       logoImageUrl: json['logo_image_url'] as String?,
       imageUrls: (json['image_urls'] as List<dynamic>)
           .map((e) => e as String)
@@ -34,6 +35,7 @@ Map<String, dynamic> _$DetailedShopInformationToJson(
       'business_hours': instance.businessHours,
       'regular_closed_days': instance.regularClosedDays,
       'url': instance.url,
+      'description': instance.description,
       'logo_image_url': instance.logoImageUrl,
       'image_urls': instance.imageUrls,
       'address': instance.address,

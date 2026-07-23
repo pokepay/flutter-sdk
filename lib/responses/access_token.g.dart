@@ -10,10 +10,11 @@ AccessToken _$AccessTokenFromJson(Map<String, dynamic> json) => AccessToken(
       accessToken: json['access_token'] as String,
       refreshToken: json['refresh_token'] as String,
       tokenType: json['token_type'] as String,
-      expiresIn: json['expires_in'] as int?,
+      expiresIn: (json['expires_in'] as num?)?.toInt(),
     );
 
-Map<String, dynamic> _$AccessTokenToJson(AccessToken instance) => <String, dynamic>{
+Map<String, dynamic> _$AccessTokenToJson(AccessToken instance) =>
+    <String, dynamic>{
       'access_token': instance.accessToken,
       'refresh_token': instance.refreshToken,
       'token_type': instance.tokenType,

@@ -1,25 +1,25 @@
 // GENERATED CODE - DO NOT MODIFY BY HAND
 
-part of 'paginated_private_moneys.dart';
+part of 'paginated_user_tag_subgroups.dart';
 
 // **************************************************************************
 // JsonSerializableGenerator
 // **************************************************************************
 
-PaginatedPrivateMoneys _$PaginatedPrivateMoneysFromJson(
+PaginatedUserTagSubgroups _$PaginatedUserTagSubgroupsFromJson(
         Map<String, dynamic> json) =>
-    PaginatedPrivateMoneys(
-      perPage: (json['per_page'] as num?)?.toInt(),
-      count: (json['count'] as num?)?.toInt(),
+    PaginatedUserTagSubgroups(
+      perPage: (json['per_page'] as num).toInt(),
+      count: (json['count'] as num).toInt(),
       next: json['next'] as String?,
       prev: json['prev'] as String?,
       items: (json['items'] as List<dynamic>)
-          .map((e) => PrivateMoney.fromJson(e as Map<String, dynamic>))
+          .map((e) => UserTagSubgroup.fromJson(e as Map<String, dynamic>))
           .toList(),
     );
 
-Map<String, dynamic> _$PaginatedPrivateMoneysToJson(
-        PaginatedPrivateMoneys instance) =>
+Map<String, dynamic> _$PaginatedUserTagSubgroupsToJson(
+        PaginatedUserTagSubgroups instance) =>
     <String, dynamic>{
       'per_page': instance.perPage,
       'count': instance.count,
