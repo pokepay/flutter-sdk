@@ -4,7 +4,7 @@
 #
 Pod::Spec.new do |s|
   s.name             = 'pokepay_sdk'
-  s.version          = '2.0.27'
+  s.version          = '2.0.28'
   s.summary          = 'Pokepay flutter SDK'
   s.description      = <<-DESC
 Pokepay flutter SDK

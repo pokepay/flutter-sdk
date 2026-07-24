@@ -1,3 +1,8 @@
+## 2.0.28
+* Create Bill/Cashtray/Check/Cpm with Fallback
+* Get User Tag Subgroups
+* Fixed IdentifyIndividual on iOS
+
 ## 2.0.27
 * Added individual identification number
 * Sync with Native SDKs version 2.0.27
