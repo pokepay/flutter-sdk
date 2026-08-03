@@ -16,6 +16,10 @@ CvsAuthorization _$CvsAuthorizationFromJson(Map<String, dynamic> json) =>
       tel: json['tel'] as String,
       payLimit: json['pay_limit'] as String,
       account: Account.fromJson(json['account'] as Map<String, dynamic>),
+      haraikomiUrl: json['haraikomi_url'] as String?,
+      receiptNo: json['receipt_no'] as String?,
+      doneAt: json['done_at'] as String?,
+      canceledAt: json['canceled_at'] as String?,
     );
 
 Map<String, dynamic> _$CvsAuthorizationToJson(CvsAuthorization instance) =>
@@ -28,4 +32,8 @@ Map<String, dynamic> _$CvsAuthorizationToJson(CvsAuthorization instance) =>
       'tel': instance.tel,
       'pay_limit': instance.payLimit,
       'account': instance.account,
+      'haraikomi_url': instance.haraikomiUrl,
+      'receipt_no': instance.receiptNo,
+      'done_at': instance.doneAt,
+      'canceled_at': instance.canceledAt,
     };

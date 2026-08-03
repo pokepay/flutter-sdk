@@ -151,6 +151,7 @@ extension AccountAPI on PokepayAPI {
     required String accountId,
     required String couponId,
     required bool isReceived,
+    String? code,
   }) async {
     return await invokeMethod<CouponDetail>(
       (j) => CouponDetail.fromJson(j),
@@ -161,6 +162,7 @@ extension AccountAPI on PokepayAPI {
         'accountId': accountId,
         'couponId': couponId,
         'is_received': isReceived,
+        'code': code,
       },
     );
   }
