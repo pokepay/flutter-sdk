@@ -13,6 +13,9 @@ class PrivateMoney {
   final String type;
   final String unit;
   final String description;
+  // フィールド名は oneline (一行) の typo だが、公開 API 互換のため改名せず
+  // JSON キーだけ明示する。field_rename: snake では online_message になってしまう。
+  @JsonKey(name: 'oneline_message')
   final String onlineMessage;
   final String? accountImage;
   final Images images;
@@ -26,6 +29,8 @@ class PrivateMoney {
   final String? paymentActUrl;
   final String? commercialActUrl;
   final bool canUseCreditCard;
+  // field_rename: snake は大文字1文字ごとに _ を挟むため C2C が c2_c になる。
+  @JsonKey(name: 'can_use_c2c_transfer')
   final bool canUseC2CTransfer;
   final String? customDomainName;
   final List<TopupMethod>? topupMethods;
