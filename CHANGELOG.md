@@ -1,3 +1,7 @@
+## 2.1.0
+* Fixed amount type conversion for Create Bill/Cpm Transactions
+* Align with iOS SDK version 2.1.0
+
 ## 2.0.28
 * Create Bill/Cashtray/Check/Cpm with Fallback
 * Get User Tag Subgroups
