@@ -4,7 +4,11 @@ part 'bankpay_redirect_url.g.dart';
 
 @JsonSerializable()
 class BankPayRedirectUrl {
+  // このエンドポイントのレスポンスキーは snake_case ではなく camelCase のため、
+  // field_rename: snake を @JsonKey で打ち消す。
+  @JsonKey(name: 'redirectUrl')
   final String redirectUrl;
+  @JsonKey(name: 'paytreeCustomerNumber')
   final String? paytreeCustomerNumber;
 
   BankPayRedirectUrl({

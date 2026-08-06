@@ -506,7 +506,8 @@ class MethodCallTask {
             let accountId = args["accountId"] as! String
             let couponId = args["couponId"] as! String
             let isReceived = args["is_received"] as! Bool
-            client.send(BankAPI.Account.PatchCouponDetail(accountId: accountId, couponId: couponId,isReceived: isReceived),handler: self.after)
+            let code = args["code"] as? String
+            client.send(BankAPI.Account.PatchCouponDetail(accountId: accountId, couponId: couponId,isReceived: isReceived, code: code),handler: self.after)
         case "receiveMessageAttachment":
             let env = flutterEnvToSDKEnv(ienv: args["env"] as! Int32)
             let accessToken = args["accessToken"] as! String
