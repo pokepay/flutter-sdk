@@ -1,3 +1,6 @@
+## 2.1.1
+* Fixed parsing wrong JSON keys for PrivateMoney and BankPayRedirectUrl
+
 ## 2.1.0
 * Fixed amount type conversion for Create Bill/Cpm Transactions
 * Align with iOS SDK version 2.1.0
