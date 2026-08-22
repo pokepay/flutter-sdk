@@ -8,7 +8,6 @@ import jp.pokepay.pokepaylib.Pokepay;
 import jp.pokepay.pokepaylib.BankAPI.autogen.requests.*;
 import jp.pokepay.pokepaylib.BankAPI.autogen.responses.*;
 import jp.pokepay.pokepaylib.Responses.NoContent;
-import jp.pokepay.pokepaylib.Responses.IdentificationResult;
 
 class AutogenMethodHandlers {
     private static Env flutterEnvToSDKEnv(int env) {
@@ -26,8 +25,105 @@ class AutogenMethodHandlers {
     }
 
     // 自動生成 API のメソッド呼び出しを処理する。対応しないメソッド名なら null を返す。
+    // 生成 Dart (lib/generated/bank_api/*.dart) は "autogen_xxx" を送る。
+    // 接頭辞なしの "xxx" は旧手書き Dart (lib/bank_api/*.dart) 互換の別名で、
+    // 手書き switch に同名 case があればそちらが先に処理するためここへは来ない。
     static String handle(MethodCall call) throws Exception {
         switch (call.method) {
+            case "getTerminalById": {
+                Env env = flutterEnvToSDKEnv((int) call.argument("env"));
+                String accessToken = call.argument("accessToken");
+                String terminalId = call.argument("terminal_id");
+                if (terminalId == null) terminalId = call.argument("terminalId");
+                GetTerminalById req = new GetTerminalById(terminalId);
+                Pokepay.setEnv(env);
+                Terminal res = req.send(accessToken);
+                return res.toString();
+            }
+            case "autogen_getTerminalById": {
+                Env env = flutterEnvToSDKEnv((int) call.argument("env"));
+                String accessToken = call.argument("accessToken");
+                String terminalId = call.argument("terminal_id");
+                if (terminalId == null) terminalId = call.argument("terminalId");
+                GetTerminalById req = new GetTerminalById(terminalId);
+                Pokepay.setEnv(env);
+                Terminal res = req.send(accessToken);
+                return res.toString();
+            }
+            case "getTerminal": {
+                Env env = flutterEnvToSDKEnv((int) call.argument("env"));
+                String accessToken = call.argument("accessToken");
+                GetTerminal req = new GetTerminal();
+                Pokepay.setEnv(env);
+                Terminal res = req.send(accessToken);
+                return res.toString();
+            }
+            case "autogen_getTerminal": {
+                Env env = flutterEnvToSDKEnv((int) call.argument("env"));
+                String accessToken = call.argument("accessToken");
+                GetTerminal req = new GetTerminal();
+                Pokepay.setEnv(env);
+                Terminal res = req.send(accessToken);
+                return res.toString();
+            }
+            case "updateTerminal": {
+                Env env = flutterEnvToSDKEnv((int) call.argument("env"));
+                String accessToken = call.argument("accessToken");
+                String name = call.argument("name");
+                String accountId = call.argument("account_id");
+                if (accountId == null) accountId = call.argument("accountId");
+                String pushService = call.argument("push_service");
+                if (pushService == null) pushService = call.argument("pushService");
+                String pushToken = call.argument("push_token");
+                if (pushToken == null) pushToken = call.argument("pushToken");
+                UpdateTerminal req = new UpdateTerminal();
+                req = req.name(name);
+                req = req.accountId(accountId);
+                req = req.pushService(pushService);
+                req = req.pushToken(pushToken);
+                Pokepay.setEnv(env);
+                Terminal res = req.send(accessToken);
+                return res.toString();
+            }
+            case "autogen_updateTerminal": {
+                Env env = flutterEnvToSDKEnv((int) call.argument("env"));
+                String accessToken = call.argument("accessToken");
+                String name = call.argument("name");
+                String accountId = call.argument("account_id");
+                if (accountId == null) accountId = call.argument("accountId");
+                String pushService = call.argument("push_service");
+                if (pushService == null) pushService = call.argument("pushService");
+                String pushToken = call.argument("push_token");
+                if (pushToken == null) pushToken = call.argument("pushToken");
+                UpdateTerminal req = new UpdateTerminal();
+                req = req.name(name);
+                req = req.accountId(accountId);
+                req = req.pushService(pushService);
+                req = req.pushToken(pushToken);
+                Pokepay.setEnv(env);
+                Terminal res = req.send(accessToken);
+                return res.toString();
+            }
+            case "getTransaction": {
+                Env env = flutterEnvToSDKEnv((int) call.argument("env"));
+                String accessToken = call.argument("accessToken");
+                String transactionId = call.argument("transaction_id");
+                if (transactionId == null) transactionId = call.argument("transactionId");
+                GetTransaction req = new GetTransaction(transactionId);
+                Pokepay.setEnv(env);
+                UserTransactionWithTransfers res = req.send(accessToken);
+                return res.toString();
+            }
+            case "autogen_getTransaction": {
+                Env env = flutterEnvToSDKEnv((int) call.argument("env"));
+                String accessToken = call.argument("accessToken");
+                String transactionId = call.argument("transaction_id");
+                if (transactionId == null) transactionId = call.argument("transactionId");
+                GetTransaction req = new GetTransaction(transactionId);
+                Pokepay.setEnv(env);
+                UserTransactionWithTransfers res = req.send(accessToken);
+                return res.toString();
+            }
             case "getTransactionByRequestId": {
                 Env env = flutterEnvToSDKEnv((int) call.argument("env"));
                 String accessToken = call.argument("accessToken");
@@ -38,7 +134,41 @@ class AutogenMethodHandlers {
                 UserTransactionWithTransfers res = req.send(accessToken);
                 return res.toString();
             }
-            case "createCashtrayTransaction": {
+            case "autogen_getTransactionByRequestId": {
+                Env env = flutterEnvToSDKEnv((int) call.argument("env"));
+                String accessToken = call.argument("accessToken");
+                String requestId = call.argument("request_id");
+                if (requestId == null) requestId = call.argument("requestId");
+                GetTransactionByRequestId req = new GetTransactionByRequestId(requestId);
+                Pokepay.setEnv(env);
+                UserTransactionWithTransfers res = req.send(accessToken);
+                return res.toString();
+            }
+            case "refundTransaction": {
+                Env env = flutterEnvToSDKEnv((int) call.argument("env"));
+                String accessToken = call.argument("accessToken");
+                String transactionId = call.argument("transaction_id");
+                if (transactionId == null) transactionId = call.argument("transactionId");
+                Double amount = call.argument("amount");
+                RefundTransaction req = new RefundTransaction(transactionId);
+                req = req.amount(amount);
+                Pokepay.setEnv(env);
+                UserTransaction res = req.send(accessToken);
+                return res.toString();
+            }
+            case "autogen_refundTransaction": {
+                Env env = flutterEnvToSDKEnv((int) call.argument("env"));
+                String accessToken = call.argument("accessToken");
+                String transactionId = call.argument("transaction_id");
+                if (transactionId == null) transactionId = call.argument("transactionId");
+                Double amount = call.argument("amount");
+                RefundTransaction req = new RefundTransaction(transactionId);
+                req = req.amount(amount);
+                Pokepay.setEnv(env);
+                UserTransaction res = req.send(accessToken);
+                return res.toString();
+            }
+            case "createTransactionWithCashtray": {
                 Env env = flutterEnvToSDKEnv((int) call.argument("env"));
                 String accessToken = call.argument("accessToken");
                 String requestId = call.argument("request_id");
@@ -52,7 +182,7 @@ class AutogenMethodHandlers {
                 String strategy = call.argument("strategy");
                 Integer topupQuotaId = call.argument("topup_quota_id");
                 if (topupQuotaId == null) topupQuotaId = call.argument("topupQuotaId");
-                CreateCashtrayTransaction req = new CreateCashtrayTransaction(requestId, cashtrayId);
+                CreateTransactionWithCashtray req = new CreateTransactionWithCashtray(requestId, cashtrayId);
                 req = req.accountId(accountId);
                 req = req.couponId(couponId);
                 req = req.strategy(strategy);
@@ -61,7 +191,30 @@ class AutogenMethodHandlers {
                 UserTransactionWithFallback res = req.send(accessToken);
                 return res.toString();
             }
-            case "createBillTransaction": {
+            case "autogen_createTransactionWithCashtray": {
+                Env env = flutterEnvToSDKEnv((int) call.argument("env"));
+                String accessToken = call.argument("accessToken");
+                String requestId = call.argument("request_id");
+                if (requestId == null) requestId = call.argument("requestId");
+                String cashtrayId = call.argument("cashtray_id");
+                if (cashtrayId == null) cashtrayId = call.argument("cashtrayId");
+                String accountId = call.argument("account_id");
+                if (accountId == null) accountId = call.argument("accountId");
+                String couponId = call.argument("coupon_id");
+                if (couponId == null) couponId = call.argument("couponId");
+                String strategy = call.argument("strategy");
+                Integer topupQuotaId = call.argument("topup_quota_id");
+                if (topupQuotaId == null) topupQuotaId = call.argument("topupQuotaId");
+                CreateTransactionWithCashtray req = new CreateTransactionWithCashtray(requestId, cashtrayId);
+                req = req.accountId(accountId);
+                req = req.couponId(couponId);
+                req = req.strategy(strategy);
+                req = req.topupQuotaId(topupQuotaId);
+                Pokepay.setEnv(env);
+                UserTransactionWithFallback res = req.send(accessToken);
+                return res.toString();
+            }
+            case "createTransactionWithBill": {
                 Env env = flutterEnvToSDKEnv((int) call.argument("env"));
                 String accessToken = call.argument("accessToken");
                 String requestId = call.argument("request_id");
@@ -74,7 +227,7 @@ class AutogenMethodHandlers {
                 String couponId = call.argument("coupon_id");
                 if (couponId == null) couponId = call.argument("couponId");
                 String strategy = call.argument("strategy");
-                CreateBillTransaction req = new CreateBillTransaction(requestId, billId);
+                CreateTransactionWithBill req = new CreateTransactionWithBill(requestId, billId);
                 req = req.accountId(accountId);
                 req = req.amount(amount);
                 req = req.couponId(couponId);
@@ -83,7 +236,29 @@ class AutogenMethodHandlers {
                 UserTransactionWithFallback res = req.send(accessToken);
                 return res.toString();
             }
-            case "createCheckTransaction": {
+            case "autogen_createTransactionWithBill": {
+                Env env = flutterEnvToSDKEnv((int) call.argument("env"));
+                String accessToken = call.argument("accessToken");
+                String requestId = call.argument("request_id");
+                if (requestId == null) requestId = call.argument("requestId");
+                String billId = call.argument("bill_id");
+                if (billId == null) billId = call.argument("billId");
+                String accountId = call.argument("account_id");
+                if (accountId == null) accountId = call.argument("accountId");
+                Double amount = call.argument("amount");
+                String couponId = call.argument("coupon_id");
+                if (couponId == null) couponId = call.argument("couponId");
+                String strategy = call.argument("strategy");
+                CreateTransactionWithBill req = new CreateTransactionWithBill(requestId, billId);
+                req = req.accountId(accountId);
+                req = req.amount(amount);
+                req = req.couponId(couponId);
+                req = req.strategy(strategy);
+                Pokepay.setEnv(env);
+                UserTransactionWithFallback res = req.send(accessToken);
+                return res.toString();
+            }
+            case "createTransactionWithCheck": {
                 Env env = flutterEnvToSDKEnv((int) call.argument("env"));
                 String accessToken = call.argument("accessToken");
                 String checkId = call.argument("check_id");
@@ -94,7 +269,7 @@ class AutogenMethodHandlers {
                 if (accountId == null) accountId = call.argument("accountId");
                 Integer topupQuotaId = call.argument("topup_quota_id");
                 if (topupQuotaId == null) topupQuotaId = call.argument("topupQuotaId");
-                CreateCheckTransaction req = new CreateCheckTransaction(checkId);
+                CreateTransactionWithCheck req = new CreateTransactionWithCheck(checkId);
                 req = req.requestId(requestId);
                 req = req.accountId(accountId);
                 req = req.topupQuotaId(topupQuotaId);
@@ -102,7 +277,499 @@ class AutogenMethodHandlers {
                 UserTransactionWithFallback res = req.send(accessToken);
                 return res.toString();
             }
+            case "autogen_createTransactionWithCheck": {
+                Env env = flutterEnvToSDKEnv((int) call.argument("env"));
+                String accessToken = call.argument("accessToken");
+                String checkId = call.argument("check_id");
+                if (checkId == null) checkId = call.argument("checkId");
+                String requestId = call.argument("request_id");
+                if (requestId == null) requestId = call.argument("requestId");
+                String accountId = call.argument("account_id");
+                if (accountId == null) accountId = call.argument("accountId");
+                Integer topupQuotaId = call.argument("topup_quota_id");
+                if (topupQuotaId == null) topupQuotaId = call.argument("topupQuotaId");
+                CreateTransactionWithCheck req = new CreateTransactionWithCheck(checkId);
+                req = req.requestId(requestId);
+                req = req.accountId(accountId);
+                req = req.topupQuotaId(topupQuotaId);
+                Pokepay.setEnv(env);
+                UserTransactionWithFallback res = req.send(accessToken);
+                return res.toString();
+            }
+            case "deleteCheck": {
+                Env env = flutterEnvToSDKEnv((int) call.argument("env"));
+                String accessToken = call.argument("accessToken");
+                String checkId = call.argument("check_id");
+                if (checkId == null) checkId = call.argument("checkId");
+                DeleteCheck req = new DeleteCheck(checkId);
+                Pokepay.setEnv(env);
+                NoContent res = req.send(accessToken);
+                return res.toString();
+            }
+            case "autogen_deleteCheck": {
+                Env env = flutterEnvToSDKEnv((int) call.argument("env"));
+                String accessToken = call.argument("accessToken");
+                String checkId = call.argument("check_id");
+                if (checkId == null) checkId = call.argument("checkId");
+                DeleteCheck req = new DeleteCheck(checkId);
+                Pokepay.setEnv(env);
+                NoContent res = req.send(accessToken);
+                return res.toString();
+            }
+            case "getCheck": {
+                Env env = flutterEnvToSDKEnv((int) call.argument("env"));
+                String accessToken = call.argument("accessToken");
+                String checkId = call.argument("check_id");
+                if (checkId == null) checkId = call.argument("checkId");
+                GetCheck req = new GetCheck(checkId);
+                Pokepay.setEnv(env);
+                Check res = req.send(accessToken);
+                return res.toString();
+            }
+            case "autogen_getCheck": {
+                Env env = flutterEnvToSDKEnv((int) call.argument("env"));
+                String accessToken = call.argument("accessToken");
+                String checkId = call.argument("check_id");
+                if (checkId == null) checkId = call.argument("checkId");
+                GetCheck req = new GetCheck(checkId);
+                Pokepay.setEnv(env);
+                Check res = req.send(accessToken);
+                return res.toString();
+            }
+            case "updateCheck": {
+                Env env = flutterEnvToSDKEnv((int) call.argument("env"));
+                String accessToken = call.argument("accessToken");
+                String checkId = call.argument("check_id");
+                if (checkId == null) checkId = call.argument("checkId");
+                Double amount = call.argument("amount");
+                String description = call.argument("description");
+                String expiresAt = call.argument("expires_at");
+                if (expiresAt == null) expiresAt = call.argument("expiresAt");
+                String pointExpiresAt = call.argument("point_expires_at");
+                if (pointExpiresAt == null) pointExpiresAt = call.argument("pointExpiresAt");
+                Integer pointExpiresInDays = call.argument("point_expires_in_days");
+                if (pointExpiresInDays == null) pointExpiresInDays = call.argument("pointExpiresInDays");
+                UpdateCheck req = new UpdateCheck(checkId);
+                req = req.amount(amount);
+                req = req.description(description);
+                req = req.expiresAt(expiresAt);
+                req = req.pointExpiresAt(pointExpiresAt);
+                req = req.pointExpiresInDays(pointExpiresInDays);
+                Pokepay.setEnv(env);
+                Check res = req.send(accessToken);
+                return res.toString();
+            }
+            case "autogen_updateCheck": {
+                Env env = flutterEnvToSDKEnv((int) call.argument("env"));
+                String accessToken = call.argument("accessToken");
+                String checkId = call.argument("check_id");
+                if (checkId == null) checkId = call.argument("checkId");
+                Double amount = call.argument("amount");
+                String description = call.argument("description");
+                String expiresAt = call.argument("expires_at");
+                if (expiresAt == null) expiresAt = call.argument("expiresAt");
+                String pointExpiresAt = call.argument("point_expires_at");
+                if (pointExpiresAt == null) pointExpiresAt = call.argument("pointExpiresAt");
+                Integer pointExpiresInDays = call.argument("point_expires_in_days");
+                if (pointExpiresInDays == null) pointExpiresInDays = call.argument("pointExpiresInDays");
+                UpdateCheck req = new UpdateCheck(checkId);
+                req = req.amount(amount);
+                req = req.description(description);
+                req = req.expiresAt(expiresAt);
+                req = req.pointExpiresAt(pointExpiresAt);
+                req = req.pointExpiresInDays(pointExpiresInDays);
+                Pokepay.setEnv(env);
+                Check res = req.send(accessToken);
+                return res.toString();
+            }
+            case "createCheck": {
+                Env env = flutterEnvToSDKEnv((int) call.argument("env"));
+                String accessToken = call.argument("accessToken");
+                Double amount = call.argument("amount");
+                Double moneyAmount = call.argument("money_amount");
+                if (moneyAmount == null) moneyAmount = call.argument("moneyAmount");
+                Double pointAmount = call.argument("point_amount");
+                if (pointAmount == null) pointAmount = call.argument("pointAmount");
+                String accountId = call.argument("account_id");
+                if (accountId == null) accountId = call.argument("accountId");
+                String description = call.argument("description");
+                Boolean isOnetime = call.argument("is_onetime");
+                if (isOnetime == null) isOnetime = call.argument("isOnetime");
+                Integer usageLimit = call.argument("usage_limit");
+                if (usageLimit == null) usageLimit = call.argument("usageLimit");
+                String expiresAt = call.argument("expires_at");
+                if (expiresAt == null) expiresAt = call.argument("expiresAt");
+                String pointExpiresAt = call.argument("point_expires_at");
+                if (pointExpiresAt == null) pointExpiresAt = call.argument("pointExpiresAt");
+                Integer pointExpiresInDays = call.argument("point_expires_in_days");
+                if (pointExpiresInDays == null) pointExpiresInDays = call.argument("pointExpiresInDays");
+                String metadata = call.argument("metadata");
+                CreateCheck req = new CreateCheck();
+                req = req.amount(amount);
+                req = req.moneyAmount(moneyAmount);
+                req = req.pointAmount(pointAmount);
+                req = req.accountId(accountId);
+                req = req.description(description);
+                req = req.isOnetime(isOnetime);
+                req = req.usageLimit(usageLimit);
+                req = req.expiresAt(expiresAt);
+                req = req.pointExpiresAt(pointExpiresAt);
+                req = req.pointExpiresInDays(pointExpiresInDays);
+                req = req.metadata(metadata);
+                Pokepay.setEnv(env);
+                Check res = req.send(accessToken);
+                return res.toString();
+            }
+            case "autogen_createCheck": {
+                Env env = flutterEnvToSDKEnv((int) call.argument("env"));
+                String accessToken = call.argument("accessToken");
+                Double amount = call.argument("amount");
+                Double moneyAmount = call.argument("money_amount");
+                if (moneyAmount == null) moneyAmount = call.argument("moneyAmount");
+                Double pointAmount = call.argument("point_amount");
+                if (pointAmount == null) pointAmount = call.argument("pointAmount");
+                String accountId = call.argument("account_id");
+                if (accountId == null) accountId = call.argument("accountId");
+                String description = call.argument("description");
+                Boolean isOnetime = call.argument("is_onetime");
+                if (isOnetime == null) isOnetime = call.argument("isOnetime");
+                Integer usageLimit = call.argument("usage_limit");
+                if (usageLimit == null) usageLimit = call.argument("usageLimit");
+                String expiresAt = call.argument("expires_at");
+                if (expiresAt == null) expiresAt = call.argument("expiresAt");
+                String pointExpiresAt = call.argument("point_expires_at");
+                if (pointExpiresAt == null) pointExpiresAt = call.argument("pointExpiresAt");
+                Integer pointExpiresInDays = call.argument("point_expires_in_days");
+                if (pointExpiresInDays == null) pointExpiresInDays = call.argument("pointExpiresInDays");
+                String metadata = call.argument("metadata");
+                CreateCheck req = new CreateCheck();
+                req = req.amount(amount);
+                req = req.moneyAmount(moneyAmount);
+                req = req.pointAmount(pointAmount);
+                req = req.accountId(accountId);
+                req = req.description(description);
+                req = req.isOnetime(isOnetime);
+                req = req.usageLimit(usageLimit);
+                req = req.expiresAt(expiresAt);
+                req = req.pointExpiresAt(pointExpiresAt);
+                req = req.pointExpiresInDays(pointExpiresInDays);
+                req = req.metadata(metadata);
+                Pokepay.setEnv(env);
+                Check res = req.send(accessToken);
+                return res.toString();
+            }
+            case "deleteBill": {
+                Env env = flutterEnvToSDKEnv((int) call.argument("env"));
+                String accessToken = call.argument("accessToken");
+                String billId = call.argument("bill_id");
+                if (billId == null) billId = call.argument("billId");
+                DeleteBill req = new DeleteBill(billId);
+                Pokepay.setEnv(env);
+                NoContent res = req.send(accessToken);
+                return res.toString();
+            }
+            case "autogen_deleteBill": {
+                Env env = flutterEnvToSDKEnv((int) call.argument("env"));
+                String accessToken = call.argument("accessToken");
+                String billId = call.argument("bill_id");
+                if (billId == null) billId = call.argument("billId");
+                DeleteBill req = new DeleteBill(billId);
+                Pokepay.setEnv(env);
+                NoContent res = req.send(accessToken);
+                return res.toString();
+            }
+            case "getBill": {
+                Env env = flutterEnvToSDKEnv((int) call.argument("env"));
+                String accessToken = call.argument("accessToken");
+                String billId = call.argument("bill_id");
+                if (billId == null) billId = call.argument("billId");
+                String privateMoneyId = call.argument("private_money_id");
+                if (privateMoneyId == null) privateMoneyId = call.argument("privateMoneyId");
+                GetBill req = new GetBill(billId);
+                req = req.privateMoneyId(privateMoneyId);
+                Pokepay.setEnv(env);
+                BillWithAdditionalPrivateMoneys res = req.send(accessToken);
+                return res.toString();
+            }
+            case "autogen_getBill": {
+                Env env = flutterEnvToSDKEnv((int) call.argument("env"));
+                String accessToken = call.argument("accessToken");
+                String billId = call.argument("bill_id");
+                if (billId == null) billId = call.argument("billId");
+                String privateMoneyId = call.argument("private_money_id");
+                if (privateMoneyId == null) privateMoneyId = call.argument("privateMoneyId");
+                GetBill req = new GetBill(billId);
+                req = req.privateMoneyId(privateMoneyId);
+                Pokepay.setEnv(env);
+                BillWithAdditionalPrivateMoneys res = req.send(accessToken);
+                return res.toString();
+            }
+            case "getBillTransactions": {
+                Env env = flutterEnvToSDKEnv((int) call.argument("env"));
+                String accessToken = call.argument("accessToken");
+                String billId = call.argument("bill_id");
+                if (billId == null) billId = call.argument("billId");
+                String before = call.argument("before");
+                String after = call.argument("after");
+                Integer perPage = call.argument("per_page");
+                if (perPage == null) perPage = call.argument("perPage");
+                GetBillTransactions req = new GetBillTransactions(billId);
+                req = req.before(before);
+                req = req.after(after);
+                req = req.perPage(perPage);
+                Pokepay.setEnv(env);
+                PaginatedBillTransactions res = req.send(accessToken);
+                return res.toString();
+            }
+            case "autogen_getBillTransactions": {
+                Env env = flutterEnvToSDKEnv((int) call.argument("env"));
+                String accessToken = call.argument("accessToken");
+                String billId = call.argument("bill_id");
+                if (billId == null) billId = call.argument("billId");
+                String before = call.argument("before");
+                String after = call.argument("after");
+                Integer perPage = call.argument("per_page");
+                if (perPage == null) perPage = call.argument("perPage");
+                GetBillTransactions req = new GetBillTransactions(billId);
+                req = req.before(before);
+                req = req.after(after);
+                req = req.perPage(perPage);
+                Pokepay.setEnv(env);
+                PaginatedBillTransactions res = req.send(accessToken);
+                return res.toString();
+            }
+            case "deleteCashtray": {
+                Env env = flutterEnvToSDKEnv((int) call.argument("env"));
+                String accessToken = call.argument("accessToken");
+                String cashtrayId = call.argument("cashtray_id");
+                if (cashtrayId == null) cashtrayId = call.argument("cashtrayId");
+                DeleteCashtray req = new DeleteCashtray(cashtrayId);
+                Pokepay.setEnv(env);
+                NoContent res = req.send(accessToken);
+                return res.toString();
+            }
+            case "autogen_deleteCashtray": {
+                Env env = flutterEnvToSDKEnv((int) call.argument("env"));
+                String accessToken = call.argument("accessToken");
+                String cashtrayId = call.argument("cashtray_id");
+                if (cashtrayId == null) cashtrayId = call.argument("cashtrayId");
+                DeleteCashtray req = new DeleteCashtray(cashtrayId);
+                Pokepay.setEnv(env);
+                NoContent res = req.send(accessToken);
+                return res.toString();
+            }
+            case "getCashtray": {
+                Env env = flutterEnvToSDKEnv((int) call.argument("env"));
+                String accessToken = call.argument("accessToken");
+                String cashtrayId = call.argument("cashtray_id");
+                if (cashtrayId == null) cashtrayId = call.argument("cashtrayId");
+                GetCashtray req = new GetCashtray(cashtrayId);
+                Pokepay.setEnv(env);
+                CashtrayWithAttemptAndTransaction res = req.send(accessToken);
+                return res.toString();
+            }
+            case "autogen_getCashtray": {
+                Env env = flutterEnvToSDKEnv((int) call.argument("env"));
+                String accessToken = call.argument("accessToken");
+                String cashtrayId = call.argument("cashtray_id");
+                if (cashtrayId == null) cashtrayId = call.argument("cashtrayId");
+                GetCashtray req = new GetCashtray(cashtrayId);
+                Pokepay.setEnv(env);
+                CashtrayWithAttemptAndTransaction res = req.send(accessToken);
+                return res.toString();
+            }
+            case "getCashtrayAttempts": {
+                Env env = flutterEnvToSDKEnv((int) call.argument("env"));
+                String accessToken = call.argument("accessToken");
+                String cashtrayId = call.argument("cashtray_id");
+                if (cashtrayId == null) cashtrayId = call.argument("cashtrayId");
+                GetCashtrayAttempts req = new GetCashtrayAttempts(cashtrayId);
+                Pokepay.setEnv(env);
+                CashtrayAttempts res = req.send(accessToken);
+                return res.toString();
+            }
+            case "autogen_getCashtrayAttempts": {
+                Env env = flutterEnvToSDKEnv((int) call.argument("env"));
+                String accessToken = call.argument("accessToken");
+                String cashtrayId = call.argument("cashtray_id");
+                if (cashtrayId == null) cashtrayId = call.argument("cashtrayId");
+                GetCashtrayAttempts req = new GetCashtrayAttempts(cashtrayId);
+                Pokepay.setEnv(env);
+                CashtrayAttempts res = req.send(accessToken);
+                return res.toString();
+            }
+            case "deleteUser": {
+                Env env = flutterEnvToSDKEnv((int) call.argument("env"));
+                String accessToken = call.argument("accessToken");
+                String userId = call.argument("user_id");
+                if (userId == null) userId = call.argument("userId");
+                DeleteUser req = new DeleteUser(userId);
+                Pokepay.setEnv(env);
+                NoContent res = req.send(accessToken);
+                return res.toString();
+            }
+            case "autogen_deleteUser": {
+                Env env = flutterEnvToSDKEnv((int) call.argument("env"));
+                String accessToken = call.argument("accessToken");
+                String userId = call.argument("user_id");
+                if (userId == null) userId = call.argument("userId");
+                DeleteUser req = new DeleteUser(userId);
+                Pokepay.setEnv(env);
+                NoContent res = req.send(accessToken);
+                return res.toString();
+            }
+            case "getUser": {
+                Env env = flutterEnvToSDKEnv((int) call.argument("env"));
+                String accessToken = call.argument("accessToken");
+                String userId = call.argument("user_id");
+                if (userId == null) userId = call.argument("userId");
+                GetUser req = new GetUser(userId);
+                Pokepay.setEnv(env);
+                UserWithDetails res = req.send(accessToken);
+                return res.toString();
+            }
+            case "autogen_getUser": {
+                Env env = flutterEnvToSDKEnv((int) call.argument("env"));
+                String accessToken = call.argument("accessToken");
+                String userId = call.argument("user_id");
+                if (userId == null) userId = call.argument("userId");
+                GetUser req = new GetUser(userId);
+                Pokepay.setEnv(env);
+                UserWithDetails res = req.send(accessToken);
+                return res.toString();
+            }
+            case "updateUser": {
+                Env env = flutterEnvToSDKEnv((int) call.argument("env"));
+                String accessToken = call.argument("accessToken");
+                String userId = call.argument("user_id");
+                if (userId == null) userId = call.argument("userId");
+                String name = call.argument("name");
+                UpdateUser req = new UpdateUser(userId);
+                req = req.name(name);
+                Pokepay.setEnv(env);
+                UserWithDetails res = req.send(accessToken);
+                return res.toString();
+            }
+            case "autogen_updateUser": {
+                Env env = flutterEnvToSDKEnv((int) call.argument("env"));
+                String accessToken = call.argument("accessToken");
+                String userId = call.argument("user_id");
+                if (userId == null) userId = call.argument("userId");
+                String name = call.argument("name");
+                UpdateUser req = new UpdateUser(userId);
+                req = req.name(name);
+                Pokepay.setEnv(env);
+                UserWithDetails res = req.send(accessToken);
+                return res.toString();
+            }
+            case "getUserWithAuthFactors": {
+                Env env = flutterEnvToSDKEnv((int) call.argument("env"));
+                String accessToken = call.argument("accessToken");
+                String userId = call.argument("user_id");
+                if (userId == null) userId = call.argument("userId");
+                GetUserWithAuthFactors req = new GetUserWithAuthFactors(userId);
+                Pokepay.setEnv(env);
+                UserWithAuthFactors res = req.send(accessToken);
+                return res.toString();
+            }
+            case "autogen_getUserWithAuthFactors": {
+                Env env = flutterEnvToSDKEnv((int) call.argument("env"));
+                String accessToken = call.argument("accessToken");
+                String userId = call.argument("user_id");
+                if (userId == null) userId = call.argument("userId");
+                GetUserWithAuthFactors req = new GetUserWithAuthFactors(userId);
+                Pokepay.setEnv(env);
+                UserWithAuthFactors res = req.send(accessToken);
+                return res.toString();
+            }
+            case "getUserTransactions": {
+                Env env = flutterEnvToSDKEnv((int) call.argument("env"));
+                String accessToken = call.argument("accessToken");
+                String userId = call.argument("user_id");
+                if (userId == null) userId = call.argument("userId");
+                String before = call.argument("before");
+                String after = call.argument("after");
+                Integer perPage = call.argument("per_page");
+                if (perPage == null) perPage = call.argument("perPage");
+                GetUserTransactions req = new GetUserTransactions(userId);
+                req = req.before(before);
+                req = req.after(after);
+                req = req.perPage(perPage);
+                Pokepay.setEnv(env);
+                PaginatedUserTransactions res = req.send(accessToken);
+                return res.toString();
+            }
+            case "autogen_getUserTransactions": {
+                Env env = flutterEnvToSDKEnv((int) call.argument("env"));
+                String accessToken = call.argument("accessToken");
+                String userId = call.argument("user_id");
+                if (userId == null) userId = call.argument("userId");
+                String before = call.argument("before");
+                String after = call.argument("after");
+                Integer perPage = call.argument("per_page");
+                if (perPage == null) perPage = call.argument("perPage");
+                GetUserTransactions req = new GetUserTransactions(userId);
+                req = req.before(before);
+                req = req.after(after);
+                req = req.perPage(perPage);
+                Pokepay.setEnv(env);
+                PaginatedUserTransactions res = req.send(accessToken);
+                return res.toString();
+            }
+            case "getUserAccounts": {
+                Env env = flutterEnvToSDKEnv((int) call.argument("env"));
+                String accessToken = call.argument("accessToken");
+                String userId = call.argument("user_id");
+                if (userId == null) userId = call.argument("userId");
+                String before = call.argument("before");
+                String after = call.argument("after");
+                Integer perPage = call.argument("per_page");
+                if (perPage == null) perPage = call.argument("perPage");
+                GetUserAccounts req = new GetUserAccounts(userId);
+                req = req.before(before);
+                req = req.after(after);
+                req = req.perPage(perPage);
+                Pokepay.setEnv(env);
+                PaginatedUserAccounts res = req.send(accessToken);
+                return res.toString();
+            }
+            case "autogen_getUserAccounts": {
+                Env env = flutterEnvToSDKEnv((int) call.argument("env"));
+                String accessToken = call.argument("accessToken");
+                String userId = call.argument("user_id");
+                if (userId == null) userId = call.argument("userId");
+                String before = call.argument("before");
+                String after = call.argument("after");
+                Integer perPage = call.argument("per_page");
+                if (perPage == null) perPage = call.argument("perPage");
+                GetUserAccounts req = new GetUserAccounts(userId);
+                req = req.before(before);
+                req = req.after(after);
+                req = req.perPage(perPage);
+                Pokepay.setEnv(env);
+                PaginatedUserAccounts res = req.send(accessToken);
+                return res.toString();
+            }
             case "getCreditCards": {
+                Env env = flutterEnvToSDKEnv((int) call.argument("env"));
+                String accessToken = call.argument("accessToken");
+                String userId = call.argument("user_id");
+                if (userId == null) userId = call.argument("userId");
+                String organizationCode = call.argument("organization_code");
+                if (organizationCode == null) organizationCode = call.argument("organizationCode");
+                String before = call.argument("before");
+                String after = call.argument("after");
+                Integer perPage = call.argument("per_page");
+                if (perPage == null) perPage = call.argument("perPage");
+                GetCreditCards req = new GetCreditCards(userId, organizationCode);
+                req = req.before(before);
+                req = req.after(after);
+                req = req.perPage(perPage);
+                Pokepay.setEnv(env);
+                PaginatedCreditCards res = req.send(accessToken);
+                return res.toString();
+            }
+            case "autogen_getCreditCards": {
                 Env env = flutterEnvToSDKEnv((int) call.argument("env"));
                 String accessToken = call.argument("accessToken");
                 String userId = call.argument("user_id");
@@ -137,6 +804,22 @@ class AutogenMethodHandlers {
                 CreditCard res = req.send(accessToken);
                 return res.toString();
             }
+            case "autogen_createCreditCard": {
+                Env env = flutterEnvToSDKEnv((int) call.argument("env"));
+                String accessToken = call.argument("accessToken");
+                String userId = call.argument("user_id");
+                if (userId == null) userId = call.argument("userId");
+                String token = call.argument("token");
+                String organizationCode = call.argument("organization_code");
+                if (organizationCode == null) organizationCode = call.argument("organizationCode");
+                Boolean isCardholderNameSpecified = call.argument("is_cardholder_name_specified");
+                if (isCardholderNameSpecified == null) isCardholderNameSpecified = call.argument("isCardholderNameSpecified");
+                CreateCreditCard req = new CreateCreditCard(userId, token, organizationCode);
+                req = req.isCardholderNameSpecified(isCardholderNameSpecified);
+                Pokepay.setEnv(env);
+                CreditCard res = req.send(accessToken);
+                return res.toString();
+            }
             case "deleteCreditCard": {
                 Env env = flutterEnvToSDKEnv((int) call.argument("env"));
                 String accessToken = call.argument("accessToken");
@@ -155,7 +838,271 @@ class AutogenMethodHandlers {
                 NoContent res = req.send(accessToken);
                 return res.toString();
             }
+            case "autogen_deleteCreditCard": {
+                Env env = flutterEnvToSDKEnv((int) call.argument("env"));
+                String accessToken = call.argument("accessToken");
+                String userId = call.argument("user_id");
+                if (userId == null) userId = call.argument("userId");
+                String organizationCode = call.argument("organization_code");
+                if (organizationCode == null) organizationCode = call.argument("organizationCode");
+                String cardRegisteredAt = call.argument("card_registered_at");
+                if (cardRegisteredAt == null) cardRegisteredAt = call.argument("cardRegisteredAt");
+                String cardUuid = call.argument("card_uuid");
+                if (cardUuid == null) cardUuid = call.argument("cardUuid");
+                DeleteCreditCard req = new DeleteCreditCard(userId, organizationCode);
+                req = req.cardRegisteredAt(cardRegisteredAt);
+                req = req.cardUuid(cardUuid);
+                Pokepay.setEnv(env);
+                NoContent res = req.send(accessToken);
+                return res.toString();
+            }
+            case "topupWithCreditCard": {
+                Env env = flutterEnvToSDKEnv((int) call.argument("env"));
+                String accessToken = call.argument("accessToken");
+                String userId = call.argument("user_id");
+                if (userId == null) userId = call.argument("userId");
+                String accountId = call.argument("account_id");
+                if (accountId == null) accountId = call.argument("accountId");
+                Integer amount = call.argument("amount");
+                String cardRegisteredAt = call.argument("card_registered_at");
+                if (cardRegisteredAt == null) cardRegisteredAt = call.argument("cardRegisteredAt");
+                String cardUuid = call.argument("card_uuid");
+                if (cardUuid == null) cardUuid = call.argument("cardUuid");
+                String organizationCode = call.argument("organization_code");
+                if (organizationCode == null) organizationCode = call.argument("organizationCode");
+                TopupWithCreditCard req = new TopupWithCreditCard(userId, accountId, amount);
+                req = req.cardRegisteredAt(cardRegisteredAt);
+                req = req.cardUuid(cardUuid);
+                req = req.organizationCode(organizationCode);
+                Pokepay.setEnv(env);
+                UserTransaction res = req.send(accessToken);
+                return res.toString();
+            }
+            case "autogen_topupWithCreditCard": {
+                Env env = flutterEnvToSDKEnv((int) call.argument("env"));
+                String accessToken = call.argument("accessToken");
+                String userId = call.argument("user_id");
+                if (userId == null) userId = call.argument("userId");
+                String accountId = call.argument("account_id");
+                if (accountId == null) accountId = call.argument("accountId");
+                Integer amount = call.argument("amount");
+                String cardRegisteredAt = call.argument("card_registered_at");
+                if (cardRegisteredAt == null) cardRegisteredAt = call.argument("cardRegisteredAt");
+                String cardUuid = call.argument("card_uuid");
+                if (cardUuid == null) cardUuid = call.argument("cardUuid");
+                String organizationCode = call.argument("organization_code");
+                if (organizationCode == null) organizationCode = call.argument("organizationCode");
+                TopupWithCreditCard req = new TopupWithCreditCard(userId, accountId, amount);
+                req = req.cardRegisteredAt(cardRegisteredAt);
+                req = req.cardUuid(cardUuid);
+                req = req.organizationCode(organizationCode);
+                Pokepay.setEnv(env);
+                UserTransaction res = req.send(accessToken);
+                return res.toString();
+            }
+            case "deleteBankPay": {
+                Env env = flutterEnvToSDKEnv((int) call.argument("env"));
+                String accessToken = call.argument("accessToken");
+                String userId = call.argument("user_id");
+                if (userId == null) userId = call.argument("userId");
+                String bankId = call.argument("bank_id");
+                if (bankId == null) bankId = call.argument("bankId");
+                DeleteBankPay req = new DeleteBankPay(userId, bankId);
+                Pokepay.setEnv(env);
+                NoContent res = req.send(accessToken);
+                return res.toString();
+            }
+            case "autogen_deleteBankPay": {
+                Env env = flutterEnvToSDKEnv((int) call.argument("env"));
+                String accessToken = call.argument("accessToken");
+                String userId = call.argument("user_id");
+                if (userId == null) userId = call.argument("userId");
+                String bankId = call.argument("bank_id");
+                if (bankId == null) bankId = call.argument("bankId");
+                DeleteBankPay req = new DeleteBankPay(userId, bankId);
+                Pokepay.setEnv(env);
+                NoContent res = req.send(accessToken);
+                return res.toString();
+            }
+            case "createBankPay": {
+                Env env = flutterEnvToSDKEnv((int) call.argument("env"));
+                String accessToken = call.argument("accessToken");
+                String userId = call.argument("user_id");
+                if (userId == null) userId = call.argument("userId");
+                String privateMoneyId = call.argument("private_money_id");
+                if (privateMoneyId == null) privateMoneyId = call.argument("privateMoneyId");
+                String callbackUrl = call.argument("callback_url");
+                if (callbackUrl == null) callbackUrl = call.argument("callbackUrl");
+                String kana = call.argument("kana");
+                CreateBankPay req = new CreateBankPay(userId, privateMoneyId, callbackUrl);
+                req = req.kana(kana);
+                Pokepay.setEnv(env);
+                BankPaySession res = req.send(accessToken);
+                return res.toString();
+            }
+            case "autogen_createBankPay": {
+                Env env = flutterEnvToSDKEnv((int) call.argument("env"));
+                String accessToken = call.argument("accessToken");
+                String userId = call.argument("user_id");
+                if (userId == null) userId = call.argument("userId");
+                String privateMoneyId = call.argument("private_money_id");
+                if (privateMoneyId == null) privateMoneyId = call.argument("privateMoneyId");
+                String callbackUrl = call.argument("callback_url");
+                if (callbackUrl == null) callbackUrl = call.argument("callbackUrl");
+                String kana = call.argument("kana");
+                CreateBankPay req = new CreateBankPay(userId, privateMoneyId, callbackUrl);
+                req = req.kana(kana);
+                Pokepay.setEnv(env);
+                BankPaySession res = req.send(accessToken);
+                return res.toString();
+            }
+            case "bankPayTopUp": {
+                Env env = flutterEnvToSDKEnv((int) call.argument("env"));
+                String accessToken = call.argument("accessToken");
+                String userId = call.argument("user_id");
+                if (userId == null) userId = call.argument("userId");
+                String accountId = call.argument("account_id");
+                if (accountId == null) accountId = call.argument("accountId");
+                String bankId = call.argument("bank_id");
+                if (bankId == null) bankId = call.argument("bankId");
+                Integer amount = call.argument("amount");
+                String requestId = call.argument("request_id");
+                if (requestId == null) requestId = call.argument("requestId");
+                Integer topupQuotaId = call.argument("topup_quota_id");
+                if (topupQuotaId == null) topupQuotaId = call.argument("topupQuotaId");
+                BankPayTopUp req = new BankPayTopUp(userId, accountId, bankId, amount);
+                req = req.requestId(requestId);
+                req = req.topupQuotaId(topupQuotaId);
+                Pokepay.setEnv(env);
+                UserTransaction res = req.send(accessToken);
+                return res.toString();
+            }
+            case "autogen_bankPayTopUp": {
+                Env env = flutterEnvToSDKEnv((int) call.argument("env"));
+                String accessToken = call.argument("accessToken");
+                String userId = call.argument("user_id");
+                if (userId == null) userId = call.argument("userId");
+                String accountId = call.argument("account_id");
+                if (accountId == null) accountId = call.argument("accountId");
+                String bankId = call.argument("bank_id");
+                if (bankId == null) bankId = call.argument("bankId");
+                Integer amount = call.argument("amount");
+                String requestId = call.argument("request_id");
+                if (requestId == null) requestId = call.argument("requestId");
+                Integer topupQuotaId = call.argument("topup_quota_id");
+                if (topupQuotaId == null) topupQuotaId = call.argument("topupQuotaId");
+                BankPayTopUp req = new BankPayTopUp(userId, accountId, bankId, amount);
+                req = req.requestId(requestId);
+                req = req.topupQuotaId(topupQuotaId);
+                Pokepay.setEnv(env);
+                UserTransaction res = req.send(accessToken);
+                return res.toString();
+            }
+            case "getUserSettingUrl": {
+                Env env = flutterEnvToSDKEnv((int) call.argument("env"));
+                String accessToken = call.argument("accessToken");
+                GetUserSettingUrl req = new GetUserSettingUrl();
+                Pokepay.setEnv(env);
+                OauthFullAccessUrl res = req.send(accessToken);
+                return res.toString();
+            }
+            case "autogen_getUserSettingUrl": {
+                Env env = flutterEnvToSDKEnv((int) call.argument("env"));
+                String accessToken = call.argument("accessToken");
+                GetUserSettingUrl req = new GetUserSettingUrl();
+                Pokepay.setEnv(env);
+                OauthFullAccessUrl res = req.send(accessToken);
+                return res.toString();
+            }
+            case "getMerchantTransaction": {
+                Env env = flutterEnvToSDKEnv((int) call.argument("env"));
+                String accessToken = call.argument("accessToken");
+                String transactionId = call.argument("transaction_id");
+                if (transactionId == null) transactionId = call.argument("transactionId");
+                GetMerchantTransaction req = new GetMerchantTransaction(transactionId);
+                Pokepay.setEnv(env);
+                UserTransactionWithCustomerBalance res = req.send(accessToken);
+                return res.toString();
+            }
+            case "autogen_getMerchantTransaction": {
+                Env env = flutterEnvToSDKEnv((int) call.argument("env"));
+                String accessToken = call.argument("accessToken");
+                String transactionId = call.argument("transaction_id");
+                if (transactionId == null) transactionId = call.argument("transactionId");
+                GetMerchantTransaction req = new GetMerchantTransaction(transactionId);
+                Pokepay.setEnv(env);
+                UserTransactionWithCustomerBalance res = req.send(accessToken);
+                return res.toString();
+            }
+            case "creditWithCreditCardMembership": {
+                Env env = flutterEnvToSDKEnv((int) call.argument("env"));
+                String accessToken = call.argument("accessToken");
+                String userId = call.argument("user_id");
+                if (userId == null) userId = call.argument("userId");
+                String cardRegisteredAt = call.argument("card_registered_at");
+                if (cardRegisteredAt == null) cardRegisteredAt = call.argument("cardRegisteredAt");
+                String cardUuid = call.argument("card_uuid");
+                if (cardUuid == null) cardUuid = call.argument("cardUuid");
+                String organizationCode = call.argument("organization_code");
+                if (organizationCode == null) organizationCode = call.argument("organizationCode");
+                CreditWithCreditCardMembership req = new CreditWithCreditCardMembership(userId);
+                req = req.cardRegisteredAt(cardRegisteredAt);
+                req = req.cardUuid(cardUuid);
+                req = req.organizationCode(organizationCode);
+                Pokepay.setEnv(env);
+                String res = req.send(accessToken);
+                return res;
+            }
+            case "autogen_creditWithCreditCardMembership": {
+                Env env = flutterEnvToSDKEnv((int) call.argument("env"));
+                String accessToken = call.argument("accessToken");
+                String userId = call.argument("user_id");
+                if (userId == null) userId = call.argument("userId");
+                String cardRegisteredAt = call.argument("card_registered_at");
+                if (cardRegisteredAt == null) cardRegisteredAt = call.argument("cardRegisteredAt");
+                String cardUuid = call.argument("card_uuid");
+                if (cardUuid == null) cardUuid = call.argument("cardUuid");
+                String organizationCode = call.argument("organization_code");
+                if (organizationCode == null) organizationCode = call.argument("organizationCode");
+                CreditWithCreditCardMembership req = new CreditWithCreditCardMembership(userId);
+                req = req.cardRegisteredAt(cardRegisteredAt);
+                req = req.cardUuid(cardUuid);
+                req = req.organizationCode(organizationCode);
+                Pokepay.setEnv(env);
+                String res = req.send(accessToken);
+                return res;
+            }
             case "topupWithCreditCardMembership": {
+                Env env = flutterEnvToSDKEnv((int) call.argument("env"));
+                String accessToken = call.argument("accessToken");
+                String userId = call.argument("user_id");
+                if (userId == null) userId = call.argument("userId");
+                String accountId = call.argument("account_id");
+                if (accountId == null) accountId = call.argument("accountId");
+                Integer amount = call.argument("amount");
+                String organizationCode = call.argument("organization_code");
+                if (organizationCode == null) organizationCode = call.argument("organizationCode");
+                String cardRegisteredAt = call.argument("card_registered_at");
+                if (cardRegisteredAt == null) cardRegisteredAt = call.argument("cardRegisteredAt");
+                String cardUuid = call.argument("card_uuid");
+                if (cardUuid == null) cardUuid = call.argument("cardUuid");
+                Boolean deleteCardIfAuthFail = call.argument("delete_card_if_auth_fail");
+                if (deleteCardIfAuthFail == null) deleteCardIfAuthFail = call.argument("deleteCardIfAuthFail");
+                String requestId = call.argument("request_id");
+                if (requestId == null) requestId = call.argument("requestId");
+                Integer topupQuotaId = call.argument("topup_quota_id");
+                if (topupQuotaId == null) topupQuotaId = call.argument("topupQuotaId");
+                TopupWithCreditCardMembership req = new TopupWithCreditCardMembership(userId, accountId, amount, organizationCode);
+                req = req.cardRegisteredAt(cardRegisteredAt);
+                req = req.cardUuid(cardUuid);
+                req = req.deleteCardIfAuthFail(deleteCardIfAuthFail);
+                req = req.requestId(requestId);
+                req = req.topupQuotaId(topupQuotaId);
+                Pokepay.setEnv(env);
+                String res = req.send(accessToken);
+                return res;
+            }
+            case "autogen_topupWithCreditCardMembership": {
                 Env env = flutterEnvToSDKEnv((int) call.argument("env"));
                 String accessToken = call.argument("accessToken");
                 String userId = call.argument("user_id");
@@ -210,7 +1157,71 @@ class AutogenMethodHandlers {
                 String res = req.send(accessToken);
                 return res;
             }
+            case "autogen_topupWithCreditCardMdkToken": {
+                Env env = flutterEnvToSDKEnv((int) call.argument("env"));
+                String accessToken = call.argument("accessToken");
+                String userId = call.argument("user_id");
+                if (userId == null) userId = call.argument("userId");
+                String token = call.argument("token");
+                String accountId = call.argument("account_id");
+                if (accountId == null) accountId = call.argument("accountId");
+                Integer amount = call.argument("amount");
+                String organizationCode = call.argument("organization_code");
+                if (organizationCode == null) organizationCode = call.argument("organizationCode");
+                Boolean isCardholderNameSpecified = call.argument("is_cardholder_name_specified");
+                if (isCardholderNameSpecified == null) isCardholderNameSpecified = call.argument("isCardholderNameSpecified");
+                String requestId = call.argument("request_id");
+                if (requestId == null) requestId = call.argument("requestId");
+                Integer topupQuotaId = call.argument("topup_quota_id");
+                if (topupQuotaId == null) topupQuotaId = call.argument("topupQuotaId");
+                TopupWithCreditCardMdkToken req = new TopupWithCreditCardMdkToken(userId, token, accountId, amount, organizationCode);
+                req = req.isCardholderNameSpecified(isCardholderNameSpecified);
+                req = req.requestId(requestId);
+                req = req.topupQuotaId(topupQuotaId);
+                Pokepay.setEnv(env);
+                String res = req.send(accessToken);
+                return res;
+            }
+            case "getVeritransMdkTokenApiKey": {
+                Env env = flutterEnvToSDKEnv((int) call.argument("env"));
+                String accessToken = call.argument("accessToken");
+                String organizationCode = call.argument("organization_code");
+                if (organizationCode == null) organizationCode = call.argument("organizationCode");
+                GetVeritransMdkTokenApiKey req = new GetVeritransMdkTokenApiKey();
+                req = req.organizationCode(organizationCode);
+                Pokepay.setEnv(env);
+                VeritransMdkTokenApiKey res = req.send(accessToken);
+                return res.toString();
+            }
+            case "autogen_getVeritransMdkTokenApiKey": {
+                Env env = flutterEnvToSDKEnv((int) call.argument("env"));
+                String accessToken = call.argument("accessToken");
+                String organizationCode = call.argument("organization_code");
+                if (organizationCode == null) organizationCode = call.argument("organizationCode");
+                GetVeritransMdkTokenApiKey req = new GetVeritransMdkTokenApiKey();
+                req = req.organizationCode(organizationCode);
+                Pokepay.setEnv(env);
+                VeritransMdkTokenApiKey res = req.send(accessToken);
+                return res.toString();
+            }
             case "getCvsAuthorizations": {
+                Env env = flutterEnvToSDKEnv((int) call.argument("env"));
+                String accessToken = call.argument("accessToken");
+                String accountId = call.argument("account_id");
+                if (accountId == null) accountId = call.argument("accountId");
+                String before = call.argument("before");
+                String after = call.argument("after");
+                Integer perPage = call.argument("per_page");
+                if (perPage == null) perPage = call.argument("perPage");
+                GetCvsAuthorizations req = new GetCvsAuthorizations(accountId);
+                req = req.before(before);
+                req = req.after(after);
+                req = req.perPage(perPage);
+                Pokepay.setEnv(env);
+                PaginatedCvsAuthorizations res = req.send(accessToken);
+                return res.toString();
+            }
+            case "autogen_getCvsAuthorizations": {
                 Env env = flutterEnvToSDKEnv((int) call.argument("env"));
                 String accessToken = call.argument("accessToken");
                 String accountId = call.argument("account_id");
@@ -246,7 +1257,38 @@ class AutogenMethodHandlers {
                 CvsAuthorization res = req.send(accessToken);
                 return res.toString();
             }
+            case "autogen_cvsAuthorizeRequest": {
+                Env env = flutterEnvToSDKEnv((int) call.argument("env"));
+                String accessToken = call.argument("accessToken");
+                String accountId = call.argument("account_id");
+                if (accountId == null) accountId = call.argument("accountId");
+                String serviceOptionType = call.argument("service_option_type");
+                if (serviceOptionType == null) serviceOptionType = call.argument("serviceOptionType");
+                Integer amount = call.argument("amount");
+                String name1 = call.argument("name1");
+                String name2 = call.argument("name2");
+                String tel = call.argument("tel");
+                Integer topupQuotaId = call.argument("topup_quota_id");
+                if (topupQuotaId == null) topupQuotaId = call.argument("topupQuotaId");
+                CvsAuthorizeRequest req = new CvsAuthorizeRequest(accountId, serviceOptionType, amount, name1, name2, tel);
+                req = req.topupQuotaId(topupQuotaId);
+                Pokepay.setEnv(env);
+                CvsAuthorization res = req.send(accessToken);
+                return res.toString();
+            }
             case "cancelCvsAuthorization": {
+                Env env = flutterEnvToSDKEnv((int) call.argument("env"));
+                String accessToken = call.argument("accessToken");
+                String accountId = call.argument("account_id");
+                if (accountId == null) accountId = call.argument("accountId");
+                String orderId = call.argument("order_id");
+                if (orderId == null) orderId = call.argument("orderId");
+                CancelCvsAuthorization req = new CancelCvsAuthorization(accountId, orderId);
+                Pokepay.setEnv(env);
+                NoContent res = req.send(accessToken);
+                return res.toString();
+            }
+            case "autogen_cancelCvsAuthorization": {
                 Env env = flutterEnvToSDKEnv((int) call.argument("env"));
                 String accessToken = call.argument("accessToken");
                 String accountId = call.argument("account_id");
@@ -270,7 +1312,421 @@ class AutogenMethodHandlers {
                 CvsAuthorization res = req.send(accessToken);
                 return res.toString();
             }
+            case "autogen_getCvsAuthorization": {
+                Env env = flutterEnvToSDKEnv((int) call.argument("env"));
+                String accessToken = call.argument("accessToken");
+                String accountId = call.argument("account_id");
+                if (accountId == null) accountId = call.argument("accountId");
+                String orderId = call.argument("order_id");
+                if (orderId == null) orderId = call.argument("orderId");
+                GetCvsAuthorization req = new GetCvsAuthorization(accountId, orderId);
+                Pokepay.setEnv(env);
+                CvsAuthorization res = req.send(accessToken);
+                return res.toString();
+            }
+            case "getAccount": {
+                Env env = flutterEnvToSDKEnv((int) call.argument("env"));
+                String accessToken = call.argument("accessToken");
+                String accountId = call.argument("account_id");
+                if (accountId == null) accountId = call.argument("accountId");
+                GetAccount req = new GetAccount(accountId);
+                Pokepay.setEnv(env);
+                AccountDetail res = req.send(accessToken);
+                return res.toString();
+            }
+            case "autogen_getAccount": {
+                Env env = flutterEnvToSDKEnv((int) call.argument("env"));
+                String accessToken = call.argument("accessToken");
+                String accountId = call.argument("account_id");
+                if (accountId == null) accountId = call.argument("accountId");
+                GetAccount req = new GetAccount(accountId);
+                Pokepay.setEnv(env);
+                AccountDetail res = req.send(accessToken);
+                return res.toString();
+            }
+            case "updateAccount": {
+                Env env = flutterEnvToSDKEnv((int) call.argument("env"));
+                String accessToken = call.argument("accessToken");
+                String accountId = call.argument("account_id");
+                if (accountId == null) accountId = call.argument("accountId");
+                String name = call.argument("name");
+                UpdateAccount req = new UpdateAccount(accountId);
+                req = req.name(name);
+                Pokepay.setEnv(env);
+                AccountDetail res = req.send(accessToken);
+                return res.toString();
+            }
+            case "autogen_updateAccount": {
+                Env env = flutterEnvToSDKEnv((int) call.argument("env"));
+                String accessToken = call.argument("accessToken");
+                String accountId = call.argument("account_id");
+                if (accountId == null) accountId = call.argument("accountId");
+                String name = call.argument("name");
+                UpdateAccount req = new UpdateAccount(accountId);
+                req = req.name(name);
+                Pokepay.setEnv(env);
+                AccountDetail res = req.send(accessToken);
+                return res.toString();
+            }
+            case "createAccount": {
+                Env env = flutterEnvToSDKEnv((int) call.argument("env"));
+                String accessToken = call.argument("accessToken");
+                String privateMoneyId = call.argument("private_money_id");
+                if (privateMoneyId == null) privateMoneyId = call.argument("privateMoneyId");
+                String name = call.argument("name");
+                String externalId = call.argument("external_id");
+                if (externalId == null) externalId = call.argument("externalId");
+                CreateAccount req = new CreateAccount(privateMoneyId);
+                req = req.name(name);
+                req = req.externalId(externalId);
+                Pokepay.setEnv(env);
+                AccountDetail res = req.send(accessToken);
+                return res.toString();
+            }
+            case "autogen_createAccount": {
+                Env env = flutterEnvToSDKEnv((int) call.argument("env"));
+                String accessToken = call.argument("accessToken");
+                String privateMoneyId = call.argument("private_money_id");
+                if (privateMoneyId == null) privateMoneyId = call.argument("privateMoneyId");
+                String name = call.argument("name");
+                String externalId = call.argument("external_id");
+                if (externalId == null) externalId = call.argument("externalId");
+                CreateAccount req = new CreateAccount(privateMoneyId);
+                req = req.name(name);
+                req = req.externalId(externalId);
+                Pokepay.setEnv(env);
+                AccountDetail res = req.send(accessToken);
+                return res.toString();
+            }
+            case "getAccountTransactions": {
+                Env env = flutterEnvToSDKEnv((int) call.argument("env"));
+                String accessToken = call.argument("accessToken");
+                String accountId = call.argument("account_id");
+                if (accountId == null) accountId = call.argument("accountId");
+                String before = call.argument("before");
+                String after = call.argument("after");
+                Integer perPage = call.argument("per_page");
+                if (perPage == null) perPage = call.argument("perPage");
+                GetAccountTransactions req = new GetAccountTransactions(accountId);
+                req = req.before(before);
+                req = req.after(after);
+                req = req.perPage(perPage);
+                Pokepay.setEnv(env);
+                PaginatedAccountTransactions res = req.send(accessToken);
+                return res.toString();
+            }
+            case "autogen_getAccountTransactions": {
+                Env env = flutterEnvToSDKEnv((int) call.argument("env"));
+                String accessToken = call.argument("accessToken");
+                String accountId = call.argument("account_id");
+                if (accountId == null) accountId = call.argument("accountId");
+                String before = call.argument("before");
+                String after = call.argument("after");
+                Integer perPage = call.argument("per_page");
+                if (perPage == null) perPage = call.argument("perPage");
+                GetAccountTransactions req = new GetAccountTransactions(accountId);
+                req = req.before(before);
+                req = req.after(after);
+                req = req.perPage(perPage);
+                Pokepay.setEnv(env);
+                PaginatedAccountTransactions res = req.send(accessToken);
+                return res.toString();
+            }
+            case "sendToAccount": {
+                Env env = flutterEnvToSDKEnv((int) call.argument("env"));
+                String accessToken = call.argument("accessToken");
+                String accountId = call.argument("account_id");
+                if (accountId == null) accountId = call.argument("accountId");
+                Double amount = call.argument("amount");
+                String receiverTerminalId = call.argument("receiver_terminal_id");
+                if (receiverTerminalId == null) receiverTerminalId = call.argument("receiverTerminalId");
+                String senderAccountId = call.argument("sender_account_id");
+                if (senderAccountId == null) senderAccountId = call.argument("senderAccountId");
+                String description = call.argument("description");
+                SendToAccount req = new SendToAccount(accountId, amount);
+                req = req.receiverTerminalId(receiverTerminalId);
+                req = req.senderAccountId(senderAccountId);
+                req = req.description(description);
+                Pokepay.setEnv(env);
+                UserTransaction res = req.send(accessToken);
+                return res.toString();
+            }
+            case "autogen_sendToAccount": {
+                Env env = flutterEnvToSDKEnv((int) call.argument("env"));
+                String accessToken = call.argument("accessToken");
+                String accountId = call.argument("account_id");
+                if (accountId == null) accountId = call.argument("accountId");
+                Double amount = call.argument("amount");
+                String receiverTerminalId = call.argument("receiver_terminal_id");
+                if (receiverTerminalId == null) receiverTerminalId = call.argument("receiverTerminalId");
+                String senderAccountId = call.argument("sender_account_id");
+                if (senderAccountId == null) senderAccountId = call.argument("senderAccountId");
+                String description = call.argument("description");
+                SendToAccount req = new SendToAccount(accountId, amount);
+                req = req.receiverTerminalId(receiverTerminalId);
+                req = req.senderAccountId(senderAccountId);
+                req = req.description(description);
+                Pokepay.setEnv(env);
+                UserTransaction res = req.send(accessToken);
+                return res.toString();
+            }
+            case "getAccountTransfers": {
+                Env env = flutterEnvToSDKEnv((int) call.argument("env"));
+                String accessToken = call.argument("accessToken");
+                String accountId = call.argument("account_id");
+                if (accountId == null) accountId = call.argument("accountId");
+                String before = call.argument("before");
+                String after = call.argument("after");
+                Integer perPage = call.argument("per_page");
+                if (perPage == null) perPage = call.argument("perPage");
+                GetAccountTransfers req = new GetAccountTransfers(accountId);
+                req = req.before(before);
+                req = req.after(after);
+                req = req.perPage(perPage);
+                Pokepay.setEnv(env);
+                PaginatedAccountTransfers res = req.send(accessToken);
+                return res.toString();
+            }
+            case "autogen_getAccountTransfers": {
+                Env env = flutterEnvToSDKEnv((int) call.argument("env"));
+                String accessToken = call.argument("accessToken");
+                String accountId = call.argument("account_id");
+                if (accountId == null) accountId = call.argument("accountId");
+                String before = call.argument("before");
+                String after = call.argument("after");
+                Integer perPage = call.argument("per_page");
+                if (perPage == null) perPage = call.argument("perPage");
+                GetAccountTransfers req = new GetAccountTransfers(accountId);
+                req = req.before(before);
+                req = req.after(after);
+                req = req.perPage(perPage);
+                Pokepay.setEnv(env);
+                PaginatedAccountTransfers res = req.send(accessToken);
+                return res.toString();
+            }
+            case "getAccountBalances": {
+                Env env = flutterEnvToSDKEnv((int) call.argument("env"));
+                String accessToken = call.argument("accessToken");
+                String accountId = call.argument("account_id");
+                if (accountId == null) accountId = call.argument("accountId");
+                String before = call.argument("before");
+                String after = call.argument("after");
+                Integer perPage = call.argument("per_page");
+                if (perPage == null) perPage = call.argument("perPage");
+                String expired = call.argument("expired");
+                GetAccountBalances req = new GetAccountBalances(accountId);
+                req = req.before(before);
+                req = req.after(after);
+                req = req.perPage(perPage);
+                req = req.expired(expired);
+                Pokepay.setEnv(env);
+                PaginatedAccountBalances res = req.send(accessToken);
+                return res.toString();
+            }
+            case "autogen_getAccountBalances": {
+                Env env = flutterEnvToSDKEnv((int) call.argument("env"));
+                String accessToken = call.argument("accessToken");
+                String accountId = call.argument("account_id");
+                if (accountId == null) accountId = call.argument("accountId");
+                String before = call.argument("before");
+                String after = call.argument("after");
+                Integer perPage = call.argument("per_page");
+                if (perPage == null) perPage = call.argument("perPage");
+                String expired = call.argument("expired");
+                GetAccountBalances req = new GetAccountBalances(accountId);
+                req = req.before(before);
+                req = req.after(after);
+                req = req.perPage(perPage);
+                req = req.expired(expired);
+                Pokepay.setEnv(env);
+                PaginatedAccountBalances res = req.send(accessToken);
+                return res.toString();
+            }
+            case "createAccountCpmToken": {
+                Env env = flutterEnvToSDKEnv((int) call.argument("env"));
+                String accessToken = call.argument("accessToken");
+                String accountId = call.argument("account_id");
+                if (accountId == null) accountId = call.argument("accountId");
+                String[] scopes = call.argument("scopes");
+                Integer expiresIn = call.argument("expires_in");
+                if (expiresIn == null) expiresIn = call.argument("expiresIn");
+                String metadata = call.argument("metadata");
+                Boolean keepAlive = call.argument("keep_alive");
+                if (keepAlive == null) keepAlive = call.argument("keepAlive");
+                Boolean isShortToken = call.argument("is_short_token");
+                if (isShortToken == null) isShortToken = call.argument("isShortToken");
+                String strategy = call.argument("strategy");
+                String couponId = call.argument("coupon_id");
+                if (couponId == null) couponId = call.argument("couponId");
+                CreateAccountCpmToken req = new CreateAccountCpmToken(accountId);
+                req = req.scopes(scopes);
+                req = req.expiresIn(expiresIn);
+                req = req.metadata(metadata);
+                req = req.keepAlive(keepAlive);
+                req = req.isShortToken(isShortToken);
+                req = req.strategy(strategy);
+                req = req.couponId(couponId);
+                Pokepay.setEnv(env);
+                CpmToken res = req.send(accessToken);
+                return res.toString();
+            }
+            case "autogen_createAccountCpmToken": {
+                Env env = flutterEnvToSDKEnv((int) call.argument("env"));
+                String accessToken = call.argument("accessToken");
+                String accountId = call.argument("account_id");
+                if (accountId == null) accountId = call.argument("accountId");
+                String[] scopes = call.argument("scopes");
+                Integer expiresIn = call.argument("expires_in");
+                if (expiresIn == null) expiresIn = call.argument("expiresIn");
+                String metadata = call.argument("metadata");
+                Boolean keepAlive = call.argument("keep_alive");
+                if (keepAlive == null) keepAlive = call.argument("keepAlive");
+                Boolean isShortToken = call.argument("is_short_token");
+                if (isShortToken == null) isShortToken = call.argument("isShortToken");
+                String strategy = call.argument("strategy");
+                String couponId = call.argument("coupon_id");
+                if (couponId == null) couponId = call.argument("couponId");
+                CreateAccountCpmToken req = new CreateAccountCpmToken(accountId);
+                req = req.scopes(scopes);
+                req = req.expiresIn(expiresIn);
+                req = req.metadata(metadata);
+                req = req.keepAlive(keepAlive);
+                req = req.isShortToken(isShortToken);
+                req = req.strategy(strategy);
+                req = req.couponId(couponId);
+                Pokepay.setEnv(env);
+                CpmToken res = req.send(accessToken);
+                return res.toString();
+            }
+            case "getAccountCoupons": {
+                Env env = flutterEnvToSDKEnv((int) call.argument("env"));
+                String accessToken = call.argument("accessToken");
+                String accountId = call.argument("account_id");
+                if (accountId == null) accountId = call.argument("accountId");
+                String isAvailable = call.argument("is_available");
+                if (isAvailable == null) isAvailable = call.argument("isAvailable");
+                String before = call.argument("before");
+                String after = call.argument("after");
+                Integer perPage = call.argument("per_page");
+                if (perPage == null) perPage = call.argument("perPage");
+                GetAccountCoupons req = new GetAccountCoupons(accountId);
+                req = req.isAvailable(isAvailable);
+                req = req.before(before);
+                req = req.after(after);
+                req = req.perPage(perPage);
+                Pokepay.setEnv(env);
+                PaginatedAccountCoupons res = req.send(accessToken);
+                return res.toString();
+            }
+            case "autogen_getAccountCoupons": {
+                Env env = flutterEnvToSDKEnv((int) call.argument("env"));
+                String accessToken = call.argument("accessToken");
+                String accountId = call.argument("account_id");
+                if (accountId == null) accountId = call.argument("accountId");
+                String isAvailable = call.argument("is_available");
+                if (isAvailable == null) isAvailable = call.argument("isAvailable");
+                String before = call.argument("before");
+                String after = call.argument("after");
+                Integer perPage = call.argument("per_page");
+                if (perPage == null) perPage = call.argument("perPage");
+                GetAccountCoupons req = new GetAccountCoupons(accountId);
+                req = req.isAvailable(isAvailable);
+                req = req.before(before);
+                req = req.after(after);
+                req = req.perPage(perPage);
+                Pokepay.setEnv(env);
+                PaginatedAccountCoupons res = req.send(accessToken);
+                return res.toString();
+            }
+            case "getAccountCouponDetail": {
+                Env env = flutterEnvToSDKEnv((int) call.argument("env"));
+                String accessToken = call.argument("accessToken");
+                String accountId = call.argument("account_id");
+                if (accountId == null) accountId = call.argument("accountId");
+                String couponId = call.argument("coupon_id");
+                if (couponId == null) couponId = call.argument("couponId");
+                GetAccountCouponDetail req = new GetAccountCouponDetail(accountId, couponId);
+                Pokepay.setEnv(env);
+                CouponDetail res = req.send(accessToken);
+                return res.toString();
+            }
+            case "autogen_getAccountCouponDetail": {
+                Env env = flutterEnvToSDKEnv((int) call.argument("env"));
+                String accessToken = call.argument("accessToken");
+                String accountId = call.argument("account_id");
+                if (accountId == null) accountId = call.argument("accountId");
+                String couponId = call.argument("coupon_id");
+                if (couponId == null) couponId = call.argument("couponId");
+                GetAccountCouponDetail req = new GetAccountCouponDetail(accountId, couponId);
+                Pokepay.setEnv(env);
+                CouponDetail res = req.send(accessToken);
+                return res.toString();
+            }
+            case "patchAccountCouponDetail": {
+                Env env = flutterEnvToSDKEnv((int) call.argument("env"));
+                String accessToken = call.argument("accessToken");
+                String accountId = call.argument("account_id");
+                if (accountId == null) accountId = call.argument("accountId");
+                String couponId = call.argument("coupon_id");
+                if (couponId == null) couponId = call.argument("couponId");
+                Boolean isReceived = call.argument("is_received");
+                if (isReceived == null) isReceived = call.argument("isReceived");
+                String code = call.argument("code");
+                PatchAccountCouponDetail req = new PatchAccountCouponDetail(accountId, couponId);
+                req = req.isReceived(isReceived);
+                req = req.code(code);
+                Pokepay.setEnv(env);
+                CouponDetail res = req.send(accessToken);
+                return res.toString();
+            }
+            case "autogen_patchAccountCouponDetail": {
+                Env env = flutterEnvToSDKEnv((int) call.argument("env"));
+                String accessToken = call.argument("accessToken");
+                String accountId = call.argument("account_id");
+                if (accountId == null) accountId = call.argument("accountId");
+                String couponId = call.argument("coupon_id");
+                if (couponId == null) couponId = call.argument("couponId");
+                Boolean isReceived = call.argument("is_received");
+                if (isReceived == null) isReceived = call.argument("isReceived");
+                String code = call.argument("code");
+                PatchAccountCouponDetail req = new PatchAccountCouponDetail(accountId, couponId);
+                req = req.isReceived(isReceived);
+                req = req.code(code);
+                Pokepay.setEnv(env);
+                CouponDetail res = req.send(accessToken);
+                return res.toString();
+            }
+            case "getCouponDetail": {
+                Env env = flutterEnvToSDKEnv((int) call.argument("env"));
+                String accessToken = call.argument("accessToken");
+                String couponId = call.argument("coupon_id");
+                if (couponId == null) couponId = call.argument("couponId");
+                GetCouponDetail req = new GetCouponDetail(couponId);
+                Pokepay.setEnv(env);
+                CouponInfo res = req.send(accessToken);
+                return res.toString();
+            }
+            case "autogen_getCouponDetail": {
+                Env env = flutterEnvToSDKEnv((int) call.argument("env"));
+                String accessToken = call.argument("accessToken");
+                String couponId = call.argument("coupon_id");
+                if (couponId == null) couponId = call.argument("couponId");
+                GetCouponDetail req = new GetCouponDetail(couponId);
+                Pokepay.setEnv(env);
+                CouponInfo res = req.send(accessToken);
+                return res.toString();
+            }
             case "getAccountIndividualNumberIdentification": {
+                Env env = flutterEnvToSDKEnv((int) call.argument("env"));
+                String accessToken = call.argument("accessToken");
+                String accountId = call.argument("account_id");
+                if (accountId == null) accountId = call.argument("accountId");
+                GetAccountIndividualNumberIdentification req = new GetAccountIndividualNumberIdentification(accountId);
+                Pokepay.setEnv(env);
+                IndividualNumberIdentificationStatus res = req.send(accessToken);
+                return res.toString();
+            }
+            case "autogen_getAccountIndividualNumberIdentification": {
                 Env env = flutterEnvToSDKEnv((int) call.argument("env"));
                 String accessToken = call.argument("accessToken");
                 String accountId = call.argument("account_id");
@@ -304,7 +1760,79 @@ class AutogenMethodHandlers {
                 IdentificationResult res = req.send(accessToken);
                 return res.toString();
             }
+            case "autogen_identifyIndividual": {
+                Env env = flutterEnvToSDKEnv((int) call.argument("env"));
+                String accessToken = call.argument("accessToken");
+                String accountId = call.argument("account_id");
+                if (accountId == null) accountId = call.argument("accountId");
+                String signature = call.argument("signature");
+                String signingCert = call.argument("signing_cert");
+                if (signingCert == null) signingCert = call.argument("signingCert");
+                String expectedHash = call.argument("expected_hash");
+                if (expectedHash == null) expectedHash = call.argument("expectedHash");
+                String name = call.argument("name");
+                String gender = call.argument("gender");
+                String address = call.argument("address");
+                String dateOfBirth = call.argument("date_of_birth");
+                if (dateOfBirth == null) dateOfBirth = call.argument("dateOfBirth");
+                IdentifyIndividual req = new IdentifyIndividual(accountId, signature, signingCert, expectedHash);
+                req = req.name(name);
+                req = req.gender(gender);
+                req = req.address(address);
+                req = req.dateOfBirth(dateOfBirth);
+                Pokepay.setEnv(env);
+                IdentificationResult res = req.send(accessToken);
+                return res.toString();
+            }
+            case "getAccountCampaignPointAmounts": {
+                Env env = flutterEnvToSDKEnv((int) call.argument("env"));
+                String accessToken = call.argument("accessToken");
+                String accountId = call.argument("account_id");
+                if (accountId == null) accountId = call.argument("accountId");
+                String campaignId = call.argument("campaign_id");
+                if (campaignId == null) campaignId = call.argument("campaignId");
+                GetAccountCampaignPointAmounts req = new GetAccountCampaignPointAmounts(accountId, campaignId);
+                Pokepay.setEnv(env);
+                AccountCampaignPointAmounts res = req.send(accessToken);
+                return res.toString();
+            }
+            case "autogen_getAccountCampaignPointAmounts": {
+                Env env = flutterEnvToSDKEnv((int) call.argument("env"));
+                String accessToken = call.argument("accessToken");
+                String accountId = call.argument("account_id");
+                if (accountId == null) accountId = call.argument("accountId");
+                String campaignId = call.argument("campaign_id");
+                if (campaignId == null) campaignId = call.argument("campaignId");
+                GetAccountCampaignPointAmounts req = new GetAccountCampaignPointAmounts(accountId, campaignId);
+                Pokepay.setEnv(env);
+                AccountCampaignPointAmounts res = req.send(accessToken);
+                return res.toString();
+            }
             case "getAccountTopupQuotas": {
+                Env env = flutterEnvToSDKEnv((int) call.argument("env"));
+                String accessToken = call.argument("accessToken");
+                String accountId = call.argument("account_id");
+                if (accountId == null) accountId = call.argument("accountId");
+                String status = call.argument("status");
+                Boolean showExpiredForFixedPeriod = call.argument("show_expired_for_fixed_period");
+                if (showExpiredForFixedPeriod == null) showExpiredForFixedPeriod = call.argument("showExpiredForFixedPeriod");
+                Boolean showStartedQuotas = call.argument("show_started_quotas");
+                if (showStartedQuotas == null) showStartedQuotas = call.argument("showStartedQuotas");
+                Boolean isWithinApplicablePeriod = call.argument("is_within_applicable_period");
+                if (isWithinApplicablePeriod == null) isWithinApplicablePeriod = call.argument("isWithinApplicablePeriod");
+                Boolean isUsableAmountLeft = call.argument("is_usable_amount_left");
+                if (isUsableAmountLeft == null) isUsableAmountLeft = call.argument("isUsableAmountLeft");
+                GetAccountTopupQuotas req = new GetAccountTopupQuotas(accountId);
+                req = req.status(status);
+                req = req.showExpiredForFixedPeriod(showExpiredForFixedPeriod);
+                req = req.showStartedQuotas(showStartedQuotas);
+                req = req.isWithinApplicablePeriod(isWithinApplicablePeriod);
+                req = req.isUsableAmountLeft(isUsableAmountLeft);
+                Pokepay.setEnv(env);
+                AccountTopupQuotas res = req.send(accessToken);
+                return res.toString();
+            }
+            case "autogen_getAccountTopupQuotas": {
                 Env env = flutterEnvToSDKEnv((int) call.argument("env"));
                 String accessToken = call.argument("accessToken");
                 String accountId = call.argument("account_id");
@@ -338,7 +1866,228 @@ class AutogenMethodHandlers {
                 AccountTopupStats res = req.send(accessToken);
                 return res.toString();
             }
+            case "autogen_getAccountTopupStats": {
+                Env env = flutterEnvToSDKEnv((int) call.argument("env"));
+                String accessToken = call.argument("accessToken");
+                String accountId = call.argument("account_id");
+                if (accountId == null) accountId = call.argument("accountId");
+                GetAccountTopupStats req = new GetAccountTopupStats(accountId);
+                Pokepay.setEnv(env);
+                AccountTopupStats res = req.send(accessToken);
+                return res.toString();
+            }
+            case "getCpmToken": {
+                Env env = flutterEnvToSDKEnv((int) call.argument("env"));
+                String accessToken = call.argument("accessToken");
+                String cpmToken = call.argument("cpm_token");
+                if (cpmToken == null) cpmToken = call.argument("cpmToken");
+                GetCpmToken req = new GetCpmToken(cpmToken);
+                Pokepay.setEnv(env);
+                CpmToken res = req.send(accessToken);
+                return res.toString();
+            }
+            case "autogen_getCpmToken": {
+                Env env = flutterEnvToSDKEnv((int) call.argument("env"));
+                String accessToken = call.argument("accessToken");
+                String cpmToken = call.argument("cpm_token");
+                if (cpmToken == null) cpmToken = call.argument("cpmToken");
+                GetCpmToken req = new GetCpmToken(cpmToken);
+                Pokepay.setEnv(env);
+                CpmToken res = req.send(accessToken);
+                return res.toString();
+            }
+            case "getPrivateMoney": {
+                Env env = flutterEnvToSDKEnv((int) call.argument("env"));
+                String accessToken = call.argument("accessToken");
+                String privateMoneyId = call.argument("private_money_id");
+                if (privateMoneyId == null) privateMoneyId = call.argument("privateMoneyId");
+                GetPrivateMoney req = new GetPrivateMoney(privateMoneyId);
+                Pokepay.setEnv(env);
+                PrivateMoneyDetail res = req.send(accessToken);
+                return res.toString();
+            }
+            case "autogen_getPrivateMoney": {
+                Env env = flutterEnvToSDKEnv((int) call.argument("env"));
+                String accessToken = call.argument("accessToken");
+                String privateMoneyId = call.argument("private_money_id");
+                if (privateMoneyId == null) privateMoneyId = call.argument("privateMoneyId");
+                GetPrivateMoney req = new GetPrivateMoney(privateMoneyId);
+                Pokepay.setEnv(env);
+                PrivateMoneyDetail res = req.send(accessToken);
+                return res.toString();
+            }
+            case "getPrivateMoneyCoupons": {
+                Env env = flutterEnvToSDKEnv((int) call.argument("env"));
+                String accessToken = call.argument("accessToken");
+                String privateMoneyId = call.argument("private_money_id");
+                if (privateMoneyId == null) privateMoneyId = call.argument("privateMoneyId");
+                String before = call.argument("before");
+                String after = call.argument("after");
+                Integer perPage = call.argument("per_page");
+                if (perPage == null) perPage = call.argument("perPage");
+                GetPrivateMoneyCoupons req = new GetPrivateMoneyCoupons(privateMoneyId);
+                req = req.before(before);
+                req = req.after(after);
+                req = req.perPage(perPage);
+                Pokepay.setEnv(env);
+                PaginatedPrivateMoneyCoupons res = req.send(accessToken);
+                return res.toString();
+            }
+            case "autogen_getPrivateMoneyCoupons": {
+                Env env = flutterEnvToSDKEnv((int) call.argument("env"));
+                String accessToken = call.argument("accessToken");
+                String privateMoneyId = call.argument("private_money_id");
+                if (privateMoneyId == null) privateMoneyId = call.argument("privateMoneyId");
+                String before = call.argument("before");
+                String after = call.argument("after");
+                Integer perPage = call.argument("per_page");
+                if (perPage == null) perPage = call.argument("perPage");
+                GetPrivateMoneyCoupons req = new GetPrivateMoneyCoupons(privateMoneyId);
+                req = req.before(before);
+                req = req.after(after);
+                req = req.perPage(perPage);
+                Pokepay.setEnv(env);
+                PaginatedPrivateMoneyCoupons res = req.send(accessToken);
+                return res.toString();
+            }
+            case "getPrivateMoneyTerms": {
+                Env env = flutterEnvToSDKEnv((int) call.argument("env"));
+                String accessToken = call.argument("accessToken");
+                String privateMoneyId = call.argument("private_money_id");
+                if (privateMoneyId == null) privateMoneyId = call.argument("privateMoneyId");
+                GetPrivateMoneyTerms req = new GetPrivateMoneyTerms(privateMoneyId);
+                Pokepay.setEnv(env);
+                PrivateMoneyLegalText res = req.send(accessToken);
+                return res.toString();
+            }
+            case "autogen_getPrivateMoneyTerms": {
+                Env env = flutterEnvToSDKEnv((int) call.argument("env"));
+                String accessToken = call.argument("accessToken");
+                String privateMoneyId = call.argument("private_money_id");
+                if (privateMoneyId == null) privateMoneyId = call.argument("privateMoneyId");
+                GetPrivateMoneyTerms req = new GetPrivateMoneyTerms(privateMoneyId);
+                Pokepay.setEnv(env);
+                PrivateMoneyLegalText res = req.send(accessToken);
+                return res.toString();
+            }
+            case "getPrivateMoneyPrivacyPolicy": {
+                Env env = flutterEnvToSDKEnv((int) call.argument("env"));
+                String accessToken = call.argument("accessToken");
+                String privateMoneyId = call.argument("private_money_id");
+                if (privateMoneyId == null) privateMoneyId = call.argument("privateMoneyId");
+                GetPrivateMoneyPrivacyPolicy req = new GetPrivateMoneyPrivacyPolicy(privateMoneyId);
+                Pokepay.setEnv(env);
+                PrivateMoneyLegalText res = req.send(accessToken);
+                return res.toString();
+            }
+            case "autogen_getPrivateMoneyPrivacyPolicy": {
+                Env env = flutterEnvToSDKEnv((int) call.argument("env"));
+                String accessToken = call.argument("accessToken");
+                String privateMoneyId = call.argument("private_money_id");
+                if (privateMoneyId == null) privateMoneyId = call.argument("privateMoneyId");
+                GetPrivateMoneyPrivacyPolicy req = new GetPrivateMoneyPrivacyPolicy(privateMoneyId);
+                Pokepay.setEnv(env);
+                PrivateMoneyLegalText res = req.send(accessToken);
+                return res.toString();
+            }
+            case "getPrivateMoneyPaymentAct": {
+                Env env = flutterEnvToSDKEnv((int) call.argument("env"));
+                String accessToken = call.argument("accessToken");
+                String privateMoneyId = call.argument("private_money_id");
+                if (privateMoneyId == null) privateMoneyId = call.argument("privateMoneyId");
+                GetPrivateMoneyPaymentAct req = new GetPrivateMoneyPaymentAct(privateMoneyId);
+                Pokepay.setEnv(env);
+                PrivateMoneyLegalText res = req.send(accessToken);
+                return res.toString();
+            }
+            case "autogen_getPrivateMoneyPaymentAct": {
+                Env env = flutterEnvToSDKEnv((int) call.argument("env"));
+                String accessToken = call.argument("accessToken");
+                String privateMoneyId = call.argument("private_money_id");
+                if (privateMoneyId == null) privateMoneyId = call.argument("privateMoneyId");
+                GetPrivateMoneyPaymentAct req = new GetPrivateMoneyPaymentAct(privateMoneyId);
+                Pokepay.setEnv(env);
+                PrivateMoneyLegalText res = req.send(accessToken);
+                return res.toString();
+            }
+            case "getPrivateMoneyCommercialAct": {
+                Env env = flutterEnvToSDKEnv((int) call.argument("env"));
+                String accessToken = call.argument("accessToken");
+                String privateMoneyId = call.argument("private_money_id");
+                if (privateMoneyId == null) privateMoneyId = call.argument("privateMoneyId");
+                GetPrivateMoneyCommercialAct req = new GetPrivateMoneyCommercialAct(privateMoneyId);
+                Pokepay.setEnv(env);
+                PrivateMoneyLegalText res = req.send(accessToken);
+                return res.toString();
+            }
+            case "autogen_getPrivateMoneyCommercialAct": {
+                Env env = flutterEnvToSDKEnv((int) call.argument("env"));
+                String accessToken = call.argument("accessToken");
+                String privateMoneyId = call.argument("private_money_id");
+                if (privateMoneyId == null) privateMoneyId = call.argument("privateMoneyId");
+                GetPrivateMoneyCommercialAct req = new GetPrivateMoneyCommercialAct(privateMoneyId);
+                Pokepay.setEnv(env);
+                PrivateMoneyLegalText res = req.send(accessToken);
+                return res.toString();
+            }
+            case "searchPrivateMoneys": {
+                Env env = flutterEnvToSDKEnv((int) call.argument("env"));
+                String accessToken = call.argument("accessToken");
+                String name = call.argument("name");
+                Boolean includeExclusive = call.argument("include_exclusive");
+                if (includeExclusive == null) includeExclusive = call.argument("includeExclusive");
+                String before = call.argument("before");
+                String after = call.argument("after");
+                Integer perPage = call.argument("per_page");
+                if (perPage == null) perPage = call.argument("perPage");
+                SearchPrivateMoneys req = new SearchPrivateMoneys();
+                req = req.name(name);
+                req = req.includeExclusive(includeExclusive);
+                req = req.before(before);
+                req = req.after(after);
+                req = req.perPage(perPage);
+                Pokepay.setEnv(env);
+                PaginatedPrivateMoneys res = req.send(accessToken);
+                return res.toString();
+            }
+            case "autogen_searchPrivateMoneys": {
+                Env env = flutterEnvToSDKEnv((int) call.argument("env"));
+                String accessToken = call.argument("accessToken");
+                String name = call.argument("name");
+                Boolean includeExclusive = call.argument("include_exclusive");
+                if (includeExclusive == null) includeExclusive = call.argument("includeExclusive");
+                String before = call.argument("before");
+                String after = call.argument("after");
+                Integer perPage = call.argument("per_page");
+                if (perPage == null) perPage = call.argument("perPage");
+                SearchPrivateMoneys req = new SearchPrivateMoneys();
+                req = req.name(name);
+                req = req.includeExclusive(includeExclusive);
+                req = req.before(before);
+                req = req.after(after);
+                req = req.perPage(perPage);
+                Pokepay.setEnv(env);
+                PaginatedPrivateMoneys res = req.send(accessToken);
+                return res.toString();
+            }
             case "createJihanpiTransaction": {
+                Env env = flutterEnvToSDKEnv((int) call.argument("env"));
+                String accessToken = call.argument("accessToken");
+                String nfcTagId = call.argument("nfc_tag_id");
+                if (nfcTagId == null) nfcTagId = call.argument("nfcTagId");
+                String accountId = call.argument("account_id");
+                if (accountId == null) accountId = call.argument("accountId");
+                String requestId = call.argument("request_id");
+                if (requestId == null) requestId = call.argument("requestId");
+                String strategy = call.argument("strategy");
+                CreateJihanpiTransaction req = new CreateJihanpiTransaction(nfcTagId, accountId);
+                req = req.requestId(requestId);
+                req = req.strategy(strategy);
+                Pokepay.setEnv(env);
+                JihanpiTransaction res = req.send(accessToken);
+                return res.toString();
+            }
+            case "autogen_createJihanpiTransaction": {
                 Env env = flutterEnvToSDKEnv((int) call.argument("env"));
                 String accessToken = call.argument("accessToken");
                 String nfcTagId = call.argument("nfc_tag_id");
@@ -365,7 +2114,27 @@ class AutogenMethodHandlers {
                 JihanpiTransaction res = req.send(accessToken);
                 return res.toString();
             }
+            case "autogen_getJihanpiTransactionByOrderId": {
+                Env env = flutterEnvToSDKEnv((int) call.argument("env"));
+                String accessToken = call.argument("accessToken");
+                String orderId = call.argument("order_id");
+                if (orderId == null) orderId = call.argument("orderId");
+                GetJihanpiTransactionByOrderId req = new GetJihanpiTransactionByOrderId(orderId);
+                Pokepay.setEnv(env);
+                JihanpiTransaction res = req.send(accessToken);
+                return res.toString();
+            }
             case "getJihanpiTransactionByRequestId": {
+                Env env = flutterEnvToSDKEnv((int) call.argument("env"));
+                String accessToken = call.argument("accessToken");
+                String requestId = call.argument("request_id");
+                if (requestId == null) requestId = call.argument("requestId");
+                GetJihanpiTransactionByRequestId req = new GetJihanpiTransactionByRequestId(requestId);
+                Pokepay.setEnv(env);
+                JihanpiTransaction res = req.send(accessToken);
+                return res.toString();
+            }
+            case "autogen_getJihanpiTransactionByRequestId": {
                 Env env = flutterEnvToSDKEnv((int) call.argument("env"));
                 String accessToken = call.argument("accessToken");
                 String requestId = call.argument("request_id");
@@ -385,11 +2154,22 @@ class AutogenMethodHandlers {
                 DetailedShopInformation res = req.send(accessToken);
                 return res.toString();
             }
+            case "autogen_getDetailedShopInformation": {
+                Env env = flutterEnvToSDKEnv((int) call.argument("env"));
+                String accessToken = call.argument("accessToken");
+                String shopId = call.argument("shop_id");
+                if (shopId == null) shopId = call.argument("shopId");
+                GetDetailedShopInformation req = new GetDetailedShopInformation(shopId);
+                Pokepay.setEnv(env);
+                DetailedShopInformation res = req.send(accessToken);
+                return res.toString();
+            }
             case "getListOfShops": {
                 Env env = flutterEnvToSDKEnv((int) call.argument("env"));
                 String accessToken = call.argument("accessToken");
                 String privateMoneyId = call.argument("private_money_id");
                 if (privateMoneyId == null) privateMoneyId = call.argument("privateMoneyId");
+                String name = call.argument("name");
                 String userTagGroupItemId = call.argument("user_tag_group_item_id");
                 if (userTagGroupItemId == null) userTagGroupItemId = call.argument("userTagGroupItemId");
                 String userTagSubgroupId = call.argument("user_tag_subgroup_id");
@@ -399,6 +2179,32 @@ class AutogenMethodHandlers {
                 Integer perPage = call.argument("per_page");
                 if (perPage == null) perPage = call.argument("perPage");
                 GetListOfShops req = new GetListOfShops(privateMoneyId);
+                req = req.name(name);
+                req = req.userTagGroupItemId(userTagGroupItemId);
+                req = req.userTagSubgroupId(userTagSubgroupId);
+                req = req.before(before);
+                req = req.after(after);
+                req = req.perPage(perPage);
+                Pokepay.setEnv(env);
+                PaginatedShops res = req.send(accessToken);
+                return res.toString();
+            }
+            case "autogen_getListOfShops": {
+                Env env = flutterEnvToSDKEnv((int) call.argument("env"));
+                String accessToken = call.argument("accessToken");
+                String privateMoneyId = call.argument("private_money_id");
+                if (privateMoneyId == null) privateMoneyId = call.argument("privateMoneyId");
+                String name = call.argument("name");
+                String userTagGroupItemId = call.argument("user_tag_group_item_id");
+                if (userTagGroupItemId == null) userTagGroupItemId = call.argument("userTagGroupItemId");
+                String userTagSubgroupId = call.argument("user_tag_subgroup_id");
+                if (userTagSubgroupId == null) userTagSubgroupId = call.argument("userTagSubgroupId");
+                String before = call.argument("before");
+                String after = call.argument("after");
+                Integer perPage = call.argument("per_page");
+                if (perPage == null) perPage = call.argument("perPage");
+                GetListOfShops req = new GetListOfShops(privateMoneyId);
+                req = req.name(name);
                 req = req.userTagGroupItemId(userTagGroupItemId);
                 req = req.userTagSubgroupId(userTagSubgroupId);
                 req = req.before(before);
@@ -409,6 +2215,23 @@ class AutogenMethodHandlers {
                 return res.toString();
             }
             case "getUserTagGroups": {
+                Env env = flutterEnvToSDKEnv((int) call.argument("env"));
+                String accessToken = call.argument("accessToken");
+                String privateMoneyId = call.argument("private_money_id");
+                if (privateMoneyId == null) privateMoneyId = call.argument("privateMoneyId");
+                String before = call.argument("before");
+                String after = call.argument("after");
+                Integer perPage = call.argument("per_page");
+                if (perPage == null) perPage = call.argument("perPage");
+                GetUserTagGroups req = new GetUserTagGroups(privateMoneyId);
+                req = req.before(before);
+                req = req.after(after);
+                req = req.perPage(perPage);
+                Pokepay.setEnv(env);
+                PaginatedUserTagGroups res = req.send(accessToken);
+                return res.toString();
+            }
+            case "autogen_getUserTagGroups": {
                 Env env = flutterEnvToSDKEnv((int) call.argument("env"));
                 String accessToken = call.argument("accessToken");
                 String privateMoneyId = call.argument("private_money_id");
@@ -447,7 +2270,48 @@ class AutogenMethodHandlers {
                 PaginatedUserTagGroupItems res = req.send(accessToken);
                 return res.toString();
             }
+            case "autogen_getUserTagGroupItems": {
+                Env env = flutterEnvToSDKEnv((int) call.argument("env"));
+                String accessToken = call.argument("accessToken");
+                String organizationCode = call.argument("organization_code");
+                if (organizationCode == null) organizationCode = call.argument("organizationCode");
+                String tagGroupId = call.argument("tag_group_id");
+                if (tagGroupId == null) tagGroupId = call.argument("tagGroupId");
+                String subgroupId = call.argument("subgroup_id");
+                if (subgroupId == null) subgroupId = call.argument("subgroupId");
+                String before = call.argument("before");
+                String after = call.argument("after");
+                Integer perPage = call.argument("per_page");
+                if (perPage == null) perPage = call.argument("perPage");
+                GetUserTagGroupItems req = new GetUserTagGroupItems(organizationCode, tagGroupId);
+                req = req.subgroupId(subgroupId);
+                req = req.before(before);
+                req = req.after(after);
+                req = req.perPage(perPage);
+                Pokepay.setEnv(env);
+                PaginatedUserTagGroupItems res = req.send(accessToken);
+                return res.toString();
+            }
             case "getUserTagSubgroups": {
+                Env env = flutterEnvToSDKEnv((int) call.argument("env"));
+                String accessToken = call.argument("accessToken");
+                String organizationCode = call.argument("organization_code");
+                if (organizationCode == null) organizationCode = call.argument("organizationCode");
+                String tagGroupId = call.argument("tag_group_id");
+                if (tagGroupId == null) tagGroupId = call.argument("tagGroupId");
+                String before = call.argument("before");
+                String after = call.argument("after");
+                Integer perPage = call.argument("per_page");
+                if (perPage == null) perPage = call.argument("perPage");
+                GetUserTagSubgroups req = new GetUserTagSubgroups(organizationCode, tagGroupId);
+                req = req.before(before);
+                req = req.after(after);
+                req = req.perPage(perPage);
+                Pokepay.setEnv(env);
+                PaginatedUserTagSubgroups res = req.send(accessToken);
+                return res.toString();
+            }
+            case "autogen_getUserTagSubgroups": {
                 Env env = flutterEnvToSDKEnv((int) call.argument("env"));
                 String accessToken = call.argument("accessToken");
                 String organizationCode = call.argument("organization_code");

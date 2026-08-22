@@ -12,7 +12,7 @@ extension CvsAPI on PokepayAPI {
   }) async {
     return await invokeMethod<PaginatedCvsAuthorizations>(
       (j) => PaginatedCvsAuthorizations.fromJson(j),
-      'getCvsAuthorizations',
+      'autogen_getCvsAuthorizations',
       {
         'env': this.env.index,
         'accessToken': this.accessToken,
@@ -35,7 +35,7 @@ extension CvsAPI on PokepayAPI {
   }) async {
     return await invokeMethod<CvsAuthorization>(
       (j) => CvsAuthorization.fromJson(j),
-      'cvsAuthorizeRequest',
+      'autogen_cvsAuthorizeRequest',
       {
         'env': this.env.index,
         'accessToken': this.accessToken,
@@ -56,7 +56,7 @@ extension CvsAPI on PokepayAPI {
   }) async {
     return await invokeMethod<NoContent>(
       (j) => NoContent.fromJson(j),
-      'cancelCvsAuthorization',
+      'autogen_cancelCvsAuthorization',
       {
         'env': this.env.index,
         'accessToken': this.accessToken,
@@ -72,7 +72,7 @@ extension CvsAPI on PokepayAPI {
   }) async {
     return await invokeMethod<CvsAuthorization>(
       (j) => CvsAuthorization.fromJson(j),
-      'getCvsAuthorization',
+      'autogen_getCvsAuthorization',
       {
         'env': this.env.index,
         'accessToken': this.accessToken,

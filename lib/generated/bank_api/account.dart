@@ -3,12 +3,230 @@ import '../../pokepay_sdk.dart';
 import '../responses.dart';
 
 extension AccountAPI on PokepayAPI {
+  Future<AccountDetail> getAccount({
+    required String accountId,
+  }) async {
+    return await invokeMethod<AccountDetail>(
+      (j) => AccountDetail.fromJson(j),
+      'autogen_getAccount',
+      {
+        'env': this.env.index,
+        'accessToken': this.accessToken,
+        'account_id': accountId,
+      },
+    );
+  }
+
+  Future<AccountDetail> updateAccount({
+    required String accountId,
+    String? name,
+  }) async {
+    return await invokeMethod<AccountDetail>(
+      (j) => AccountDetail.fromJson(j),
+      'autogen_updateAccount',
+      {
+        'env': this.env.index,
+        'accessToken': this.accessToken,
+        'account_id': accountId,
+        'name': name,
+      },
+    );
+  }
+
+  Future<AccountDetail> createAccount({
+    String? name,
+    required String privateMoneyId,
+    String? externalId,
+  }) async {
+    return await invokeMethod<AccountDetail>(
+      (j) => AccountDetail.fromJson(j),
+      'autogen_createAccount',
+      {
+        'env': this.env.index,
+        'accessToken': this.accessToken,
+        'name': name,
+        'private_money_id': privateMoneyId,
+        'external_id': externalId,
+      },
+    );
+  }
+
+  Future<PaginatedAccountTransactions> getAccountTransactions({
+    required String accountId,
+    String? before,
+    String? after,
+    int? perPage,
+  }) async {
+    return await invokeMethod<PaginatedAccountTransactions>(
+      (j) => PaginatedAccountTransactions.fromJson(j),
+      'autogen_getAccountTransactions',
+      {
+        'env': this.env.index,
+        'accessToken': this.accessToken,
+        'account_id': accountId,
+        'before': before,
+        'after': after,
+        'per_page': perPage,
+      },
+    );
+  }
+
+  Future<UserTransaction> sendToAccount({
+    required String accountId,
+    String? receiverTerminalId,
+    String? senderAccountId,
+    required double amount,
+    String? description,
+  }) async {
+    return await invokeMethod<UserTransaction>(
+      (j) => UserTransaction.fromJson(j),
+      'autogen_sendToAccount',
+      {
+        'env': this.env.index,
+        'accessToken': this.accessToken,
+        'account_id': accountId,
+        'receiver_terminal_id': receiverTerminalId,
+        'sender_account_id': senderAccountId,
+        'amount': amount,
+        'description': description,
+      },
+    );
+  }
+
+  Future<PaginatedAccountTransfers> getAccountTransfers({
+    required String accountId,
+    String? before,
+    String? after,
+    int? perPage,
+  }) async {
+    return await invokeMethod<PaginatedAccountTransfers>(
+      (j) => PaginatedAccountTransfers.fromJson(j),
+      'autogen_getAccountTransfers',
+      {
+        'env': this.env.index,
+        'accessToken': this.accessToken,
+        'account_id': accountId,
+        'before': before,
+        'after': after,
+        'per_page': perPage,
+      },
+    );
+  }
+
+  Future<PaginatedAccountBalances> getAccountBalances({
+    required String accountId,
+    String? before,
+    String? after,
+    int? perPage,
+    String? expired,
+  }) async {
+    return await invokeMethod<PaginatedAccountBalances>(
+      (j) => PaginatedAccountBalances.fromJson(j),
+      'autogen_getAccountBalances',
+      {
+        'env': this.env.index,
+        'accessToken': this.accessToken,
+        'account_id': accountId,
+        'before': before,
+        'after': after,
+        'per_page': perPage,
+        'expired': expired,
+      },
+    );
+  }
+
+  Future<CpmToken> createAccountCpmToken({
+    required String accountId,
+    List<String>? scopes,
+    int? expiresIn,
+    String? metadata,
+    bool? keepAlive,
+    bool? isShortToken,
+    String? strategy,
+    String? couponId,
+  }) async {
+    return await invokeMethod<CpmToken>(
+      (j) => CpmToken.fromJson(j),
+      'autogen_createAccountCpmToken',
+      {
+        'env': this.env.index,
+        'accessToken': this.accessToken,
+        'account_id': accountId,
+        'scopes': scopes,
+        'expires_in': expiresIn,
+        'metadata': metadata,
+        'keep_alive': keepAlive,
+        'is_short_token': isShortToken,
+        'strategy': strategy,
+        'coupon_id': couponId,
+      },
+    );
+  }
+
+  Future<PaginatedAccountCoupons> getAccountCoupons({
+    required String accountId,
+    String? isAvailable,
+    String? before,
+    String? after,
+    int? perPage,
+  }) async {
+    return await invokeMethod<PaginatedAccountCoupons>(
+      (j) => PaginatedAccountCoupons.fromJson(j),
+      'autogen_getAccountCoupons',
+      {
+        'env': this.env.index,
+        'accessToken': this.accessToken,
+        'account_id': accountId,
+        'is_available': isAvailable,
+        'before': before,
+        'after': after,
+        'per_page': perPage,
+      },
+    );
+  }
+
+  Future<CouponDetail> getAccountCouponDetail({
+    required String accountId,
+    required String couponId,
+  }) async {
+    return await invokeMethod<CouponDetail>(
+      (j) => CouponDetail.fromJson(j),
+      'autogen_getAccountCouponDetail',
+      {
+        'env': this.env.index,
+        'accessToken': this.accessToken,
+        'account_id': accountId,
+        'coupon_id': couponId,
+      },
+    );
+  }
+
+  Future<CouponDetail> patchAccountCouponDetail({
+    required String accountId,
+    required String couponId,
+    bool? isReceived,
+    String? code,
+  }) async {
+    return await invokeMethod<CouponDetail>(
+      (j) => CouponDetail.fromJson(j),
+      'autogen_patchAccountCouponDetail',
+      {
+        'env': this.env.index,
+        'accessToken': this.accessToken,
+        'account_id': accountId,
+        'coupon_id': couponId,
+        'is_received': isReceived,
+        'code': code,
+      },
+    );
+  }
+
   Future<IndividualNumberIdentificationStatus> getAccountIndividualNumberIdentification({
     required String accountId,
   }) async {
     return await invokeMethod<IndividualNumberIdentificationStatus>(
       (j) => IndividualNumberIdentificationStatus.fromJson(j),
-      'getAccountIndividualNumberIdentification',
+      'autogen_getAccountIndividualNumberIdentification',
       {
         'env': this.env.index,
         'accessToken': this.accessToken,
@@ -29,7 +247,7 @@ extension AccountAPI on PokepayAPI {
   }) async {
     return await invokeMethod<IdentificationResult>(
       (j) => IdentificationResult.fromJson(j),
-      'identifyIndividual',
+      'autogen_identifyIndividual',
       {
         'env': this.env.index,
         'accessToken': this.accessToken,
@@ -55,7 +273,7 @@ extension AccountAPI on PokepayAPI {
   }) async {
     return await invokeMethod<AccountTopupQuotas>(
       (j) => AccountTopupQuotas.fromJson(j),
-      'getAccountTopupQuotas',
+      'autogen_getAccountTopupQuotas',
       {
         'env': this.env.index,
         'accessToken': this.accessToken,
@@ -74,7 +292,7 @@ extension AccountAPI on PokepayAPI {
   }) async {
     return await invokeMethod<AccountTopupStats>(
       (j) => AccountTopupStats.fromJson(j),
-      'getAccountTopupStats',
+      'autogen_getAccountTopupStats',
       {
         'env': this.env.index,
         'accessToken': this.accessToken,
