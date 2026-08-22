@@ -4,15 +4,15 @@ part 'private_money_images.g.dart';
 
 @JsonSerializable()
 class PrivateMoneyImages {
-  final String card;
+  final String? card;
   @JsonKey(name: '300x300')
-  final String n300x300;
+  final String? n300x300;
   @JsonKey(name: '600x600')
-  final String n600x600;
+  final String? n600x600;
   PrivateMoneyImages({
-    required this.card,
-    required this.n300x300,
-    required this.n600x600,
+    this.card,
+    this.n300x300,
+    this.n600x600,
   });
 
   factory PrivateMoneyImages.fromJson(Map<String, dynamic> json) =>

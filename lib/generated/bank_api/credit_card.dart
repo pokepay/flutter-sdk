@@ -13,7 +13,7 @@ extension CreditCardAPI on PokepayAPI {
   }) async {
     return await invokeMethod<PaginatedCreditCards>(
       (j) => PaginatedCreditCards.fromJson(j),
-      'getCreditCards',
+      'autogen_getCreditCards',
       {
         'env': this.env.index,
         'accessToken': this.accessToken,
@@ -34,7 +34,7 @@ extension CreditCardAPI on PokepayAPI {
   }) async {
     return await invokeMethod<CreditCard>(
       (j) => CreditCard.fromJson(j),
-      'createCreditCard',
+      'autogen_createCreditCard',
       {
         'env': this.env.index,
         'accessToken': this.accessToken,
@@ -54,7 +54,51 @@ extension CreditCardAPI on PokepayAPI {
   }) async {
     return await invokeMethod<NoContent>(
       (j) => NoContent.fromJson(j),
-      'deleteCreditCard',
+      'autogen_deleteCreditCard',
+      {
+        'env': this.env.index,
+        'accessToken': this.accessToken,
+        'user_id': userId,
+        'card_registered_at': cardRegisteredAt,
+        'card_uuid': cardUuid,
+        'organization_code': organizationCode,
+      },
+    );
+  }
+
+  Future<UserTransaction> topupWithCreditCard({
+    required String userId,
+    required String accountId,
+    required int amount,
+    String? cardRegisteredAt,
+    String? cardUuid,
+    String? organizationCode,
+  }) async {
+    return await invokeMethod<UserTransaction>(
+      (j) => UserTransaction.fromJson(j),
+      'autogen_topupWithCreditCard',
+      {
+        'env': this.env.index,
+        'accessToken': this.accessToken,
+        'user_id': userId,
+        'account_id': accountId,
+        'amount': amount,
+        'card_registered_at': cardRegisteredAt,
+        'card_uuid': cardUuid,
+        'organization_code': organizationCode,
+      },
+    );
+  }
+
+  Future<String> creditWithCreditCardMembership({
+    required String userId,
+    String? cardRegisteredAt,
+    String? cardUuid,
+    String? organizationCode,
+  }) async {
+    return await invokeMethod<String>(
+      (j) => j as String,
+      'autogen_creditWithCreditCardMembership',
       {
         'env': this.env.index,
         'accessToken': this.accessToken,
@@ -79,7 +123,7 @@ extension CreditCardAPI on PokepayAPI {
   }) async {
     return await invokeMethod<String>(
       (j) => j as String,
-      'topupWithCreditCardMembership',
+      'autogen_topupWithCreditCardMembership',
       {
         'env': this.env.index,
         'accessToken': this.accessToken,
@@ -108,7 +152,7 @@ extension CreditCardAPI on PokepayAPI {
   }) async {
     return await invokeMethod<String>(
       (j) => j as String,
-      'topupWithCreditCardMdkToken',
+      'autogen_topupWithCreditCardMdkToken',
       {
         'env': this.env.index,
         'accessToken': this.accessToken,
@@ -120,6 +164,20 @@ extension CreditCardAPI on PokepayAPI {
         'is_cardholder_name_specified': isCardholderNameSpecified,
         'request_id': requestId,
         'topup_quota_id': topupQuotaId,
+      },
+    );
+  }
+
+  Future<VeritransMdkTokenApiKey> getVeritransMdkTokenApiKey({
+    String? organizationCode,
+  }) async {
+    return await invokeMethod<VeritransMdkTokenApiKey>(
+      (j) => VeritransMdkTokenApiKey.fromJson(j),
+      'autogen_getVeritransMdkTokenApiKey',
+      {
+        'env': this.env.index,
+        'accessToken': this.accessToken,
+        'organization_code': organizationCode,
       },
     );
   }

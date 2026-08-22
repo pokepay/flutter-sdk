@@ -3,12 +3,26 @@ import '../../pokepay_sdk.dart';
 import '../responses.dart';
 
 extension TransactionAPI on PokepayAPI {
+  Future<UserTransactionWithTransfers> getTransaction({
+    required String transactionId,
+  }) async {
+    return await invokeMethod<UserTransactionWithTransfers>(
+      (j) => UserTransactionWithTransfers.fromJson(j),
+      'autogen_getTransaction',
+      {
+        'env': this.env.index,
+        'accessToken': this.accessToken,
+        'transaction_id': transactionId,
+      },
+    );
+  }
+
   Future<UserTransactionWithTransfers> getTransactionByRequestId({
     required String requestId,
   }) async {
     return await invokeMethod<UserTransactionWithTransfers>(
       (j) => UserTransactionWithTransfers.fromJson(j),
-      'getTransactionByRequestId',
+      'autogen_getTransactionByRequestId',
       {
         'env': this.env.index,
         'accessToken': this.accessToken,
@@ -17,7 +31,23 @@ extension TransactionAPI on PokepayAPI {
     );
   }
 
-  Future<UserTransactionWithFallback> createCashtrayTransaction({
+  Future<UserTransaction> refundTransaction({
+    required String transactionId,
+    double? amount,
+  }) async {
+    return await invokeMethod<UserTransaction>(
+      (j) => UserTransaction.fromJson(j),
+      'autogen_refundTransaction',
+      {
+        'env': this.env.index,
+        'accessToken': this.accessToken,
+        'transaction_id': transactionId,
+        'amount': amount,
+      },
+    );
+  }
+
+  Future<UserTransactionWithFallback> createTransactionWithCashtray({
     required String requestId,
     required String cashtrayId,
     String? accountId,
@@ -27,7 +57,7 @@ extension TransactionAPI on PokepayAPI {
   }) async {
     return await invokeMethod<UserTransactionWithFallback>(
       (j) => UserTransactionWithFallback.fromJson(j),
-      'createCashtrayTransaction',
+      'autogen_createTransactionWithCashtray',
       {
         'env': this.env.index,
         'accessToken': this.accessToken,
@@ -41,7 +71,7 @@ extension TransactionAPI on PokepayAPI {
     );
   }
 
-  Future<UserTransactionWithFallback> createBillTransaction({
+  Future<UserTransactionWithFallback> createTransactionWithBill({
     required String requestId,
     required String billId,
     String? accountId,
@@ -51,7 +81,7 @@ extension TransactionAPI on PokepayAPI {
   }) async {
     return await invokeMethod<UserTransactionWithFallback>(
       (j) => UserTransactionWithFallback.fromJson(j),
-      'createBillTransaction',
+      'autogen_createTransactionWithBill',
       {
         'env': this.env.index,
         'accessToken': this.accessToken,
@@ -65,7 +95,7 @@ extension TransactionAPI on PokepayAPI {
     );
   }
 
-  Future<UserTransactionWithFallback> createCheckTransaction({
+  Future<UserTransactionWithFallback> createTransactionWithCheck({
     String? requestId,
     required String checkId,
     String? accountId,
@@ -73,7 +103,7 @@ extension TransactionAPI on PokepayAPI {
   }) async {
     return await invokeMethod<UserTransactionWithFallback>(
       (j) => UserTransactionWithFallback.fromJson(j),
-      'createCheckTransaction',
+      'autogen_createTransactionWithCheck',
       {
         'env': this.env.index,
         'accessToken': this.accessToken,
