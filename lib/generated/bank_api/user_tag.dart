@@ -11,7 +11,7 @@ extension UserTagAPI on PokepayAPI {
   }) async {
     return await invokeMethod<PaginatedUserTagGroups>(
       (j) => PaginatedUserTagGroups.fromJson(j),
-      'getUserTagGroups',
+      'autogen_getUserTagGroups',
       {
         'env': this.env.index,
         'accessToken': this.accessToken,
@@ -33,7 +33,7 @@ extension UserTagAPI on PokepayAPI {
   }) async {
     return await invokeMethod<PaginatedUserTagGroupItems>(
       (j) => PaginatedUserTagGroupItems.fromJson(j),
-      'getUserTagGroupItems',
+      'autogen_getUserTagGroupItems',
       {
         'env': this.env.index,
         'accessToken': this.accessToken,
@@ -56,7 +56,7 @@ extension UserTagAPI on PokepayAPI {
   }) async {
     return await invokeMethod<PaginatedUserTagSubgroups>(
       (j) => PaginatedUserTagSubgroups.fromJson(j),
-      'getUserTagSubgroups',
+      'autogen_getUserTagSubgroups',
       {
         'env': this.env.index,
         'accessToken': this.accessToken,

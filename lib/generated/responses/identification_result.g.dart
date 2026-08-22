@@ -13,7 +13,9 @@ IdentificationResult _$IdentificationResultFromJson(
       identifiedAt: json['identified_at'] == null
           ? null
           : DateTime.parse(json['identified_at'] as String),
-      match: json['match'] as Map<String, dynamic>,
+      match:
+          IdentificationMatch.fromJson(json['match'] as Map<String, dynamic>),
+      isResident: json['is_resident'] as bool,
     );
 
 Map<String, dynamic> _$IdentificationResultToJson(
@@ -22,4 +24,5 @@ Map<String, dynamic> _$IdentificationResultToJson(
       'is_valid': instance.isValid,
       'identified_at': instance.identifiedAt?.toIso8601String(),
       'match': instance.match,
+      'is_resident': instance.isResident,
     };
