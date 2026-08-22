@@ -11,7 +11,7 @@ extension JihanpiAPI on PokepayAPI {
   }) async {
     return await invokeMethod<JihanpiTransaction>(
       (j) => JihanpiTransaction.fromJson(j),
-      'createJihanpiTransaction',
+      'autogen_createJihanpiTransaction',
       {
         'env': this.env.index,
         'accessToken': this.accessToken,
@@ -28,7 +28,7 @@ extension JihanpiAPI on PokepayAPI {
   }) async {
     return await invokeMethod<JihanpiTransaction>(
       (j) => JihanpiTransaction.fromJson(j),
-      'getJihanpiTransactionByOrderId',
+      'autogen_getJihanpiTransactionByOrderId',
       {
         'env': this.env.index,
         'accessToken': this.accessToken,
@@ -42,7 +42,7 @@ extension JihanpiAPI on PokepayAPI {
   }) async {
     return await invokeMethod<JihanpiTransaction>(
       (j) => JihanpiTransaction.fromJson(j),
-      'getJihanpiTransactionByRequestId',
+      'autogen_getJihanpiTransactionByRequestId',
       {
         'env': this.env.index,
         'accessToken': this.accessToken,
