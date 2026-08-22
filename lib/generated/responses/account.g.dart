@@ -14,6 +14,7 @@ Account _$AccountFromJson(Map<String, dynamic> json) => Account(
       pointBalance: (json['point_balance'] as num).toDouble(),
       pointDebt: (json['point_debt'] as num).toDouble(),
       isSuspended: json['is_suspended'] as bool,
+      status: json['status'] as String,
       privateMoney:
           PrivateMoney.fromJson(json['private_money'] as Map<String, dynamic>),
     );
@@ -26,5 +27,6 @@ Map<String, dynamic> _$AccountToJson(Account instance) => <String, dynamic>{
       'point_balance': instance.pointBalance,
       'point_debt': instance.pointDebt,
       'is_suspended': instance.isSuspended,
+      'status': instance.status,
       'private_money': instance.privateMoney,
     };
