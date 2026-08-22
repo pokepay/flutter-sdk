@@ -8,9 +8,9 @@ part of 'private_money_images.dart';
 
 PrivateMoneyImages _$PrivateMoneyImagesFromJson(Map<String, dynamic> json) =>
     PrivateMoneyImages(
-      card: json['card'] as String,
-      n300x300: json['300x300'] as String,
-      n600x600: json['600x600'] as String,
+      card: json['card'] as String?,
+      n300x300: json['300x300'] as String?,
+      n600x600: json['600x600'] as String?,
     );
 
 Map<String, dynamic> _$PrivateMoneyImagesToJson(PrivateMoneyImages instance) =>
