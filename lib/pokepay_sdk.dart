@@ -281,10 +281,14 @@ class PokepayClient {
   Future<UserTransaction> invokeToken({
     required String token,
   }) async {
+    // ネイティブ側の scanToken は 'scanToken' キーを読む。
+    // 以前は 'token' キーで送っていたため常に null になり機能していなかった。
     String json = await channel.invokeMethod('scanToken', {
       'env': envToInt(this.api.env),
       'accessToken': this.api.accessToken,
-      'token': token,
+      'scanToken': token,
+      'tx_strategy': TransactionStrategy.POINT_PREFERRED.value,
+      'privateMoneyId': this.privateMoneyId,
     });
     return UserTransaction.fromJson(jsonDecode(json));
   }

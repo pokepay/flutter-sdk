@@ -217,6 +217,7 @@ public class PokepaySdkPlugin implements FlutterPlugin, MethodCallHandler {
         }
 
         private TransactionStrategy parseTxStrategy(String strategy){
+            if (strategy == null) return TransactionStrategy.POINT_PREFERRED;
             switch (strategy){
                 case "money-only": return TransactionStrategy.MONEY_ONLY;
                 case "point-preferred": return TransactionStrategy.POINT_PREFERRED;
@@ -383,7 +384,8 @@ public class PokepaySdkPlugin implements FlutterPlugin, MethodCallHandler {
                         TransactionStrategy txStrategy = parseTxStrategy(rawStrategy);
                         Double amount = call.argument("amount");
                         String rawRequestId = call.argument("requestId");
-                        UUID requestId = UUID.fromString(rawRequestId);
+                        // requestId は省略可能。UUID.fromString(null) は NPE になる
+                        UUID requestId = rawRequestId == null ? null : UUID.fromString(rawRequestId);
                         if (amount != null){
                             req = new CreateTransactionWithBill(billId, accountId, amount, couponId, txStrategy, requestId);
                         }else{
@@ -402,7 +404,8 @@ public class PokepaySdkPlugin implements FlutterPlugin, MethodCallHandler {
                         String couponId = call.argument("couponId");
                         String rawStrategy = call.argument("tx_strategy");
                         String rawRequestId = call.argument("requestId");
-                        UUID requestId = UUID.fromString(rawRequestId);
+                        // requestId は省略可能。UUID.fromString(null) は NPE になる
+                        UUID requestId = rawRequestId == null ? null : UUID.fromString(rawRequestId);
                         TransactionStrategy txStrategy = parseTxStrategy(rawStrategy);
                         Integer topupQuotaId = call.argument("topupQuotaId");
                         CreateTransactionWithCashtray req = new CreateTransactionWithCashtray(cashtrayId, accountId, couponId,txStrategy,requestId).topupQuotaId(topupQuotaId);
@@ -416,7 +419,8 @@ public class PokepaySdkPlugin implements FlutterPlugin, MethodCallHandler {
                         String checkId = call.argument("checkId");
                         String accountId = call.argument("accountId");
                         String rawRequestId = call.argument("requestId");
-                        UUID requestId = UUID.fromString(rawRequestId);
+                        // requestId は省略可能。UUID.fromString(null) は NPE になる
+                        UUID requestId = rawRequestId == null ? null : UUID.fromString(rawRequestId);
                         Integer topupQuotaId = call.argument("topupQuotaId");
                         CreateTransactionWithCheck req = new CreateTransactionWithCheck(checkId, accountId, requestId).topupQuotaId(topupQuotaId);
                         Pokepay.setEnv(env);
@@ -433,7 +437,8 @@ public class PokepaySdkPlugin implements FlutterPlugin, MethodCallHandler {
                         final ObjectMapper mapper = JsonConverter.createObjectMapper();
                         Product[] products = mapper.readValue(productsString,  Product[].class);
                         String rawRequestId = call.argument("requestId");
-                        UUID requestId = UUID.fromString(rawRequestId);
+                        // requestId は省略可能。UUID.fromString(null) は NPE になる
+                        UUID requestId = rawRequestId == null ? null : UUID.fromString(rawRequestId);
                         Integer topupQuotaId = call.argument("topupQuotaId");
                         CreateTransactionWithCpm req = new CreateTransactionWithCpm(cpmToken, accountId, amount, products, requestId).topupQuotaId(topupQuotaId);
                         Pokepay.setEnv(env);
@@ -810,7 +815,8 @@ public class PokepaySdkPlugin implements FlutterPlugin, MethodCallHandler {
                         TransactionStrategy txStrategy = parseTxStrategy(rawStrategy);
                         String privateMoneyId = call.argument("privateMoneyId");
                         String rawRequestId = call.argument("requestId");
-                        UUID requestId = UUID.fromString(rawRequestId);
+                        // requestId は省略可能。UUID.fromString(null) は NPE になる
+                        UUID requestId = rawRequestId == null ? null : UUID.fromString(rawRequestId);
                         Pokepay.Client client;
                         UserTransaction userTransaction;
 
