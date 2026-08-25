@@ -275,7 +275,7 @@ class PokepayClient {
   Future<UserTransaction> topup(
       {required Check check, String? accountId}) async {
     return await this.api.createUserTransactionWithCheck(
-        checkId: 'check.id', accountId: accountId);
+        checkId: check.id, accountId: accountId);
   }
 
   Future<UserTransaction> invokeToken({
