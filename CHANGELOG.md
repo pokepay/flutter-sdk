@@ -1,3 +1,9 @@
+## 2.2.0
+* Synced with Native SDKs version 2.2.0 (iOS `Pokepay` 2.2.0, Android `pokepaylib` 2.2.0)
+* Regenerated the auto-generated Bank API from `bank.yaml`
+* Added auto-generated Terminal, Transaction (get/refund), Check, Account, and User endpoints
+* Renamed generated transaction methods to `createTransactionWithCashtray`/`WithBill`/`WithCheck`
+
 ## 2.1.1
 * Fixed parsing wrong JSON keys for PrivateMoney and BankPayRedirectUrl
 
