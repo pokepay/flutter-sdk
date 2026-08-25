@@ -8,7 +8,7 @@ extension ShopAPI on PokepayAPI {
   }) async {
     return await invokeMethod<DetailedShopInformation>(
       (j) => DetailedShopInformation.fromJson(j),
-      'getDetailedShopInformation',
+      'autogen_getDetailedShopInformation',
       {
         'env': this.env.index,
         'accessToken': this.accessToken,
@@ -19,6 +19,7 @@ extension ShopAPI on PokepayAPI {
 
   Future<PaginatedShops> getListOfShops({
     required String privateMoneyId,
+    String? name,
     String? userTagGroupItemId,
     String? userTagSubgroupId,
     String? before,
@@ -27,11 +28,12 @@ extension ShopAPI on PokepayAPI {
   }) async {
     return await invokeMethod<PaginatedShops>(
       (j) => PaginatedShops.fromJson(j),
-      'getListOfShops',
+      'autogen_getListOfShops',
       {
         'env': this.env.index,
         'accessToken': this.accessToken,
         'private_money_id': privateMoneyId,
+        'name': name,
         'user_tag_group_item_id': userTagGroupItemId,
         'user_tag_subgroup_id': userTagSubgroupId,
         'before': before,

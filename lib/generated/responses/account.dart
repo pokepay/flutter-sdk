@@ -12,6 +12,7 @@ class Account {
   final double pointBalance;
   final double pointDebt;
   final bool isSuspended;
+  final String status;
   final PrivateMoney privateMoney;
   Account({
     required this.id,
@@ -21,6 +22,7 @@ class Account {
     required this.pointBalance,
     required this.pointDebt,
     required this.isSuspended,
+    required this.status,
     required this.privateMoney,
   });
 
