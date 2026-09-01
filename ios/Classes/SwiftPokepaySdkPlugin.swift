@@ -11,6 +11,12 @@ private class APIJSONEncoder : JSONEncoder, @unchecked Sendable {
         let dateFormatter = DateFormatter()
         dateFormatter.dateFormat = "yyyy-MM-dd'T'HH:mm:ss.SSSSSS'Z'"
         dateFormatter.timeZone = TimeZone(secondsFromGMT: 0)
+        // A fixed-format DateFormatter must always use en_US_POSIX (Apple QA1480).
+        // Otherwise Locale.current is used, and Foundation rewrites "HH" into
+        // "h" plus an AM/PM marker when the device is set to 12-hour time. The
+        // date handed to Flutter then stops being ISO8601 and DateTime.parse
+        // throws a FormatException on the Dart side.
+        dateFormatter.locale = Locale(identifier: "en_US_POSIX")
         dateEncodingStrategy = .formatted(dateFormatter)
     }
 }
