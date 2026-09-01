@@ -1,3 +1,6 @@
+## 2.2.1
+* Fixed a FormatException when parsing dates on iOS devices set to 12-hour time (the date formatter now uses the `en_US_POSIX` locale)
+
 ## 2.2.0
 * Synced with Native SDKs version 2.2.0 (iOS `Pokepay` 2.2.0, Android `pokepaylib` 2.2.0)
 * Regenerated the auto-generated Bank API from `bank.yaml`
