@@ -1,13 +1,24 @@
 import '../responses/error.dart';
 
-/// A canonical RFC 4122 textual UUID: 8-4-4-4-12 hexadecimal digits.
+/// A canonical RFC 4122 textual UUID in **lowercase**: 8-4-4-4-12 hex digits.
 ///
-/// This is deliberately the *strict* form that iOS's `UUID(uuidString:)`
-/// accepts, not the lenient form Java's `UUID.fromString` accepts (which also
-/// takes e.g. "1-1-1-1-1"). Validating against the intersection of the two is
-/// what lets a single Dart-side check keep both platforms in agreement.
+/// Two independent constraints force this exact shape:
+///
+///   * **Lowercase**, because the API only accepts lowercase `request_id`.
+///     Both native SDKs already normalise on write -- Java's `UUID.toString()`
+///     emits lowercase, and iOS has an explicit `pokepayRequestID` extension
+///     (`uuidString.lowercased()`) because Foundation's `uuidString` is
+///     uppercase. But `getTransactionByRequestId` sends the caller's string
+///     through verbatim on both platforms, so an uppercase value would write
+///     successfully and then be unreadable. Rejecting instead of normalising
+///     keeps the caller's string byte-identical to what the server stores.
+///   * **Strict 8-4-4-4-12**, because this is the intersection of the two
+///     native parsers. Java's `UUID.fromString` is lenient and also accepts
+///     e.g. "1-1-1-1-1"; iOS's `UUID(uuidString:)` requires the canonical
+///     form. Validating to the intersection is what lets a single Dart-side
+///     check keep both platforms in agreement.
 final RegExp _requestIdPattern = RegExp(
-    r'^[0-9a-fA-F]{8}-[0-9a-fA-F]{4}-[0-9a-fA-F]{4}-[0-9a-fA-F]{4}-[0-9a-fA-F]{12}$');
+    r'^[0-9a-f]{8}-[0-9a-f]{4}-[0-9a-f]{4}-[0-9a-f]{4}-[0-9a-f]{12}$');
 
 /// Validates the optional `requestId` (idempotency key) and returns it
 /// unchanged. `null` is allowed and means "no idempotency key".
@@ -18,16 +29,12 @@ final RegExp _requestIdPattern = RegExp(
 /// makes the native SDK omit `request_id` from the request body entirely --
 /// the server then creates a NON-idempotent transaction, so a retry
 /// double-charges the user with no error raised anywhere.
-///
-/// The value is never normalised: both native parsers and the server are
-/// case-insensitive, and silently rewriting an idempotency key would be the
-/// same class of bug this guards against.
 String? validateRequestId(String? requestId) {
   if (requestId == null) return null;
   if (!_requestIdPattern.hasMatch(requestId)) {
     throw ProcessingError(
-      message: 'requestId must be a UUID in the 8-4-4-4-12 hexadecimal form '
-          '(e.g. "550e8400-e29b-41d4-a716-446655440000"), '
+      message: 'requestId must be a lowercase UUID in the 8-4-4-4-12 '
+          'hexadecimal form (e.g. "550e8400-e29b-41d4-a716-446655440000"), '
           'but got "$requestId".',
     );
   }

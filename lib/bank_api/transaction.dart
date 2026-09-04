@@ -202,7 +202,7 @@ extension TransactionAPI on PokepayAPI {
       {
         'env': this.env.index,
         'accessToken': this.accessToken,
-        'requestId': requestId,
+        'requestId': validateRequestId(requestId),
       },
     );
   }
