@@ -5,6 +5,7 @@ import 'package:flutter/services.dart';
 import 'package:logger/logger.dart';
 import 'bank_api/private_money.dart';
 import 'parameters/transaction_strategy.dart';
+import 'parameters/request_id.dart';
 
 import 'bank_api/bill.dart';
 import 'bank_api/check.dart';
@@ -331,7 +332,7 @@ class PokepayClient {
       'couponId': couponId,
       'tx_strategy': strategy.value,
       'privateMoneyId': this.privateMoneyId,
-      'requestId': requestId,
+      'requestId': validateRequestId(requestId),
     });
 
     return UserTransaction.fromJson(jsonDecode(json));
