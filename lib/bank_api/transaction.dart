@@ -2,6 +2,7 @@ import 'dart:convert';
 
 import '../parameters/transaction_strategy.dart';
 import '../parameters/product.dart';
+import '../parameters/request_id.dart';
 import '../pokepay_sdk.dart';
 import '../responses.dart';
 
@@ -25,7 +26,7 @@ extension TransactionAPI on PokepayAPI {
         'amount': amount,
         'couponId': couponId,
         'tx_strategy': strategy.value,
-        'requestId': requestId,
+        'requestId': validateRequestId(requestId),
       },
     );
   }
@@ -48,7 +49,7 @@ extension TransactionAPI on PokepayAPI {
         'accountId': accountId,
         'couponId': couponId,
         'tx_strategy': strategy.value,
-        'requestId': requestId,
+        'requestId': validateRequestId(requestId),
         'topupQuotaId': topupQuotaId,
       },
     );
@@ -68,7 +69,7 @@ extension TransactionAPI on PokepayAPI {
         'accessToken': this.accessToken,
         'checkId': checkId,
         'accountId': accountId,
-        'requestId': requestId,
+        'requestId': validateRequestId(requestId),
         'topupQuotaId': topupQuotaId,
       },
     );
@@ -92,7 +93,7 @@ extension TransactionAPI on PokepayAPI {
         'accountId': accountId,
         'amount': amount,
         'products': jsonEncode(products),
-        'requestId': requestId,
+        'requestId': validateRequestId(requestId),
         'topupQuotaId': topupQuotaId,
       },
     );
@@ -201,7 +202,7 @@ extension TransactionAPI on PokepayAPI {
       {
         'env': this.env.index,
         'accessToken': this.accessToken,
-        'requestId': requestId,
+        'requestId': validateRequestId(requestId),
       },
     );
   }
