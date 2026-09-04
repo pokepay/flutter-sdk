@@ -1,6 +1,6 @@
 name: pokepay_sdk
 description: SDK for pokepay
-version: 2.2.1
+version: 2.2.2
 homepage: https://pay.pocket-change.jp/
 
 environment:

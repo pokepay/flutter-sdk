@@ -1,3 +1,8 @@
+## 2.2.2
+* Fixed a NullPointerException on Android when `requestId` was omitted (null) on `createTransactionWithBill`/`WithCashtray`/`WithCheck`/`WithCpm` and `createTransactionWithJwt` -- a null `requestId` is now passed through to the native SDK instead of being parsed as a UUID
+* Added validation for `requestId`: it must be a lowercase RFC 4122 UUID in the 8-4-4-4-12 hexadecimal form, and a malformed value now throws a `ProcessingError` on both platforms. Previously iOS silently dropped a malformed `request_id`, creating a non-idempotent transaction that could double-charge on retry
+* Bumped the iOS `Pokepay` dependency to 2.2.1
+
 ## 2.2.1
 * Fixed a FormatException when parsing dates on iOS devices set to 12-hour time (the date formatter now uses the `en_US_POSIX` locale)
 
