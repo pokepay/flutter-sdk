@@ -1,6 +1,34 @@
 # Pokepay Flutter SDK
 ## API Document reference
 Please refer to [this document](https://docs.pokepay.jp/guidelines/app-sdk/java.html#_client_api)
+## Requirements
+* iOS 15.0 or later (required by the native `Pokepay` pod as of 2.3.0)
+* Android `minSdkVersion` 26 or later
+
+### iOS setup
+
+In your app's `ios/Podfile`, set the platform and raise the deployment target of
+every pod. Both are required: `APIKit` (a transitive dependency of `Pokepay`)
+declares iOS 9.0 and the `Flutter` pod declares 11.0, and Xcode 26 and later
+refuse to build anything below 15.0.
+
+```ruby
+platform :ios, '15.0'
+
+post_install do |installer|
+  installer.pods_project.targets.each do |target|
+    flutter_additional_ios_build_settings(target)
+    # Must come after flutter_additional_ios_build_settings, which resets it.
+    target.build_configurations.each do |config|
+      config.build_settings['IPHONEOS_DEPLOYMENT_TARGET'] = '15.0'
+    end
+  end
+end
+```
+
+Also set `IPHONEOS_DEPLOYMENT_TARGET` to 15.0 for the `Runner` target itself
+(Xcode: Runner → General → Minimum Deployments).
+
 ## Install
 1. In the pubspec.yaml of the project, add the following:
  ```yaml  

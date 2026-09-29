@@ -1,7 +1,6 @@
 import Flutter
 import UIKit
 import APIKit
-import Result
 import Pokepay
 import Foundation
 

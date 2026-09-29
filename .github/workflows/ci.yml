@@ -74,5 +74,12 @@ jobs:
         run: |
           flutter create --template=app --platforms=ios /tmp/example
           cd /tmp/example
+          # Pokepay 2.3.0 は iOS 15.0 以上を要求するが、Flutter のテンプレートは
+          # それより低いデプロイメントターゲットを生成するため引き上げる。
+          # post_install の上書きも必須: APIKit は 9.0、Flutter pod は 11.0 を
+          # 宣言しており、Xcode 26 以降はそのままではビルドできない。
+          sed -i '' -E "s@^#? *platform :ios.*@platform :ios, '15.0'@" ios/Podfile
+          sed -i '' -E "s@^( *)flutter_additional_ios_build_settings\(target\)@\1flutter_additional_ios_build_settings(target)\n\1target.build_configurations.each { |c| c.build_settings['IPHONEOS_DEPLOYMENT_TARGET'] = '15.0' }@" ios/Podfile
+          sed -i '' -E "s@IPHONEOS_DEPLOYMENT_TARGET = [0-9.]+;@IPHONEOS_DEPLOYMENT_TARGET = 15.0;@" ios/Runner.xcodeproj/project.pbxproj
           flutter pub add pokepay_sdk --path "$GITHUB_WORKSPACE"
           flutter build ios --debug --no-codesign

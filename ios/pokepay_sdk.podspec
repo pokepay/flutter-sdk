@@ -4,7 +4,7 @@
 #
 Pod::Spec.new do |s|
   s.name             = 'pokepay_sdk'
-  s.version          = '2.2.2'
+  s.version          = '2.3.0'
   s.summary          = 'Pokepay flutter SDK'
   s.description      = <<-DESC
 Pokepay flutter SDK
@@ -15,8 +15,8 @@ Pokepay flutter SDK
   s.source           = { :path => '.' }
   s.source_files = 'Classes/**/*'
   s.dependency 'Flutter'
-  s.dependency 'Pokepay', '2.2.1'
-  s.platform = :ios, '12.0'
+  s.dependency 'Pokepay', '2.3.0'
+  s.platform = :ios, '15.0'
 
   # Flutter.framework does not contain a i386 slice. Only x86_64 simulators are supported.
   s.pod_target_xcconfig = { 'DEFINES_MODULE' => 'YES', 'VALID_ARCHS[sdk=iphonesimulator*]' => 'x86_64' }

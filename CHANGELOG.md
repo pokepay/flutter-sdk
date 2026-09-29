@@ -1,3 +1,8 @@
+## 2.3.0
+* Bumped the iOS `Pokepay` dependency to 2.3.0
+* **Raised the minimum iOS deployment target to 15.0.** Apps embedding this plugin must set `platform :ios, '15.0'` in their `ios/Podfile`, add a `post_install` hook raising `IPHONEOS_DEPLOYMENT_TARGET` for all pods, and match it on the `Runner` target -- see the iOS setup section in the README. The hook is required because `APIKit` declares iOS 9.0 and the `Flutter` pod declares 11.0, which Xcode 26 and later refuse to build
+* Removed `import Result` from the iOS plugin: `Pokepay` 2.3.0 dropped the `antitypical/Result` dependency, which had been a no-op shim over the standard library's `Result` since Swift 5. No Dart-facing API changed
+
 ## 2.2.2
 * Fixed a NullPointerException on Android when `requestId` was omitted (null) on `createTransactionWithBill`/`WithCashtray`/`WithCheck`/`WithCpm` and `createTransactionWithJwt` -- a null `requestId` is now passed through to the native SDK instead of being parsed as a UUID
 * Added validation for `requestId`: it must be a lowercase RFC 4122 UUID in the 8-4-4-4-12 hexadecimal form, and a malformed value now throws a `ProcessingError` on both platforms. Previously iOS silently dropped a malformed `request_id`, creating a non-idempotent transaction that could double-charge on retry
