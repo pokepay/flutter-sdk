@@ -36,7 +36,12 @@ class TokenInfo extends Response {
         token = Bill.fromJson(json['token'] as Map<String, dynamic>);
         break;
       case TokenType.CASHTRAY:
-        token = Cashtray.fromJson(json['token'] as Map<String, dynamic>);
+        // getTokenInfo は cashtray の中身を持たない TokenInfo を返す。
+        // GET /cashtrays/{id} は作成した店舗しか参照できず、読み取った側は取得できないため
+        final cashtray = json['token'];
+        token = cashtray is Map<String, dynamic>
+            ? Cashtray.fromJson(cashtray)
+            : cashtray;
         break;
       case TokenType.CHECK:
         token = Check.fromJson(json['token'] as Map<String, dynamic>);
@@ -62,7 +67,8 @@ class TokenInfo extends Response {
     late dynamic token;
     switch (this.type) {
       case TokenType.CASHTRAY:
-        token = (this.token as Cashtray).toJson();
+        final cashtray = this.token;
+        token = cashtray is Cashtray ? cashtray.toJson() : cashtray;
         break;
       case TokenType.BILL:
         token = (this.token as Bill).toJson();
