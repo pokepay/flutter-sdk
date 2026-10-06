@@ -1,3 +1,6 @@
+## 2.3.1
+* Fixed a `type 'String' is not a subtype of type 'Cashtray' in type cast` error when calling `toJson` on the `TokenInfo` that `getTokenInfo` returns for a cashtray QR. `getTokenInfo` returns an empty token for a cashtray, because the user who scanned it cannot read the cashtray itself, and `fromJson`/`toJson` now pass that token through instead of casting it
+
 ## 2.3.0
 * Bumped the iOS `Pokepay` dependency to 2.3.0
 * **Raised the minimum iOS deployment target to 15.0.** Apps embedding this plugin must set `platform :ios, '15.0'` in their `ios/Podfile`, add a `post_install` hook raising `IPHONEOS_DEPLOYMENT_TARGET` for all pods, and match it on the `Runner` target -- see the iOS setup section in the README. The hook is required because `APIKit` declares iOS 9.0 and the `Flutter` pod declares 11.0, which Xcode 26 and later refuse to build
